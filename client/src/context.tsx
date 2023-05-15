@@ -1,0 +1,167 @@
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useReducer,
+} from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+
+type postState = {
+  name: string
+
+  faction: string
+  stats: number
+  photo: string
+  weight: number
+  height: number
+}
+type postAction = {
+  type: string
+  payload: any
+}
+
+type Cell = {
+  Register: (e: React.FormEvent<HTMLFormElement>) => void
+  Login: (e: React.FormEvent<HTMLFormElement>) => void
+  PostWrestler: (e: React.FormEvent<HTMLFormElement>) => void
+  setPassword: React.Dispatch<React.SetStateAction<string>>
+  setEmail: React.Dispatch<React.SetStateAction<string>>
+  setName: React.Dispatch<React.SetStateAction<string>>
+  err: any
+  user: any
+  postDispatch: React.Dispatch<postAction>
+}
+
+const context = createContext<Cell | null>(null)
+
+export const ContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode
+}) => {
+  const [authRoute, setAuthRoute] = useState<string>('')
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const [name, setName] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const [err, setErr] = useState<any>()
+  const [user, setUser] = useState<any>()
+  const Register = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const apiUrl = `http://localhost:3000/register`
+    if (name && email && password) {
+      try {
+        await axios
+          .post(apiUrl, { password, email, name })
+          .catch((err) => setErr(err))
+        console.log('request sent')
+      } catch (error) {
+        console.log(error)
+        console.log(err)
+      }
+    }
+  }
+  const Login = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const apiUrl = `http://localhost:3000/login`
+    if (email && password) {
+      try {
+        await axios
+          .post(apiUrl, { email, password })
+          .then((res) => setUser(res.data.user))
+          .catch((err) => setErr(err))
+        navigate('/home')
+      } catch (error) {
+        console.log(error)
+        setErr(error)
+      }
+    }
+  }
+
+  const postReducer = (state: postState, action: postAction) => {
+    switch (action.type) {
+      case 'name':
+        return { ...state, name: state.name = action.payload }
+      case 'faction':
+        return { ...state, faction: state.faction = action.payload }
+      case 'stats':
+        return { ...state, stats: state.stats = action.payload }
+      case 'photo':
+        return { ...state, photo: state.photo = action.payload }
+      case 'weight':
+        return { ...state, weight: state.weight = action.payload }
+      case 'height':
+        return { ...state, height: state.height = action.payload }
+      default:
+        return state
+    }
+  }
+
+  const [postState, postDispatch] = useReducer(postReducer, {
+    name: '',
+
+    faction: '',
+    stats: 0,
+    photo: '',
+    weight: 0,
+    height: 0,
+  })
+  useEffect(() => {
+    console.log(postState.faction)
+  }, [postState.faction])
+  const PostWrestler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const apiUrl = `http://localhost:3000/api/v1/wrestler`
+    if (user._id && postState.name) {
+      let obj = {
+        name: postState.name,
+        faction: postState.faction,
+        stats: postState.stats,
+        photo: postState.photo,
+        weight: postState.weight,
+        height: postState.height,
+        userID: user._id,
+      }
+      try {
+        await axios
+          .post(apiUrl, obj)
+          .then((res) => console.log(res))
+          .catch((err) => console.log(err))
+        console.log('data sent')
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+  return (
+    <context.Provider
+      value={{
+        Register,
+        Login,
+        setPassword,
+        setEmail,
+        setName,
+        err,
+        user,
+        postDispatch,
+        PostWrestler,
+      }}
+    >
+      {children}
+    </context.Provider>
+  )
+}
+
+export const useMainContext = () => {
+  const usecontext = useContext(context)
+
+  if (!usecontext) {
+    throw new Error('Not Wrapped')
+  }
+  return usecontext
+}
