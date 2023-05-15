@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useMainContext } from '../../context'
 
 const PostData = () => {
   const { postDispatch, PostWrestler } = useMainContext()
-
+  useEffect(() => {}, [])
   return (
     <div>
       <form onSubmit={(e) => PostWrestler(e)}>

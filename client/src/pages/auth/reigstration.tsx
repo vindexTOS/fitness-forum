@@ -1,23 +1,31 @@
-import React from 'react'
-import { useMainContext } from '../../context'
 import { Link } from 'react-router-dom'
-
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  getName,
+  getEmail,
+  getPassword,
+} from '../../redux/features/slice/RegisterSlice'
+import { RegisterThunk } from '../../redux/features/async-thunk/Register'
+import { ThunkDispatch } from '@reduxjs/toolkit'
 const Reigstration = () => {
-  const { Register, setPassword, setEmail, setName, err } = useMainContext()
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
+  const err = useSelector((state: any) => state.RegisterReducer.error)
+  const { name, email, password } = useSelector(
+    (state: any) => state.RegisterReducer,
+  )
   return (
     <>
-      {' '}
-      <form onSubmit={(e) => Register(e)}>
-        <h1 onClick={() => console.log(err)}>Conose</h1>
+      <div>
+        <h1 onClick={() => console.log(err)}>console</h1>
         <input
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => dispatch(getName(e.target.value))}
           type="text"
           name="name"
           id="name"
           placeholder=" Name"
         />
         <input
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => dispatch(getEmail(e.target.value))}
           type="email"
           name="email"
           id="email"
@@ -25,14 +33,18 @@ const Reigstration = () => {
         />
 
         <input
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => dispatch(getPassword(e.target.value))}
           type="password"
           name="password"
           id="password"
           placeholder=" password"
         />
-        <button type="submit">Register</button>
-      </form>
+        <button
+          onClick={() => dispatch(RegisterThunk({ name, email, password }))}
+        >
+          Register
+        </button>
+      </div>
       <Link to="/login">Login</Link>
     </>
   )
