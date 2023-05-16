@@ -5,12 +5,21 @@ import { useNavigate, Navigate, Link } from 'react-router-dom'
 import PostData from './user-components/PostData'
 import jwt from 'jwt-decode'
 import Cookies from 'universal-cookie'
+import { getDataFromRegister } from '../redux/features/slice/LoginSlice'
 const UserHome = () => {
+  const registerUser = useSelector((state: any) => state.RegisterReducer.data)
   const user = useSelector((state: any) => state.LoginReducer.data)
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const cookies = new Cookies()
   const token = cookies.get('jwt_authorization')
+  useEffect(() => {
+    if (!user) {
+      dispatch(getDataFromRegister(registerUser))
+    }
+  }, [])
+
   useEffect(() => {
     if (token) {
       dispatch(getCookies())

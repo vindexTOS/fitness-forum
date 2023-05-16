@@ -1,53 +1,96 @@
-import { Link } from 'react-router-dom'
+// icons
+import { RiLockPasswordFill } from 'react-icons/ri'
+import { AiOutlineMail } from 'react-icons/ai'
+import { RiFileUserFill } from 'react-icons/ri'
+// library imports
+import React from 'react'
+import { ThunkDispatch } from '@reduxjs/toolkit'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import Cookies from 'universal-cookie'
+
+// importing redux functions slices and thunk
+import { RegisterThunk } from '../../redux/features/async-thunk/Register'
+import { getCookies } from '../../redux/features/slice/LoginSlice'
 import {
   getName,
   getEmail,
   getPassword,
 } from '../../redux/features/slice/RegisterSlice'
-import { RegisterThunk } from '../../redux/features/async-thunk/Register'
-import { ThunkDispatch } from '@reduxjs/toolkit'
+// importing react components
+import InputDiv from '../../components/auth-components/InputDiv'
+import ButtonAuth from '../../components/auth-components/ButtonAuth'
+
 const Reigstration = () => {
+  //use navigate from react router dom
+  const navigate = useNavigate()
+  // dispatching , using ThunkDispatch is very importent to Dispatch asyncThunk functions
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const err = useSelector((state: any) => state.RegisterReducer.error)
+  // getting states from RegisterSlice from redux
   const { name, email, password } = useSelector(
     (state: any) => state.RegisterReducer,
   )
-  return (
-    <>
-      <div>
-        <h1 onClick={() => console.log(err)}>console</h1>
-        <input
-          onChange={(e) => dispatch(getName(e.target.value))}
-          type="text"
-          name="name"
-          id="name"
-          placeholder=" Name"
-        />
-        <input
-          onChange={(e) => dispatch(getEmail(e.target.value))}
-          type="email"
-          name="email"
-          id="email"
-          placeholder=" Email"
-        />
+  // cookie storage library
+  const cookies = new Cookies()
+  //getting token from cookies
+  const token = cookies.get('jwt_authorization')
+  //getting data from register
+  const { data } = useSelector((state: any) => state.LoginReducer)
 
-        <input
-          onChange={(e) => dispatch(getPassword(e.target.value))}
-          type="password"
-          name="password"
-          id="password"
-          placeholder=" password"
-        />
-        <button
-          onClick={() => dispatch(RegisterThunk({ name, email, password }))}
-        >
-          Register
-        </button>
-      </div>
-      <Link to="/login">Login</Link>
-    </>
-  )
+  React.useEffect(() => {
+    //checking if user has a token if token exist we get user data from cookies
+    // token must be checked or app will crash
+    if (token) {
+      dispatch(getCookies())
+      navigate('/login')
+    }
+  }, [])
+  //registration
+  const RegisterFun = async () => {
+    //checking if form values exist
+    if (name && email && password) {
+      //waiting to register
+      await dispatch(RegisterThunk({ name, email, password }))
+      //checking if we get token from the database so we can sign user in right away
+      if (data || data.user) {
+        //re daecting user to home page
+        navigate('/home')
+      }
+    }
+  }
+  const style = {
+    section: `w-[100vw] pt-40 flex flex-col items-center justify-center`,
+    formDiv: `flex flex-col gap-2 bg-[#403f3f] p-10 rounded-[20px]`,
+  }
+  if (!data || !data.user) {
+    return (
+      <section className={style.section}>
+        <div className={style.formDiv}>
+          {/* <h1 onClick={() => console.log(err)}>console</h1> */}
+
+          <InputDiv Icon={RiFileUserFill} type={'name'} fun={getName} />
+          <InputDiv Icon={AiOutlineMail} type={'email'} fun={getEmail} />
+
+          <InputDiv
+            Icon={RiLockPasswordFill}
+            type={'password'}
+            fun={getPassword}
+          />
+          <button></button>
+          <ButtonAuth title="Register" func={RegisterFun} />
+        </div>
+        <p className="text-[#f51b51]">
+          If you already have an account sign
+          <Link className="text-blue-400 hover:text-blue-300" to="/register">
+            <span> Login </span>
+          </Link>
+        </p>
+      </section>
+    )
+  } else {
+    return <Navigate to="/home" />
+  }
 }
 
 export default Reigstration

@@ -11,6 +11,7 @@ type initialStateType = {
 const initialState = {
   name: '',
   email: '',
+  data: {},
   password: '',
   error: null,
   loading: false,
@@ -38,14 +39,17 @@ const RegisterSlice = createSlice({
       .addCase(RegisterThunk.pending, (state) => {
         state.loading = true
         state.error = null
+        state.data = {}
       })
       .addCase(RegisterThunk.fulfilled, (state, action: any) => {
         state.loading = false
         state.error = null
+        state.data = action.payload
       })
       .addCase(RegisterThunk.rejected, (state, action: any) => {
         state.loading = false
         state.error = action.error
+        state.data = {}
       })
   },
 })

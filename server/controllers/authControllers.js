@@ -20,8 +20,17 @@ const register = async (req, res) => {
     } else {
       return res.status(201).send({ message: 'Enter all the values' })
     }
+    const userFromDb = await userSchema.findOne({ email: email })
+    userFromDb.password = null
 
-    return res.status(201).send({ message: 'User created successfully!' })
+    const token = jwt.sign({ user: userFromDb }, process.env.JWT_STRING, {
+      expiresIn: '1h',
+    })
+    if (userFromDb) {
+      return res.status(201).json({ token, user: userFromDb })
+    } else if (!userFromDb) {
+      return res.status(201).send({ message: 'Try to sign in' })
+    }
   } catch (error) {
     console.log(error)
     res.status(500).send({ message: 'Internal server error' })
@@ -47,7 +56,7 @@ const login = async (req, res) => {
     const token = jwt.sign({ user }, process.env.JWT_STRING, {
       expiresIn: '1h',
     })
-    console.log(token)
+
     res.set('Authorization', `Bearer ${token}`)
 
     return res.status(200).json({ token, user })

@@ -43,6 +43,9 @@ const LoginSlice = createSlice({
       state.data = {}
       cookies.remove('jwt_authorization')
     },
+    getDataFromRegister: (state, action: any) => {
+      state.data = action.payload
+    },
   },
 
   extraReducers: (builder) => {
@@ -78,4 +81,5 @@ export const {
   getCookies,
   LogOut,
   getError,
+  getDataFromRegister,
 } = LoginSlice.actions
