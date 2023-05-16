@@ -4,6 +4,6 @@ import { getUser } from '../controllers/userController.js'
 
 const route = express.Router()
 
-route.route.get('/:id', verifyToken, getUser)
+route.route.get('/protected', verifyToken, getUser)
 
 export default route

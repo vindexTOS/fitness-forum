@@ -1,12 +1,13 @@
 import React from 'react'
-import { useMainContext } from '../context'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 const ProtectedRoute = ({
   children,
 }: {
   children: React.JSX.Element | null
 }) => {
-  const { user } = useMainContext()
+  const user = useSelector((state: any) => state.LoginReducer.data)
+
   const navigate = useNavigate()
   if (user) {
     return children
