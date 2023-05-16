@@ -31,8 +31,8 @@ export const LoginThunk = createAsyncThunk(
               expires: new Date(decode.exp * 1000),
             })
             const userCookieData = jwt(cookies.get('jwt_authorization'))
-            const fullData = res.data
-            return { userCookieData, fullData }
+
+            return userCookieData
           })
           .catch((err) => {
             val.dispatch(getError(err.response.data.msg))

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 
-import { Link } from 'react-router-dom'
 import { ThunkDispatch } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -9,57 +8,56 @@ import {
   getCookies,
 } from '../../redux/features/slice/LoginSlice'
 import { LoginThunk } from '../../redux/features/async-thunk/LoginThunk'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate, Navigate } from 'react-router-dom'
+import InputDiv from '../../components/auth-components/InputDiv'
+import Cookies from 'universal-cookie'
 const Login = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const { email, password, data, error, realErro } = useSelector(
     (state: any) => state.LoginReducer,
   )
+
+  const LoginFun = () => {
+    dispatch(LoginThunk({ email, password, dispatch }))
+  }
+  const cookies = new Cookies()
+  const token = cookies.get('jwt_authorization')
   useEffect(() => {
-    if (data.token) {
-      navigate('/home')
-      console.log(data.token)
+    if (token) {
       dispatch(getCookies())
+      navigate('/login')
     }
   }, [])
 
-  const Login = () => {
-    dispatch(LoginThunk({ email, password, dispatch }))
-    console.log(data)
-    if (data.token) {
-      setTimeout(() => {
-        navigate('/home')
-      }, 2000)
-    }
+  const style = {
+    section: `w-[100vw] flex items-center justify-center`,
+    formDiv: `flex flex-col`,
   }
-  useEffect(() => {
-    console.log(data)
-  }, [data])
-  return (
-    <>
-      <div>
-        <h1 onClick={() => console.log(realErro)}>console</h1>
-        <input
-          onChange={(e) => dispatch(getEmail(e.target.value))}
-          type="email"
-          name="email"
-          id="email"
-          placeholder=" Email"
-        />
+  if (!data.user) {
+    return (
+      <section className={style.section}>
+        <div className={style.formDiv}>
+          <h1 onClick={() => console.log(data)}>console</h1>
 
-        <input
-          onChange={(e) => dispatch(getPassword(e.target.value))}
-          type="password"
-          name="password"
-          id="password"
-          placeholder=" password"
-        />
-        <button onClick={() => Login()}>Login</button>
-      </div>
-      <Link to="/register">Register</Link>
-    </>
-  )
+          <h1 onClick={() => dispatch(getCookies())}>LOG</h1>
+          <InputDiv type={'email'} fun={getEmail} />
+
+          <input
+            onChange={(e) => dispatch(getPassword(e.target.value))}
+            type="password"
+            name="password"
+            id="password"
+            placeholder=" password"
+          />
+          <button onClick={() => LoginFun()}>Login</button>
+        </div>
+        <Link to="/register">Register</Link>
+      </section>
+    )
+  } else {
+    return <Navigate to="/home" />
+  }
 }
 
 export default Login

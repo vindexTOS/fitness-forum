@@ -12,7 +12,10 @@ const ProtectedRoute = ({
   if (user) {
     return children
   } else {
-    navigate('/login')
+    React.useEffect(() => {
+      navigate('/login')
+    }, [])
+
     return null
   }
 }
