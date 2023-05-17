@@ -10,7 +10,7 @@ const app = express()
 config()
 app.use(express.json())
 app.use(cors())
-app.use('/api/v1/wrestler', router)
+app.use('/posts', router)
 app.use('/', userRouter)
 
 app.use(notFound)

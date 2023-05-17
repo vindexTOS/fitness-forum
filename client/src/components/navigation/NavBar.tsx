@@ -12,7 +12,8 @@ const NavBar = () => {
   const navigate = useNavigate()
   return (
     <nav className={style.nav}>
-      <Link to="/create-thread">Create</Link>
+      <Link to="/create-thread">Create thread</Link>
+      <Link to="/create-post">Create post </Link>
       <div>
         <div className={style.auth} onClick={() => navigate('/login')}>
           <BsFillPersonFill /> <h1>{`Authorization`}</h1>

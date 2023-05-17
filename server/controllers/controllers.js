@@ -1,5 +1,6 @@
 import Post from '../models/postModel.js'
-import UserSchema from '../models/userModel.js'
+import User from '../models/userModel.js'
+import Forum from '../models/forumModel.js'
 const getData = async (req, res) => {
   const { name, faction, numeric } = req.query
   const obj = {}
@@ -34,12 +35,14 @@ const getData = async (req, res) => {
   res.status(200).json({ post, length: post.length })
 }
 const postData = async (req, res) => {
-  const { name, faction, stats, photo, weight, height, userID } = req.body
+  const { title, post, photo, forumID, userID } = req.body
+  const forum = await Forum.find({ forumID })
+  console.log(userID)
   try {
-    if (name && faction && stats && photo && weight && height && userID) {
-      const obj = { name, faction, stats, photo, weight, height, userID }
-      const post = await Post.create(obj)
-      return res.status(201).json(post)
+    if (title && post && photo && forumID && userID) {
+      const obj = { title, post, photo, forumID, userID }
+      const postObj = await Post.create(obj)
+      return res.status(201).json(postObj)
     }
   } catch (error) {
     console.log(error)

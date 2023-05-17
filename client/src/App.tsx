@@ -8,6 +8,7 @@ import UserHome from './pages/UserHome'
 import PostData from './pages/user-components/PostData'
 import NavBar from './components/navigation/NavBar'
 import CreateForum from './pages/admin/CreateForum'
+
 function App() {
   return (
     <>
@@ -18,6 +19,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Reigstration />} />
         <Route path="/create-thread" element={<CreateForum />} />
+        <Route path="/create-post" element={<PostData />} />
       </Routes>
     </>
   )
