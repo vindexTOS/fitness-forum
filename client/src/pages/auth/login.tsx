@@ -14,24 +14,12 @@ import InputDiv from '../../components/auth-components/InputDiv'
 import Cookies from 'universal-cookie'
 import ButtonAuth from '../../components/auth-components/ButtonAuth'
 const Login = () => {
-  const navigate = useNavigate()
   //getting states from redux store
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const { email, password, data, error, realErro } = useSelector(
     (state: any) => state.LoginReducer,
   )
 
-  // gettomg jwt cookies from local cookies
-  const cookies = new Cookies()
-  const token = cookies.get('jwt_authorization')
-  useEffect(() => {
-    //checking if user has a token if token exist we get user data from cookies
-    // token must be checked or app will crash
-    if (token) {
-      dispatch(getCookies())
-      navigate('/login')
-    }
-  }, [])
   // login function dispatching and passing
   const LoginFun = () => {
     if (email && password) {

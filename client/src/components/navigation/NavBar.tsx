@@ -1,7 +1,7 @@
 import React from 'react'
 import { BsFillPersonFill } from 'react-icons/bs'
 import { useNavigate, Link } from 'react-router-dom'
-
+import { useSelector } from 'react-redux'
 const NavBar = () => {
   const style = {
     color: `#232323`,
@@ -10,10 +10,14 @@ const NavBar = () => {
     auth: `border-2 p-1 rounded-[20px] text-[#ec2b58] border-[#ec2b58] flex items-center justify-around  w-[10rem] cursor-pointer hover:border-[#e64369]  text-[#e64369] `,
   }
   const navigate = useNavigate()
+  const user = useSelector((state: any) => state.LoginReducer.data)
+
   return (
     <nav className={style.nav}>
-      <Link to="/create-thread">Create thread</Link>
-      <Link to="/create-post">Create post </Link>
+      {user && user.user && user.user.adminStatus && (
+        <Link to="/create-thread">Create thread</Link>
+      )}
+      {user && user.user && <Link to="/create-post">Create post </Link>}
       <div>
         <div className={style.auth} onClick={() => navigate('/login')}>
           <BsFillPersonFill /> <h1>{`Authorization`}</h1>

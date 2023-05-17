@@ -12,14 +12,6 @@ import { ThunkDispatch } from '@reduxjs/toolkit'
 import { getCookies } from '../../redux/features/slice/LoginSlice'
 import Cookies from 'universal-cookie'
 const PostData = () => {
-  const cookies = new Cookies()
-  const token = cookies.get('jwt_authorization')
-  useEffect(() => {
-    if (token) {
-      dispatch(getCookies())
-    }
-  }, [])
-
   const hard = 'bodybuilding'
   const user = useSelector((state: any) => state.LoginReducer.data)
   const { title, post, photo } = useSelector((state: any) => state.PostReducer)
@@ -36,30 +28,34 @@ const PostData = () => {
       }),
     )
   }
-  return (
-    <div>
+  if (user && user.user) {
+    return (
       <div>
-        <input
-          // onClick={() => console.log(user)}
-          type="text"
-          placeholder=" title "
-          onChange={(e) => dispatch(getTitle(e.target.value))}
-        />
-        <input
-          onChange={(e) => dispatch(getPost(e.target.value))}
-          type="text"
-          placeholder=" post "
-        />
-        <input
-          onChange={(e) => dispatch(getPhoto(e.target.value))}
-          type="text"
-          placeholder=" photo "
-        />
+        <div>
+          <input
+            onClick={() => console.log(user)}
+            type="text"
+            placeholder=" title "
+            onChange={(e) => dispatch(getTitle(e.target.value))}
+          />
+          <input
+            onChange={(e) => dispatch(getPost(e.target.value))}
+            type="text"
+            placeholder=" post "
+          />
+          <input
+            onChange={(e) => dispatch(getPhoto(e.target.value))}
+            type="text"
+            placeholder=" photo "
+          />
 
-        <button onClick={hanndlePost}>POST DATA</button>
+          <button onClick={hanndlePost}>POST DATA</button>
+        </div>
       </div>
-    </div>
-  )
+    )
+  } else {
+    return <div>Register or Sign In if you want to post </div>
+  }
 }
 
 export default PostData

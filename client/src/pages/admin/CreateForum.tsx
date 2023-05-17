@@ -17,39 +17,35 @@ const CreateForum = () => {
   const { name, avatar, description, forumID, adminID } = useSelector(
     (state: any) => state.ThreadReducer,
   )
-  const cookies = new Cookies()
-  const token = cookies.get('jwt_authorization')
-  useEffect(() => {
-    if (token) {
-      dispatch(getCookies())
-    }
-  }, [])
 
   const createThread = () => {
     const val = { name, avatar, description, forumID, adminID: user.user._id }
     dispatch(CreateThreadThunk(val))
   }
-
-  return (
-    <div>
-      <input
-        onChange={(e) => dispatch(getName(e.target.value))}
-        type="text"
-        placeholder="name"
-      />
-      <input
-        onChange={(e) => dispatch(getDescription(e.target.value))}
-        type="text"
-        placeholder="dec"
-      />
-      <input
-        onChange={(e) => dispatch(getForumID(e.target.value))}
-        type="text"
-        placeholder=" forum id"
-      />
-      <button onClick={createThread}>Create Thread</button>
-    </div>
-  )
+  if (user && user.user && user.user.adminStatus) {
+    return (
+      <div>
+        <input
+          onChange={(e) => dispatch(getName(e.target.value))}
+          type="text"
+          placeholder="name"
+        />
+        <input
+          onChange={(e) => dispatch(getDescription(e.target.value))}
+          type="text"
+          placeholder="dec"
+        />
+        <input
+          onChange={(e) => dispatch(getForumID(e.target.value))}
+          type="text"
+          placeholder=" forum id"
+        />
+        <button onClick={createThread}>Create Thread</button>
+      </div>
+    )
+  } else {
+    return <div>Restircted Area Premission Denied</div>
+  }
 }
 
 export default CreateForum

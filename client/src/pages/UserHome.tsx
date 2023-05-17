@@ -12,17 +12,10 @@ const UserHome = () => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const cookies = new Cookies()
-  const token = cookies.get('jwt_authorization')
+
   useEffect(() => {
     if (!user) {
       dispatch(getDataFromRegister(registerUser))
-    }
-  }, [])
-
-  useEffect(() => {
-    if (token) {
-      dispatch(getCookies())
     }
   }, [])
 
@@ -31,7 +24,7 @@ const UserHome = () => {
     navigate('/login')
   }
 
-  if (user.user) {
+  if (user && user.user) {
     const { _id, name, email, adminStatus } = user.user
 
     return (

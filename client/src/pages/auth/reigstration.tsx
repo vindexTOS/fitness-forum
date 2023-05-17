@@ -32,30 +32,21 @@ const Reigstration = () => {
     (state: any) => state.RegisterReducer,
   )
   // cookie storage library
-  const cookies = new Cookies()
-  //getting token from cookies
-  const token = cookies.get('jwt_authorization')
-  //getting data from register
+
   const { data } = useSelector((state: any) => state.LoginReducer)
 
-  React.useEffect(() => {
-    //checking if user has a token if token exist we get user data from cookies
-    // token must be checked or app will crash
-    if (token) {
-      dispatch(getCookies())
-      navigate('/login')
-    }
-  }, [])
   //registration
   const RegisterFun = async () => {
     //checking if form values exist
     if (name && email && password) {
       //waiting to register
       await dispatch(RegisterThunk({ name, email, password }))
+
       //checking if we get token from the database so we can sign user in right away
-      if (data || data.user) {
+      if (data.user) {
         //re daecting user to home page
         navigate('/home')
+        console.log('home')
       }
     }
   }
@@ -77,7 +68,7 @@ const Reigstration = () => {
             type={'password'}
             fun={getPassword}
           />
-          <button></button>
+
           <ButtonAuth title="Register" func={RegisterFun} />
         </div>
         <p className="text-[#f51b51]">
