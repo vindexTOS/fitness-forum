@@ -9,13 +9,16 @@ type inistialStateForumType = {
   data: {}
   loading: boolean
   error: string | null
+  forumIDParams: string
 }
 
 const initialState = {
+  forumIDParams: '',
+  forumID: '',
   name: '',
   avatar: '',
   description: '',
-  forumID: '',
+
   adminID: '',
   data: {},
   loading: false,
@@ -38,6 +41,7 @@ const ThreadSlice = createSlice({
     getForumID: (state: inistialStateForumType, action) => {
       state.forumID = action.payload
     },
+    getForumIDparams: (state, action) => (state.forumIDParams = action.payload),
   },
   extraReducers: (builder) => {
     builder
@@ -71,4 +75,5 @@ export const {
   getAvatar,
   getDescription,
   getForumID,
+  getForumIDparams,
 } = ThreadSlice.actions

@@ -11,8 +11,10 @@ import { useSelector } from 'react-redux'
 import { ThunkDispatch } from '@reduxjs/toolkit'
 import { getCookies } from '../../redux/features/slice/LoginSlice'
 import Cookies from 'universal-cookie'
+import { useMainContext } from '../../context'
+import axios from 'axios'
 const PostData = () => {
-  const hard = 'bodybuilding'
+  const hard = 'powerlifting'
   const user = useSelector((state: any) => state.LoginReducer.data)
   const { title, post, photo } = useSelector((state: any) => state.PostReducer)
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
@@ -28,6 +30,7 @@ const PostData = () => {
       }),
     )
   }
+
   if (user && user.user) {
     return (
       <div>

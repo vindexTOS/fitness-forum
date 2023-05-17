@@ -29,6 +29,12 @@ const forumSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  color1: {
+    type: String,
+  },
+  color2: {
+    type: String,
+  },
 })
 
 const Forum = mongoose.model('Forum', forumSchema)

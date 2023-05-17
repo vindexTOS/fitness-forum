@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useReducer,
 } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import Cookies from 'universal-cookie'
 import { getCookies } from './redux/features/slice/LoginSlice'
@@ -35,6 +35,7 @@ type Cell = {
   // err: any
   // user: any
   // postDispatch: React.Dispatch<postAction>
+  getThread: () => void
 }
 
 const context = createContext<Cell | null>(null)
@@ -153,21 +154,50 @@ export const ContextProvider = ({
       dispatch(getCookies())
     }
   }, [data])
+
+  const { forumID } = useParams()
+  const [postData, setPostData] = useState<any>()
+  const getThread = async () => {
+    console.log('clicked')
+
+    try {
+      let apiUrl = `http://localhost:3000/threads/${forumID}`
+      await axios
+        .get(apiUrl)
+        .then((res) => {
+          console.log(res)
+          console.log('success')
+        })
+        .catch((err) => console.log(err))
+      console.log(forumID)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     getThread()
+  //     // console.log(forumID)
+  //   }, 1000)
+  // }, [forumID])
+  // useEffect(() => {
+  //   console.log(postData)
+  // }, [postData])
   return (
     <context.Provider
-      value={
-        {
-          // Register,
-          // Login,
-          // setPassword,
-          // setEmail,
-          // setName,
-          // err,
-          // user,
-          // postDispatch,
-          // PostWrestler,
-        }
-      }
+      value={{
+        // Register,
+        // Login,
+        // setPassword,
+        // setEmail,
+        // setName,
+        // err,
+        // user,
+        // postDispatch,
+        // PostWrestler,
+
+        getThread,
+      }}
     >
       {children}
     </context.Provider>

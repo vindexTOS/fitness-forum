@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Routes, Route, useParams } from 'react-router-dom'
 import Login from './pages/auth/login'
 import Reigstration from './pages/auth/reigstration'
 import Home from './pages/Home'
@@ -8,13 +8,19 @@ import UserHome from './pages/UserHome'
 import PostData from './pages/user-components/PostData'
 import NavBar from './components/navigation/NavBar'
 import CreateForum from './pages/admin/CreateForum'
-
+import Thread from './pages/Thread'
 function App() {
+  const { forumID } = useParams()
+  useEffect(() => {
+    console.log(forumID)
+  }, [forumID])
   return (
     <>
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
+
+        <Route path="/threads/:forumID" element={<Thread />} />
         <Route path="/home" element={<UserHome />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Reigstration />} />

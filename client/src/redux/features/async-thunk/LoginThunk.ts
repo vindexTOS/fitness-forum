@@ -38,7 +38,7 @@ export const LoginThunk = createAsyncThunk(
             val.dispatch(getError(err.response.data.msg))
             console.log(err)
           })
-        console.log(data)
+        // console.log(data)
         return data
       } catch (error) {
         const err: any = error
