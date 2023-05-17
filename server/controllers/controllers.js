@@ -1,4 +1,4 @@
-import Wrestlers from '../models/model.js'
+import Post from '../models/postModel.js'
 import UserSchema from '../models/userModel.js'
 const getData = async (req, res) => {
   const { name, faction, numeric } = req.query
@@ -29,17 +29,17 @@ const getData = async (req, res) => {
     })
   }
   console.log(numeric)
-  let result = Wrestlers.find(obj)
-  const wrestler = await result
-  res.status(200).json({ wrestler, length: wrestler.length })
+  let result = Post.find(obj)
+  const post = await result
+  res.status(200).json({ post, length: post.length })
 }
 const postData = async (req, res) => {
   const { name, faction, stats, photo, weight, height, userID } = req.body
   try {
     if (name && faction && stats && photo && weight && height && userID) {
       const obj = { name, faction, stats, photo, weight, height, userID }
-      const wrestler = await Wrestlers.create(obj)
-      return res.status(201).json(wrestler)
+      const post = await Post.create(obj)
+      return res.status(201).json(post)
     }
   } catch (error) {
     console.log(error)

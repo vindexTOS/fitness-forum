@@ -2,7 +2,7 @@ import express from 'express'
 import connectDB from './db/connect.js'
 import { config } from 'dotenv'
 import router from './routers/routers.js'
-import authRouter from './routers/authRouter.js'
+import userRouter from './routers/userRouter.js'
 import { notFound } from './middleware/not-found.js'
 import { errorHandler } from './middleware/error-handler.js'
 import cors from 'cors'
@@ -11,7 +11,7 @@ config()
 app.use(express.json())
 app.use(cors())
 app.use('/api/v1/wrestler', router)
-app.use('/', authRouter)
+app.use('/', userRouter)
 
 app.use(notFound)
 app.use(errorHandler)

@@ -32,7 +32,7 @@ const UserHome = () => {
   }
 
   if (user.user) {
-    const { _id, name, email } = user.user
+    const { _id, name, email, adminStatus } = user.user
 
     return (
       <div>
@@ -40,6 +40,7 @@ const UserHome = () => {
         <h1 onClick={() => console.log(user)}>LOG</h1>
         <h1 onClick={() => dispatch(getCookies())}>LOG</h1>
         <h1>{_id}</h1>
+        <h1>{String(adminStatus)}</h1>
         <h1>Name: {name}</h1>
         <h1>Email: {email}</h1>
         <PostData />

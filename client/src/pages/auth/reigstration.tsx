@@ -82,7 +82,7 @@ const Reigstration = () => {
         </div>
         <p className="text-[#f51b51]">
           If you already have an account sign
-          <Link className="text-blue-400 hover:text-blue-300" to="/register">
+          <Link className="text-blue-400 hover:text-blue-300" to="/login">
             <span> Login </span>
           </Link>
         </p>

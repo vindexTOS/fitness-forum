@@ -1,9 +1,12 @@
 import express from 'express'
-import { verifyToken } from '../middleware/auth'
-import { getUser } from '../controllers/userController.js'
+import { register, login } from '../controllers/authControllers.js'
 
-const route = express.Router()
+import { verifyToken } from '../middleware/auth.js'
+import { createThread } from '../controllers/forumController.js'
+const userRouter = express.Router()
 
-route.route.get('/protected', verifyToken, getUser)
+userRouter.route('/register').post(register)
+userRouter.route('/login').post(login)
 
-export default route
+userRouter.route('/create-thread').post(createThread)
+export default userRouter

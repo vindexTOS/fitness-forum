@@ -1,6 +1,7 @@
 import React from 'react'
 import { BsFillPersonFill } from 'react-icons/bs'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
+
 const NavBar = () => {
   const style = {
     color: `#232323`,
@@ -11,6 +12,7 @@ const NavBar = () => {
   const navigate = useNavigate()
   return (
     <nav className={style.nav}>
+      <Link to="/create-thread">Create</Link>
       <div>
         <div className={style.auth} onClick={() => navigate('/login')}>
           <BsFillPersonFill /> <h1>{`Authorization`}</h1>

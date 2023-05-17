@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     require: [true, 'pelase enter password'],
   },
+  adminStatus: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 export default mongoose.model('User', userSchema)

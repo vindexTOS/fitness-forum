@@ -7,9 +7,8 @@ import ProtectedRoute from './pages/ProtectedRoute'
 import UserHome from './pages/UserHome'
 import PostData from './pages/user-components/PostData'
 import NavBar from './components/navigation/NavBar'
+import CreateForum from './pages/admin/CreateForum'
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
       <NavBar />
@@ -18,6 +17,7 @@ function App() {
         <Route path="/home" element={<UserHome />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Reigstration />} />
+        <Route path="/create-thread" element={<CreateForum />} />
       </Routes>
     </>
   )
