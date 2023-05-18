@@ -13,6 +13,7 @@ const postSchema = new mongoose.Schema({
   },
   photo: {
     type: String,
+    default: 'No Photo',
   },
 
   forumID: {
@@ -24,6 +25,10 @@ const postSchema = new mongoose.Schema({
   userID: {
     type: String,
     require: true,
+  },
+  date: {
+    type: Date,
+    default: new Date(),
   },
 })
 

@@ -14,6 +14,7 @@ type DataInterFace = {
 }
 const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
   const { _id, forumID, photo, post, userID, title } = data
+  const realPhoto = photo !== 'No Photo' && photo
   const style = {
     mainDiv: `w-[100%] relative rounded-[5px] bg-[#212121]   outline outline-[1px] outline-gray-600 hover:outline-[#ec2b58] max-h-[600px]  flex  cursor-pointer      text-white`,
     headerDiv: `flex flex-col items-start w-[100%] `,
@@ -37,8 +38,8 @@ const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
           <h1 className="text-[1.2rem] font-bold text-gray-300">{title}</h1>
         </div>
 
-        {photo ? (
-          <img className={style.img} src={String(photo)} />
+        {realPhoto ? (
+          <img className={style.img} src={String(realPhoto)} />
         ) : (
           <p className="w-[90%]   break-all  text-start ">{post}</p>
         )}

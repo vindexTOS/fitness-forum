@@ -4,7 +4,7 @@ import axios from 'axios'
 interface PostThunk {
   title: string
   post: string
-  photo: string
+  photo?: string
   forumID: string
   userID: string
 }
@@ -15,9 +15,10 @@ export const CreatePostThunk = createAsyncThunk(
     const apiUrl = `http://localhost:3000/posts`
     const { title, post, photo, forumID, userID } = val
     try {
+      const withPhoto = { title, post, photo, forumID, userID }
       if (title && post && forumID && userID) {
         await axios
-          .post(apiUrl, { title, post, photo, forumID, userID })
+          .post(apiUrl, withPhoto)
           .then((res) => console.log(res))
           .catch((err) => console.log(err))
       }

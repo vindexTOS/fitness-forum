@@ -2,10 +2,19 @@ import Post from '../models/postModel.js'
 import User from '../models/userModel.js'
 import Forum from '../models/forumModel.js'
 const getAllPosts = async (req, res) => {
-  try {
-    const posts = await Post.find({})
+  const page = parseInt(req.query.page) || 1
+  const limit = parseInt(req.query.limit) || 10
+  const startIndex = (page - 1) * limit
+  const endIndex = page * limit
 
-    return res.status(200).json(posts)
+  const totalPosts = await Post.countDocuments()
+  const totalPages = Math.ceil(totalPosts / limit)
+  try {
+    const posts = await Post.find({}).skip(startIndex).limit(limit)
+
+    return res
+      .status(200)
+      .json({ posts, currentPage: page, totalPages, totalPosts })
   } catch (error) {
     return res.status(400).json({ msg: 'server error' })
   }

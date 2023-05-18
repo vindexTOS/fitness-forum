@@ -11,3 +11,15 @@ body {
   -webkit-box-shadow: 1px 5px 17px -1px rgba(236, 43, 88, 0.75);
   -moz-box-shadow: 1px 5px 17px -1px rgba(236, 43, 88, 0.75);
 }
+.rotate {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
