@@ -1,24 +1,24 @@
-import { createAsyncThunk } from '@reduxjs/toolkit'
+import { ThunkDispatch, createAsyncThunk } from '@reduxjs/toolkit'
 import { storage } from '../../../../firebase/firebase'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
-
+import { getPhotoUrl } from '../../slice/FireBaseSlices/ProfilePhotoSlice'
 interface photoThunk {
-  subFolder: string
   image: File | null
+  dispatch: ThunkDispatch<any, any, any>
 }
 
 export const FireBasePhotoThunk = createAsyncThunk(
   'photo/firebase',
   async (val: photoThunk) => {
     if (val.image) {
-      const storageRef = ref(storage, `forum/${val.subFolder}` + val.image.name)
+      const storageRef = ref(storage, `forum/` + val.image.name)
 
       try {
         const snapshot = await uploadBytesResumable(storageRef, val.image)
         const downloadURL = await getDownloadURL(snapshot.ref)
-        //   setImgUrl(downloadURL)
+        val.dispatch(getPhotoUrl(downloadURL))
         //   setLoading(false)
-        console.log('succsess')
+        console.log(downloadURL)
         //   removeImgFromHtml()
       } catch (error) {
         console.log(error)

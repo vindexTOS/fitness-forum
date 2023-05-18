@@ -10,20 +10,8 @@ import axios from 'axios'
 import Cookies from 'universal-cookie'
 import { getCookies } from './redux/features/slice/LoginSlice'
 import { useDispatch, useSelector } from 'react-redux'
-
-type postState = {
-  name: string
-
-  faction: string
-  stats: number
-  photo: string
-  weight: number
-  height: number
-}
-type postAction = {
-  type: string
-  payload: any
-}
+import { storage } from './firebase/firebase'
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 
 type Cell = {
   image: any
@@ -33,6 +21,9 @@ type Cell = {
   removeImgFromHtml: () => void
 
   imgUpload: (e: React.ChangeEvent<HTMLInputElement>) => void
+  uploadFileToFirebaseStorage: () => void
+  imgUrl: string
+  setHtmlImg: React.Dispatch<React.SetStateAction<String | null>>
 }
 
 const context = createContext<Cell | null>(null)
@@ -77,7 +68,9 @@ export const ContextProvider = ({
 
   const [image, setImage] = useState<any>(null)
   const [htmlImg, setHtmlImg] = useState<String | null>(null)
-
+  const [imgUrl, setImgUrl] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
+  const [error, setError] = useState<string>('')
   const imgUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!image) {
       let newImg = image
@@ -104,6 +97,30 @@ export const ContextProvider = ({
     setImage(null)
     setHtmlImg(null)
   }
+  const uploadFileToFirebaseStorage = async () => {
+    if (image) {
+      const storageRef = ref(storage, 'forum/' + image.name)
+      setLoading(true)
+      setError('')
+      try {
+        const snapshot = await uploadBytesResumable(storageRef, image)
+        const downloadURL = await getDownloadURL(snapshot.ref)
+        setImgUrl(downloadURL)
+        setLoading(false)
+        console.log('succsess')
+
+        removeImgFromHtml()
+      } catch (error) {
+        console.log(error)
+        console.log('ერრორ')
+      }
+    } else {
+      setError('Please Select The File!')
+      setTimeout(() => {
+        setError('')
+      }, 5000)
+    }
+  }
 
   return (
     <context.Provider
@@ -114,6 +131,9 @@ export const ContextProvider = ({
         imgUpload,
         image,
         htmlImg,
+        uploadFileToFirebaseStorage,
+        imgUrl,
+        setHtmlImg,
       }}
     >
       {children}

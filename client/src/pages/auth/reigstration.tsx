@@ -20,13 +20,28 @@ import {
 // importing react components
 import InputDiv from '../../components/auth-components/InputDiv'
 import ButtonAuth from '../../components/auth-components/ButtonAuth'
+import { FireBasePhotoThunk } from '../../redux/features/async-thunk/FireStoreThunks/ProfilePhotoThunk'
+import { useMainContext } from '../../context'
 
 const Reigstration = () => {
+  const {
+    removeImgFromHtml,
+    imgUploadDrag,
+    imgUpload,
+    image,
+    htmlImg,
+  } = useMainContext()
   //use navigate from react router dom
   const navigate = useNavigate()
   // dispatching , using ThunkDispatch is very importent to Dispatch asyncThunk functions
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const err = useSelector((state: any) => state.RegisterReducer.error)
+
+  /// photo upload
+  const UploadToStore = () => {
+    dispatch(FireBasePhotoThunk({ image, subFolder: 'profile', dispatch }))
+  }
+
   // getting states from RegisterSlice from redux
   const { name, email, password } = useSelector(
     (state: any) => state.RegisterReducer,

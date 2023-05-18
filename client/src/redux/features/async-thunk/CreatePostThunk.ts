@@ -15,7 +15,7 @@ export const CreatePostThunk = createAsyncThunk(
     const apiUrl = `http://localhost:3000/posts`
     const { title, post, photo, forumID, userID } = val
     try {
-      if (title && post && photo && forumID && userID) {
+      if (title && post && forumID && userID) {
         await axios
           .post(apiUrl, { title, post, photo, forumID, userID })
           .then((res) => console.log(res))
