@@ -21,11 +21,11 @@ const Thread = () => {
   }, [forumID])
 
   const style = {
-    section: `w-[100%] h-[100%]`,
+    section: `w-[100%] h-[100%] flex flex-col items-center justify-center`,
     nav: `w-[100%] h-[170px]  flex  items-center  justify-center  gap-5`,
     avatar: `w-[100px] rounded-[50%]`,
     header: `text-[2rem] font-bold text-red-500`,
-    cardMapDiv: `flex flex-col gap-5 items-center justify-center py-10`,
+    cardMapDiv: `flex flex-col gap-5 items-center justify-center py-10 w-[800px] `,
   }
 
   if (PostsAndThreadData && PostsAndThreadData.forumData) {

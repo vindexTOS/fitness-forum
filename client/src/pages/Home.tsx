@@ -6,7 +6,7 @@ import PostsComponentCard, {
 import { GetAllPostsThunk } from '../redux/features/async-thunk/GetAllPostsThunk'
 import { useSelector, useDispatch } from 'react-redux'
 import { ThunkDispatch } from '@reduxjs/toolkit'
-
+import MakePostComponent from '../components/MakePostComponent'
 const Home = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const allPostData = useSelector((state: any) => state.GetAllPostReducer.data)
@@ -14,16 +14,20 @@ const Home = () => {
   useEffect(() => {
     dispatch(GetAllPostsThunk({ dispatch }))
   }, [dispatch])
-  //  useEffect(()=>{
-  //   console.log(allPostData)
-  //  },[allPostData])
+  const style = {
+    section: `w-[100%] h-[100%] flex items-center justify-center`,
+    cardMapDiv: `flex flex-col gap-5 items-center justify-center py-10 w-[800px]`,
+  }
   if (allPostData) {
     return (
-      <div>
-        {allPostData.map((val: PostsComponentCardType) => (
-          <PostsComponentCard key={val._id} data={val} />
-        ))}
-      </div>
+      <section className={style.section}>
+        <div className={style.cardMapDiv}>
+          <MakePostComponent />
+          {allPostData.map((val: PostsComponentCardType) => (
+            <PostsComponentCard key={val._id} data={val} />
+          ))}
+        </div>
+      </section>
     )
   }
 }

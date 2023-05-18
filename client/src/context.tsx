@@ -26,16 +26,13 @@ type postAction = {
 }
 
 type Cell = {
-  // Register: (e: React.FormEvent<HTMLFormElement>) => void
-  // Login: (e: React.FormEvent<HTMLFormElement>) => void
-  // PostWrestler: (e: React.FormEvent<HTMLFormElement>) => void
-  // setPassword: React.Dispatch<React.SetStateAction<string>>
-  // setEmail: React.Dispatch<React.SetStateAction<string>>
-  // setName: React.Dispatch<React.SetStateAction<string>>
-  // err: any
-  // user: any
-  // postDispatch: React.Dispatch<postAction>
+  image: any
+  htmlImg: String | null
   getThread: () => void
+  imgUploadDrag: (e: React.DragEvent<HTMLLabelElement>) => void
+  removeImgFromHtml: () => void
+
+  imgUpload: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const context = createContext<Cell | null>(null)
@@ -45,103 +42,6 @@ export const ContextProvider = ({
 }: {
   children: React.ReactNode
 }) => {
-  // const [authRoute, setAuthRoute] = useState<string>('')
-  // const location = useLocation()
-  // const navigate = useNavigate()
-
-  // const [name, setName] = useState<string>('')
-  // const [email, setEmail] = useState<string>('')
-  // const [password, setPassword] = useState<string>('')
-  // const [err, setErr] = useState<any>()
-  // const [user, setUser] = useState<any>()
-  // const Register = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault()
-  //   const apiUrl = `http://localhost:3000/register`
-  //   if (name && email && password) {
-  //     try {
-  //       await axios
-  //         .post(apiUrl, { password, email, name })
-  //         .catch((err) => setErr(err))
-  //       console.log('request sent')
-  //     } catch (error) {
-  //       console.log(error)
-  //       console.log(err)
-  //     }
-  //   }
-  // }
-  // const Login = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault()
-  //   const apiUrl = `http://localhost:3000/login`
-  //   if (email && password) {
-  //     try {
-  //       await axios
-  //         .post(apiUrl, { email, password })
-  //         .then((res) => setUser(res.data.user))
-  //         .catch((err) => setErr(err))
-  //       navigate('/home')
-  //     } catch (error) {
-  //       console.log(error)
-  //       setErr(error)
-  //     }
-  //   }
-  // }
-
-  // const postReducer = (state: postState, action: postAction) => {
-  //   switch (action.type) {
-  //     case 'name':
-  //       return { ...state, name: state.name = action.payload }
-  //     case 'faction':
-  //       return { ...state, faction: state.faction = action.payload }
-  //     case 'stats':
-  //       return { ...state, stats: state.stats = action.payload }
-  //     case 'photo':
-  //       return { ...state, photo: state.photo = action.payload }
-  //     case 'weight':
-  //       return { ...state, weight: state.weight = action.payload }
-  //     case 'height':
-  //       return { ...state, height: state.height = action.payload }
-  //     default:
-  //       return state
-  //   }
-  // }
-
-  // const [postState, postDispatch] = useReducer(postReducer, {
-  //   name: '',
-
-  //   faction: '',
-  //   stats: 0,
-  //   photo: '',
-  //   weight: 0,
-  //   height: 0,
-  // })
-  // useEffect(() => {
-  //   console.log(postState.faction)
-  // }, [postState.faction])
-  // const PostWrestler = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault()
-
-  //   const apiUrl = `http://localhost:3000/api/v1/wrestler`
-  //   if (user._id && postState.name) {
-  //     let obj = {
-  //       name: postState.name,
-  //       faction: postState.faction,
-  //       stats: postState.stats,
-  //       photo: postState.photo,
-  //       weight: postState.weight,
-  //       height: postState.height,
-  //       userID: user._id,
-  //     }
-  //     try {
-  //       await axios
-  //         .post(apiUrl, obj)
-  //         .then((res) => console.log(res))
-  //         .catch((err) => console.log(err))
-  //       console.log('data sent')
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-
   const dispatch = useDispatch()
   const data = useSelector((state: any) => state.RegisterReducer.data)
   // gettomg jwt cookies from local cookies
@@ -174,29 +74,46 @@ export const ContextProvider = ({
       console.log(error)
     }
   }
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     getThread()
-  //     // console.log(forumID)
-  //   }, 1000)
-  // }, [forumID])
-  // useEffect(() => {
-  //   console.log(postData)
-  // }, [postData])
+
+  const [image, setImage] = useState<any>(null)
+  const [htmlImg, setHtmlImg] = useState<String | null>(null)
+
+  const imgUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!image) {
+      let newImg = image
+      let newHtmlImg = htmlImg
+      if (e.target.files) {
+        newImg = e.target.files[0]
+        newHtmlImg = URL.createObjectURL(e.target.files[0])
+        setImage(newImg)
+        setHtmlImg(newHtmlImg)
+      }
+    }
+  }
+  const imgUploadDrag = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault()
+    let newImg = image
+    let newHtmlImg = htmlImg
+    newImg = e.dataTransfer.files[0]
+    newHtmlImg = URL.createObjectURL(e.dataTransfer.files[0])
+    setImage(newImg)
+    setHtmlImg(newHtmlImg)
+  }
+
+  const removeImgFromHtml = () => {
+    setImage(null)
+    setHtmlImg(null)
+  }
+
   return (
     <context.Provider
       value={{
-        // Register,
-        // Login,
-        // setPassword,
-        // setEmail,
-        // setName,
-        // err,
-        // user,
-        // postDispatch,
-        // PostWrestler,
-
         getThread,
+        removeImgFromHtml,
+        imgUploadDrag,
+        imgUpload,
+        image,
+        htmlImg,
       }}
     >
       {children}

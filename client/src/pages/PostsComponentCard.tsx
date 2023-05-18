@@ -15,7 +15,7 @@ type DataInterFace = {
 const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
   const { _id, forumID, photo, post, userID, title } = data
   const style = {
-    mainDiv: `w-[800px] relative rounded-[5px] bg-[#212121]   outline outline-[1px] outline-gray-600 hover:outline-[#ec2b58] max-h-[600px]  flex  cursor-pointer      text-white`,
+    mainDiv: `w-[100%] relative rounded-[5px] bg-[#212121]   outline outline-[1px] outline-gray-600 hover:outline-[#ec2b58] max-h-[600px]  flex  cursor-pointer      text-white`,
     headerDiv: `flex flex-col items-start w-[100%] `,
     mainContent: `flex flex-col items-center jstify-center px-10 p-6 `,
     img: `h-[400px] w-[50%] `,

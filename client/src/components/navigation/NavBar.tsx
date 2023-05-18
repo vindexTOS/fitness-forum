@@ -35,7 +35,7 @@ const NavBar = () => {
         </Link>
       )}
       <div>
-        {user ? (
+        {user && user.user ? (
           <FaRegUserCircle
             className={style.icon}
             onClick={() => setDropDown(!dropDown)}
