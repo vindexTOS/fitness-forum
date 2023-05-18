@@ -43,7 +43,7 @@ const Login = () => {
             type={'password'}
             fun={getPassword}
           />
-          <ButtonAuth title="Log-in" func={LoginFun} />
+          <ButtonAuth styles={'w-[20rem]'} title="Log-in" func={LoginFun} />
           {realErro && (
             <p className="text-center text-[#ec2b58] border-2 py-2 rounded-[6px] border-[#ec2b58]">
               {realErro}!!!

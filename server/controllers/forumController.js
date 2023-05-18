@@ -25,6 +25,7 @@ const createThread = async (req, res) => {
     return res.status(500).json({ msg: error })
   }
 }
+
 const getThread = async (req, res) => {
   try {
     const { forumID } = req.params

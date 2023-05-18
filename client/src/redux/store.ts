@@ -4,6 +4,7 @@ import LoginReducer from './features/slice/LoginSlice'
 import ThreadReducer from './features/slice/ForumSlice'
 import PostReducer from './features/slice/PostSlice'
 import ThreadGetReducer from './features/slice/ThreadSlice'
+import GetAllPostReducer from './features/slice/GetAllPosts'
 const store = configureStore({
   reducer: {
     RegisterReducer,
@@ -11,6 +12,7 @@ const store = configureStore({
     ThreadReducer,
     PostReducer,
     ThreadGetReducer,
+    GetAllPostReducer,
   },
 })
 

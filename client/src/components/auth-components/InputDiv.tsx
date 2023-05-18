@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { AnyAction } from 'redux'
 import { IconType } from 'react-icons'
@@ -16,6 +16,7 @@ const InputDiv: FC<inputDivProps> = ({ type, fun, Icon }) => {
     input: `bg-transparent outline-none text-[#ec2b58] placeholder-[#ec2b58] w-[80%] `,
     icon: `text-[#ec2b58] text-[1.2rem]`,
   }
+
   return (
     <div className={style.mainDiv}>
       <label htmlFor={type}>

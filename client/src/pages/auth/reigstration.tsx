@@ -69,7 +69,11 @@ const Reigstration = () => {
             fun={getPassword}
           />
 
-          <ButtonAuth title="Register" func={RegisterFun} />
+          <ButtonAuth
+            styles={'w-[20rem]'}
+            title="Register"
+            func={RegisterFun}
+          />
         </div>
         <p className="text-[#f51b51]">
           If you already have an account sign

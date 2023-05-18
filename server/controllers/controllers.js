@@ -1,9 +1,16 @@
 import Post from '../models/postModel.js'
 import User from '../models/userModel.js'
 import Forum from '../models/forumModel.js'
-const getData = async (req, res) => {
-  const post = await Post.find(thread)
+const getAllPosts = async (req, res) => {
+  try {
+    const posts = await Post.find({})
+
+    return res.status(200).json(posts)
+  } catch (error) {
+    return res.status(400).json({ msg: 'server error' })
+  }
 }
+
 const postData = async (req, res) => {
   const { title, post, photo, forumID, userID } = req.body
   const forum = await Forum.find({ forumID })
@@ -20,4 +27,4 @@ const postData = async (req, res) => {
   }
 }
 
-export { getData, postData }
+export { postData, getAllPosts }
