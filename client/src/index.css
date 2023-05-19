@@ -23,3 +23,30 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.noSelection {
+  user-select: none;
+}
+.element-without-scrollbar {
+  /* Hide the default scrollbars */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+
+  /* Add custom scrollbar styles */
+  overflow: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+/* Add custom scrollbar styles for WebKit browsers (Chrome, Safari) */
+.element-without-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.element-without-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.element-without-scrollbar::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}

@@ -3,13 +3,13 @@ import { getAllPost } from '../slice/GetAllPosts.ts'
 import axios from 'axios'
 interface GetThreadType {
   dispatch: ThunkDispatch<any, any, any>
-  page: number
+  pages: any
 }
 export const GetAllPostsThunk = createAsyncThunk(
   'allposts/get',
   async (val: GetThreadType) => {
     const apiUrl = `http://localhost:3000/posts/?page=${String(
-      val.page,
+      val.pages,
     )}&limit=10`
 
     try {

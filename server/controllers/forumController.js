@@ -29,6 +29,14 @@ const createThread = async (req, res) => {
 const getThread = async (req, res) => {
   try {
     const { forumID } = req.params
+    const page = Number(req.query.page) || 1
+    const limit = Number(req.query.limit) || 10
+
+    const startIndex = (page - 1) * limit
+
+    const totalPosts = await Post.countDocuments()
+
+    const totalPages = Math.ceil(totalPosts / limit)
 
     const forum = await Forum.findOne({ forumID })
 
@@ -36,9 +44,15 @@ const getThread = async (req, res) => {
       return res.status(404).json({ msg: 'Thread not found' })
     }
 
-    const posts = await Post.find({ forumID })
-
-    return res.json({ posts: posts, forumData: forum })
+    const posts = await Post.find({ forumID }).skip(startIndex).limit(limit)
+    const postsCount = await Post.find({ forumID }).countDocuments()
+    return res.json({
+      posts: posts,
+      forumData: forum,
+      totalPages,
+      totalPosts,
+      postsCount,
+    })
   } catch (error) {
     console.log(error)
     res.status(500).json({ msg: 'Server Error' })
