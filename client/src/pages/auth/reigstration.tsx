@@ -39,7 +39,7 @@ const Reigstration = () => {
 
   /// photo upload
   const UploadToStore = () => {
-    dispatch(FireBasePhotoThunk({ image, subFolder: 'profile', dispatch }))
+    dispatch(FireBasePhotoThunk({ image, dispatch }))
   }
 
   // getting states from RegisterSlice from redux
