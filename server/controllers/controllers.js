@@ -11,10 +11,10 @@ const getAllPosts = async (req, res) => {
   const totalPages = Math.ceil(totalPosts / limit)
   try {
     const posts = await Post.find({}).skip(startIndex).limit(limit)
-
+    const AllData = await Post.find({})
     return res
       .status(200)
-      .json({ posts, currentPage: page, totalPages, totalPosts })
+      .json({ posts, currentPage: page, totalPages, totalPosts, AllData })
   } catch (error) {
     return res.status(400).json({ msg: 'server error' })
   }
@@ -36,4 +36,14 @@ const postData = async (req, res) => {
   }
 }
 
-export { postData, getAllPosts }
+const getUserData = async (req, res) => {
+  try {
+    const user = await User.find({}, 'name ')
+
+    return res.status(200).json(user)
+  } catch (error) {
+    return res.status(400).json({ msg: 'server error' })
+  }
+}
+
+export { postData, getAllPosts, getUserData }

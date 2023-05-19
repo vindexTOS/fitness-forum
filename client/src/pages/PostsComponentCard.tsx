@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti'
+import { useNavigate } from 'react-router-dom'
 export type PostsComponentCardType = {
   _id?: string
   forumID?: string
@@ -9,11 +10,12 @@ export type PostsComponentCardType = {
 
   title: string
 }
-type DataInterFace = {
+export type DataInterFace = {
   data: PostsComponentCardType
 }
 const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
   const { _id, forumID, photo, post, userID, title } = data
+  const navigate = useNavigate()
   const realPhoto = photo !== 'No Photo' && photo
   const style = {
     mainDiv: `w-[100%] relative rounded-[5px] bg-[#212121]   outline outline-[1px] outline-gray-600 hover:outline-[#ec2b58] max-h-[600px]  flex  cursor-pointer      text-white`,
@@ -25,7 +27,10 @@ const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
     icon: `text-[1.6rem] text-gray-500`,
   }
   return (
-    <div className={style.mainDiv}>
+    <div
+      onClick={() => navigate(`/${forumID}/${_id}`)}
+      className={style.mainDiv}
+    >
       <div className={style.raiting}>
         <div className={style.btn}>
           <TiArrowSortedUp className={style.icon} />{' '}
