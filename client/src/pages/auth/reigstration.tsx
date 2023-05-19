@@ -3,7 +3,7 @@ import { RiLockPasswordFill } from 'react-icons/ri'
 import { AiOutlineMail } from 'react-icons/ai'
 import { RiFileUserFill } from 'react-icons/ri'
 // library imports
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { ThunkDispatch } from '@reduxjs/toolkit'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -20,27 +20,19 @@ import {
 // importing react components
 import InputDiv from '../../components/auth-components/InputDiv'
 import ButtonAuth from '../../components/auth-components/ButtonAuth'
+import ImgUpload from '../user-components/post-components/ImgUpload'
 import { FireBasePhotoThunk } from '../../redux/features/async-thunk/FireStoreThunks/ProfilePhotoThunk'
 import { useMainContext } from '../../context'
 
 const Reigstration = () => {
-  const {
-    removeImgFromHtml,
-    imgUploadDrag,
-    imgUpload,
-    image,
-    htmlImg,
-  } = useMainContext()
+  const { image, htmlImg } = useMainContext()
   //use navigate from react router dom
   const navigate = useNavigate()
   // dispatching , using ThunkDispatch is very importent to Dispatch asyncThunk functions
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const err = useSelector((state: any) => state.RegisterReducer.error)
-
+  const url = useSelector((state: any) => state.FireBasePhotoReducer.url)
   /// photo upload
-  const UploadToStore = () => {
-    dispatch(FireBasePhotoThunk({ image, dispatch }))
-  }
 
   // getting states from RegisterSlice from redux
   const { name, email, password } = useSelector(
@@ -49,22 +41,35 @@ const Reigstration = () => {
   // cookie storage library
 
   const { data } = useSelector((state: any) => state.LoginReducer)
+  const [switcher, setSwitcher] = useState<boolean>(false)
 
   //registration
   const RegisterFun = async () => {
     //checking if form values exist
-    if (name && email && password) {
+    if (htmlImg) {
       //waiting to register
-      await dispatch(RegisterThunk({ name, email, password }))
-
-      //checking if we get token from the database so we can sign user in right away
-      if (data.user) {
-        //re daecting user to home page
-        navigate('/home')
-        console.log('home')
-      }
+      await dispatch(FireBasePhotoThunk({ dispatch, image }))
+    } else {
+      setSwitcher(!switcher)
     }
   }
+
+  useEffect(() => {
+    if (name && email && password && url) {
+      console.log(url)
+      dispatch(RegisterThunk({ name, email, password, url }))
+    } else if (name && email && password) {
+      console.log(url)
+      dispatch(RegisterThunk({ name, email, password, url }))
+    }
+    console.log(url)
+    //checking if we get token from the database so we can sign user in right away
+    if (data.user) {
+      //re daecting user to home page
+      navigate('/home')
+      console.log('home')
+    }
+  }, [url, switcher])
   const style = {
     section: `w-[100vw] pt-40 flex flex-col items-center justify-center`,
     formDiv: `flex flex-col gap-2 bg-[#403f3f] p-10 rounded-[20px]`,
@@ -74,7 +79,16 @@ const Reigstration = () => {
       <section className={style.section}>
         <div className={style.formDiv}>
           {/* <h1 onClick={() => console.log(err)}>console</h1> */}
-
+          <ImgUpload htmlImg={htmlImg} />
+          {htmlImg ? (
+            <div className="w-[100%] flex items-center justify-center">
+              {' '}
+              <img
+                className="w-[100px] h-[100px] rounded-[50%]"
+                src={htmlImg ? htmlImg : 'null'}
+              />
+            </div>
+          ) : null}
           <InputDiv Icon={RiFileUserFill} type={'name'} fun={getName} />
           <InputDiv Icon={AiOutlineMail} type={'email'} fun={getEmail} />
 

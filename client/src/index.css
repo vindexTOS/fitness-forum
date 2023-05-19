@@ -5,7 +5,9 @@
 body {
   background-color: #232323;
 }
-
+.status{
+color:red;
+}
 .boxshaddow {
   box-shadow: 1px 5px 17px -1px rgba(236, 43, 88, 0.75);
   -webkit-box-shadow: 1px 5px 17px -1px rgba(236, 43, 88, 0.75);

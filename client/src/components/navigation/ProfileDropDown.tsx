@@ -10,7 +10,13 @@ const ProfileDropDown = () => {
 
   return (
     <div className={style.mainDiv}>
-      <ButtonAuth styles={'w-[18rem]'} title="Log Out" func={LogOut} />
+      <button onClick={() => dispatch(LogOut())}>
+        <ButtonAuth
+          styles={'w-[18rem]'}
+          title="Log Out"
+          func={dispatch(LogOut)}
+        />
+      </button>
     </div>
   )
 }

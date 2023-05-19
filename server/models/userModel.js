@@ -20,6 +20,11 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  avatar: {
+    type: String,
+    default:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4UmW5FE0dXoSm3h5meecSKpw0oX1Jk3bZvA&usqp=CAU',
+  },
 })
 
 export default mongoose.model('User', userSchema)

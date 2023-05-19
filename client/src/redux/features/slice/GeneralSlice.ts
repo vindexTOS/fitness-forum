@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   page: 1,
   forumData: [],
-  userData: {},
+  userData: [],
 }
 
 const GeneralSlices = createSlice({

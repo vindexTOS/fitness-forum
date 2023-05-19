@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 import userSchema from '../models/userModel.js'
 
 const register = async (req, res) => {
-  const { password, email, name } = req.body
+  const { password, email, name, avatar } = req.body
   let user = {}
 
   try {
@@ -14,7 +14,7 @@ const register = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10)
-    user = { password: hashedPassword, email, name }
+    user = { password: hashedPassword, email, name, avatar }
     if (password && email && name) {
       await userSchema.create(user)
     } else {

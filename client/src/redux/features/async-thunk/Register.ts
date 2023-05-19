@@ -7,6 +7,7 @@ interface RegisterPayload {
   name: string
   email: string
   password: string
+  url: string
 }
 
 const RegisterThunk = createAsyncThunk(
@@ -15,11 +16,11 @@ const RegisterThunk = createAsyncThunk(
     const apiUrl = `http://localhost:3000/register`
     const cookies = new Cookies()
     if (val.name && val.email && val.password) {
-      const { name, email, password } = val
+      const { name, email, password, url } = val
 
       try {
         const data = await axios
-          .post(apiUrl, { name, email, password })
+          .post(apiUrl, { name, email, password, avatar: url })
           .then((res) => {
             const token = res.data.token
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
