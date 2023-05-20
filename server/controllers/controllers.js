@@ -56,5 +56,17 @@ const getUserData = async (req, res) => {
     return res.status(400).json({ msg: 'server error' })
   }
 }
-
-export { postData, getAllPosts, getUserData, deleteData }
+const updateUser = async (req, res) => {
+  let { id } = req.params
+  id = id.replace('\n', '')
+  const user = await User.findOneAndUpdate({ _id: id }, req.body, {
+    new: true,
+    runValidators: true,
+  })
+  user.password = null
+  if (!user) {
+    return res.status(404).json({ msg: `No Post With This ID ${id}` })
+  }
+  return res.status(200).json({ user })
+}
+export { postData, getAllPosts, getUserData, deleteData, updateUser }
