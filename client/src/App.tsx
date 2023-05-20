@@ -11,6 +11,7 @@ import CreateForum from './pages/admin/CreateForum'
 import Thread from './pages/Thread'
 import REDIRECT from './pages/REDIRECT'
 import PostInside from './pages/post-component/PostInside'
+import UserProfile from './pages/user-components/user-content/UserProfile'
 function App() {
   const { forumID } = useParams()
   useEffect(() => {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/posts/page/:pages" element={<Home />} />
         <Route path="/:forumID/:postID" element={<PostInside />} />
         <Route path="/threads/:forumID/page/:threadpage" element={<Thread />} />
+        <Route path="/user/:userID" element={<UserProfile />} />
         <Route path="/home" element={<UserHome />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Reigstration />} />

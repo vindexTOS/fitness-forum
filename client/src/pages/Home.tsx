@@ -9,16 +9,18 @@ import { ThunkDispatch } from '@reduxjs/toolkit'
 import MakePostComponent from '../components/MakePostComponent'
 import { navigatePage } from '../redux/features/slice/GeneralSlice'
 import { useNavigate } from 'react-router-dom'
+import { UserDataThunk } from '../redux/features/async-thunk/UserDataThunk'
 
 const Home = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const allPostData = useSelector((state: any) => state.GetAllPostReducer.data)
-  const page = useSelector((state: any) => state.GeneralReducer.page)
+  const userData = useSelector((state: any) => state.GeneralReducer.userData)
 
   const navigation = useNavigate()
   const { pages } = useParams()
   useEffect(() => {
     dispatch(GetAllPostsThunk({ dispatch, pages }))
+    dispatch(UserDataThunk({ dispatch }))
   }, [dispatch, pages])
 
   const pageRef = useRef<HTMLDivElement | null>(null)
@@ -38,19 +40,20 @@ const Home = () => {
   useEffect(() => {
     dispatch(navigatePage(pages))
   }, [pages])
-  if (allPostData) {
+  if (allPostData && userData) {
     // const location = useLocation()
     const reversedArray = allPostData.posts
+
     return (
       <section className={style.section}>
-        {/* <h1 onClick={() => console.log(pages)}> CICK ME TO LOG</h1> */}
+        {/* <h1 onClick={() => console.log(user)}> CICK ME TO LOG</h1> */}
         <div ref={pageRef} className={style.cardMapDiv}>
           <MakePostComponent />
           {reversedArray?.map((val: PostsComponentCardType) => (
             <PostsComponentCard key={val._id} data={val} />
           ))}
         </div>
-        <div className="h-[2rem] gap-3 items-center justify-center flex w-[600px] outline">
+        <div className="h-[2rem] gap-3 items-center justify-center flex w-[600px] outline ">
           {new Array(allPostData.totalPages)
             .fill('')
             .map((val: string, index: number) => (

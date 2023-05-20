@@ -38,7 +38,7 @@ const postData = async (req, res) => {
 
 const getUserData = async (req, res) => {
   try {
-    const user = await User.find({}, 'name ')
+    const user = await User.find({}, 'name avatar ')
 
     return res.status(200).json(user)
   } catch (error) {

@@ -25,6 +25,10 @@ const userSchema = new mongoose.Schema({
     default:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4UmW5FE0dXoSm3h5meecSKpw0oX1Jk3bZvA&usqp=CAU',
   },
+  date: {
+    type: Date,
+    default: new Date(),
+  },
 })
 
 export default mongoose.model('User', userSchema)
