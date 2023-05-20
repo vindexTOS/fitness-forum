@@ -46,6 +46,7 @@ const getThread = async (req, res) => {
 
     const posts = await Post.find({ forumID }).skip(startIndex).limit(limit)
     const postsCount = await Post.find({ forumID }).countDocuments()
+    posts.reverse()
     return res.json({
       posts: posts,
       forumData: forum,

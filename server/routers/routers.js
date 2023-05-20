@@ -4,6 +4,7 @@ import {
   getAllPosts,
   postData,
   getUserData,
+  deleteData,
 } from '../controllers/controllers.js'
 import { createThread } from '../controllers/forumController.js'
 import { register, login } from '../controllers/authControllers.js'
@@ -12,6 +13,7 @@ router.route('/register').post(register)
 router.route('/login').post(login)
 router.route('/create-thread').post(createThread)
 router.route('/posts').get(getAllPosts).post(postData)
+router.route('/post/:id').delete(deleteData)
 router.get('/threads/:forumID', getThread)
 router.get('/forums', getForum)
 router.get('/api/v1/user', getUserData)

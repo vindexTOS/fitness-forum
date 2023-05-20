@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react'
 import InputDiv from '../../components/auth-components/InputDiv'
+import { TiPointOfInterest } from 'react-icons/ti'
 import { useDispatch, useSelector } from 'react-redux'
 import Cookies from 'universal-cookie'
 import { getCookies } from '../../redux/features/slice/LoginSlice'
 import { CreateThreadThunk } from '../../redux/features/async-thunk/CreateForumThunk'
+
 import {
   getName,
   getAvatar,
@@ -22,24 +24,33 @@ const CreateForum = () => {
     const val = { name, avatar, description, forumID, adminID: user.user._id }
     dispatch(CreateThreadThunk(val))
   }
+
+  const style = {
+    mainDiv: `w-[100%] h-[100vh] gap-5 flex flex-col  items-center justify-center  `,
+  }
+
   if (user && user.user && user.user.adminStatus) {
     return (
-      <div>
-        <input
-          onChange={(e) => dispatch(getName(e.target.value))}
+      <div className={style.mainDiv}>
+        <InputDiv
           type="text"
-          placeholder="name"
+          holder="thread name"
+          fun={getName}
+          Icon={TiPointOfInterest}
         />
-        <input
-          onChange={(e) => dispatch(getDescription(e.target.value))}
+        <InputDiv
           type="text"
-          placeholder="dec"
+          holder="thread description"
+          fun={getDescription}
+          Icon={TiPointOfInterest}
         />
-        <input
-          onChange={(e) => dispatch(getForumID(e.target.value))}
+        <InputDiv
           type="text"
-          placeholder=" forum id"
+          holder="forum name"
+          fun={getForumID}
+          Icon={TiPointOfInterest}
         />
+
         <button onClick={createThread}>Create Thread</button>
       </div>
     )

@@ -110,7 +110,7 @@ const PostData = () => {
 
       setLoading(false)
       // redireting user to thread with post was made
-      navigate(`/threads/${threads}`)
+      navigate(`/threads/${threads}/page/1`)
       setHtmlImg(null)
     }
   }, [url, switcher])

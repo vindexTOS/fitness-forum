@@ -6,8 +6,9 @@ type inputDivProps = {
   type: string
   fun: (e: string) => AnyAction
   Icon: IconType
+  holder: string
 }
-const InputDiv: FC<inputDivProps> = ({ type, fun, Icon }) => {
+const InputDiv: FC<inputDivProps> = ({ type, fun, Icon, holder }) => {
   const dispatch = useDispatch()
   const style = {
     color: `#232323`,
@@ -28,7 +29,7 @@ const InputDiv: FC<inputDivProps> = ({ type, fun, Icon }) => {
         type={type}
         name={type}
         id={type}
-        placeholder={type.toUpperCase()}
+        placeholder={holder.toUpperCase()}
       />
     </div>
   )

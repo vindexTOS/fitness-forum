@@ -57,7 +57,7 @@ const PostInnerCard: FC<DataInterFace> = ({ data }) => {
           <h1 className="text-[1.2rem] font-bold text-gray-300">{title}</h1>
         </div>
 
-        <img className={style.img} src={String(realPhoto)} />
+        {realPhoto && <img className={style.img} src={String(realPhoto)} />}
 
         <p className="w-[90%]   break-all  text-start ">{post}</p>
       </section>

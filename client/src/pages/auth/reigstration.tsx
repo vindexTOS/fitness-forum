@@ -89,10 +89,21 @@ const Reigstration = () => {
               />
             </div>
           ) : null}
-          <InputDiv Icon={RiFileUserFill} type={'name'} fun={getName} />
-          <InputDiv Icon={AiOutlineMail} type={'email'} fun={getEmail} />
+          <InputDiv
+            holder="name"
+            Icon={RiFileUserFill}
+            type={'text'}
+            fun={getName}
+          />
+          <InputDiv
+            holder="email"
+            Icon={AiOutlineMail}
+            type={'email'}
+            fun={getEmail}
+          />
 
           <InputDiv
+            holder="password"
             Icon={RiLockPasswordFill}
             type={'password'}
             fun={getPassword}

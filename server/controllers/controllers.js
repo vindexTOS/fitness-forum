@@ -12,6 +12,7 @@ const getAllPosts = async (req, res) => {
   try {
     const posts = await Post.find({}).skip(startIndex).limit(limit)
     const AllData = await Post.find({})
+    posts.reverse()
     return res
       .status(200)
       .json({ posts, currentPage: page, totalPages, totalPosts, AllData })
@@ -25,17 +26,27 @@ const postData = async (req, res) => {
   const forum = await Forum.find({ forumID })
   console.log(userID)
   try {
-    if (title && post && photo && forumID && userID) {
-      const obj = { title, post, photo, forumID, userID }
-      const postObj = await Post.create(obj)
-      return res.status(201).json(postObj)
-    }
+    // if (title && post && photo && forumID && userID) {
+    const obj = { title, post, photo, forumID, userID }
+    const postObj = await Post.create(obj)
+    return res.status(201).json(postObj)
+    // }
   } catch (error) {
     console.log(error)
     return res.status(500).json({ msg: error })
   }
 }
+const deleteData = async (req, res) => {
+  let { id } = req.params
 
+  id = id.replace('\n', '')
+  const post = await Post.findOneAndDelete({ _id: id })
+  if (!post) {
+    return res.status(404).json({ msg: `No task with ID ${id}` })
+  }
+
+  return res.status(200).json({ post })
+}
 const getUserData = async (req, res) => {
   try {
     const user = await User.find({}, 'name avatar ')
@@ -46,4 +57,4 @@ const getUserData = async (req, res) => {
   }
 }
 
-export { postData, getAllPosts, getUserData }
+export { postData, getAllPosts, getUserData, deleteData }

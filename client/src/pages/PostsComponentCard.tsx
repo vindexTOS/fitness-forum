@@ -1,7 +1,11 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti'
+import { BsThreeDots } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { DeletePost } from '../redux/features/async-thunk/DeletePostThunk'
+import { useDispatch } from 'react-redux'
+import { ThunkDispatch } from '@reduxjs/toolkit'
 export type PostsComponentCardType = {
   _id?: string
   forumID?: string
@@ -23,18 +27,45 @@ const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
     headerDiv: `flex flex-col items-start w-[100%] `,
     mainContent: `flex flex-col items-center  justify-center w-[100%] px-10 p-6 `,
     img: `h-[400px] max-w-[80%] `,
-    raiting: ` h-[100%] w-[30px] absolute bg-[#262525] rounded-t-[5px] rounded-b-[5px]`,
+    raiting: ` h-[100%] w-[30px] absolute bg-[#262525] rounded-t-[5px] rounded-b-[5px] flex flex-col items-center py-2`,
     btn: `flex flex-col items-center py-2`,
     icon: `text-[1.6rem] text-gray-500`,
   }
 
   const userData = useSelector((state: any) => state.GeneralReducer.userData)
-
+  const userLogin = useSelector((state: any) => state.LoginReducer.data)
   const user = userData && userData.find((val: any) => val._id === userID)
+  //checking if user is author of the post
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
+  const [dropDown, setDropDown] = useState<boolean>(false)
+
+  const DeleteButton = () => {
+    if (userLogin && userLogin.user && userLogin.user._id) {
+      return (
+        <div className="absolute w-[100px] h-[100px] mt-5 ml-20 bg-[#262525] boxshaddow rounded-[10px] flex flex-col items-start   p-2">
+          <button>Shear</button>
+          <button>Edit</button>
+          {userLogin.user._id === user._id && (
+            <button onClick={() => dispatch(DeletePost({ id: _id || '' }))}>
+              Delete
+            </button>
+          )}
+        </div>
+      )
+    } else {
+      return (
+        <div className="absolute w-[100px] h-[100px] mt-5 ml-20 bg-[#262525] boxshaddow rounded-[10px] flex flex-col items-start   p-2">
+          <button>Shear</button>
+        </div>
+      )
+    }
+  }
 
   return (
-    <div className={style.mainDiv}>
+    <div className={style.mainDiv} onClick={() => console.log(userLogin)}>
       <div className={style.raiting}>
+        <BsThreeDots title="setting" onClick={() => setDropDown(!dropDown)} />
+        {dropDown && <DeleteButton />}
         <div className={style.btn}>
           <TiArrowSortedUp className={style.icon} />{' '}
           <TiArrowSortedDown className={style.icon} />
@@ -55,7 +86,7 @@ const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
             <p className="text-gray-400">
               Posted by{' '}
               <span onClick={() => navigate(`/user/${userID}`)}>
-                {user.name}
+                {user?.name ? user?.name : 'User '}
               </span>
             </p>{' '}
             <p className="text-gray-500 text-[12px]">
@@ -74,7 +105,6 @@ const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
           className="   w-[100%] flex items-center justify-center"
           onClick={() => navigate(`/${forumID}/${_id}`)}
         >
-          {' '}
           {realPhoto ? (
             <img
               onClick={() => navigate(`/${forumID}/${_id}`)}

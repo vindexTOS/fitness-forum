@@ -37,8 +37,14 @@ const Login = () => {
           {/* <h1 onClick={() => console.log(data)}>console</h1>
 // testing logs
           <h1 onClick={() => dispatch(getCookies())}>LOG</h1> */}
-          <InputDiv Icon={AiOutlineMail} type={'email'} fun={getEmail} />
           <InputDiv
+            holder="email"
+            Icon={AiOutlineMail}
+            type={'email'}
+            fun={getEmail}
+          />
+          <InputDiv
+            holder="password"
             Icon={RiLockPasswordFill}
             type={'password'}
             fun={getPassword}

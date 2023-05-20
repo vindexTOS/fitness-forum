@@ -9,6 +9,8 @@ import { UserDataThunk } from '../../../redux/features/async-thunk/UserDataThunk
 import PostsComponentCard, {
   PostsComponentCardType,
 } from '../../PostsComponentCard'
+import { DeletePost } from '../../../redux/features/async-thunk/DeletePostThunk'
+import { getCookies } from '../../../redux/features/slice/LoginSlice'
 const UserProfile = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const allPostData = useSelector((state: any) => state.GetAllPostReducer.data)
@@ -20,6 +22,7 @@ const UserProfile = () => {
   }, [])
   if (allPostData && allPostData.AllData && userData) {
     const user = userData.find((val: any) => userID === val._id)
+
     const style = {
       section: ` w-[100%] h-[100%] flex gap-40   justify-center py-40 `,
       contentDiv: `w-[40%]`,
@@ -28,12 +31,10 @@ const UserProfile = () => {
       (val: PostsComponentCardType) => userID === val.userID,
     )
     const userDataLength = filteredDataBasedOnUser.length
+
     return (
-      <section className={style.section}>
-        <div
-          className={style.contentDiv}
-          onClick={() => console.log(filteredDataBasedOnUser.length)}
-        >
+      <section onClick={() => console.log()} className={style.section}>
+        <div className={style.contentDiv}>
           {filteredDataBasedOnUser.map((val: PostsComponentCardType) => (
             <PostsComponentCard data={val} key={val._id} />
           ))}
