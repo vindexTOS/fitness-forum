@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getCookies, LogOut } from '../../redux/features/slice/LoginSlice'
 import { useNavigate, Navigate, Link } from 'react-router-dom'
-import PostData from './post-components/PostData'
+import PostData from './make-post-components/PostData'
 
 import { getDataFromRegister } from '../../redux/features/slice/LoginSlice'
 import { useMainContext } from '../../context'
@@ -42,7 +42,7 @@ const UserHome = () => {
 
   const allPostData = useSelector((state: any) => state.GetAllPostReducer.data)
   if (user && user.user) {
-    const { _id, name, email, adminStatus, avatar, postLength } = user.user
+    const { _id, name, email, role, avatar, postLength } = user.user
     const style = {
       mainDiv: `flex flex-col items-center py-20`,
     }
@@ -73,7 +73,7 @@ const UserHome = () => {
           <div>
             <h1 className="text-[#cf1b4e] flex  gap-1">
               Role
-              {adminStatus ? (
+              {role === 'admin' ? (
                 <span className="text-orange-400">Administrator</span>
               ) : (
                 <span className="text-green-400"> Member</span>

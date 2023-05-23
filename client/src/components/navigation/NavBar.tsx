@@ -65,7 +65,7 @@ const NavBar = () => {
         {homeDrop && <HomeDropDown />}
       </div>
       <div className={style.subDiv}>
-        {user && user.user && user.user.adminStatus && (
+        {user && user.user && user.user.role && (
           <Link to="/create-thread">
             <MdCreateNewFolder className={style.icon} />
           </Link>

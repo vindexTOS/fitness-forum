@@ -29,7 +29,7 @@ const CreateForum = () => {
     mainDiv: `w-[100%] h-[100vh] gap-5 flex flex-col  items-center justify-center  `,
   }
 
-  if (user && user.user && user.user.adminStatus) {
+  if (user && user.user && user.user.role) {
     return (
       <div className={style.mainDiv}>
         <InputDiv

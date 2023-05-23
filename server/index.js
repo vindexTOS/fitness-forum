@@ -5,11 +5,15 @@ import router from './routers/routers.js'
 import userRouter from './routers/userRouter.js'
 import { notFound } from './middleware/not-found.js'
 import { errorHandler } from './middleware/error-handler.js'
+import cookieParser from 'cookie-parser'
 import cors from 'cors'
 const app = express()
+app.use(cookieParser())
 config()
 app.use(express.json())
+
 app.use(cors())
+
 app.use('/', router)
 
 app.use(notFound)

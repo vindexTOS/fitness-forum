@@ -21,10 +21,7 @@ const EditPost = () => {
     const user = userData && userData.find((val: any) => val._id === userID)
     const { name } = user ? user : { name: 'user name' }
     return (
-      <section
-        className="w-[100%] h-[100vh]  flex justify-center items-center"
-        onClick={() => console.log(user)}
-      >
+      <section className="w-[100%] h-[100vh]  flex justify-center items-center">
         <EditArea
           data={{ _id, forumID, photo, post, userID, title, name, date }}
         />

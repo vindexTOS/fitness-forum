@@ -1,7 +1,6 @@
 import express from 'express'
 import { register, login } from '../controllers/authControllers.js'
 
-import { verifyToken } from '../middleware/auth.js'
 import { createThread } from '../controllers/forumController.js'
 const userRouter = express.Router()
 

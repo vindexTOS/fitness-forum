@@ -16,9 +16,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     require: [true, 'pelase enter password'],
   },
-  adminStatus: {
-    type: Boolean,
-    default: false,
+  role: {
+    type: String,
+    default: 'user',
   },
   avatar: {
     type: String,

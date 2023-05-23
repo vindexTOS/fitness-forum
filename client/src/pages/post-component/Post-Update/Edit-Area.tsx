@@ -4,6 +4,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { UpdatePost } from '../../../redux/features/async-thunk/DeleteAndUpdatePostThunk'
 import { ThunkDispatch } from '@reduxjs/toolkit'
+import { FireBasePhotoThunk } from '../../../redux/features/async-thunk/FireStoreThunks/ProfilePhotoThunk'
+import { useMainContext } from '../../../context'
+
 type EditPostType = {
   _id?: string
   forumID?: string
@@ -18,8 +21,12 @@ type DataInterFace = {
   data: EditPostType
 }
 const EditPost: FC<DataInterFace> = ({ data }) => {
+  const { imgUploadDrag, imgUpload, image } = useMainContext()
   const { _id, forumID, photo, post, userID, title, name, date } = data
   const realPhoto = photo !== 'No Photo' && photo
+  const url = useSelector((state: any) => state.FireBasePhotoReducer.url)
+  const user = useSelector((state: any) => state.LoginReducer.data)
+
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const style = {
     mainDiv: `w-[80%]  relative rounded-[5px] bg-[#212121]  mt-60      flex  cursor-pointer      text-white`,
@@ -35,13 +42,31 @@ const EditPost: FC<DataInterFace> = ({ data }) => {
   const [valuePhotoUrl, setValuePhotoUrl] = React.useState<string>(realPhoto)
 
   const EditPost = async () => {
+    if (image) {
+      await dispatch(FireBasePhotoThunk({ dispatch, image }))
+      setValuePhotoUrl(url)
+    } else {
+      const data = {
+        title: valueTitle,
+        post: `${valuePost} ~ Edited`,
+        date: new Date(),
+      }
+
+      dispatch(UpdatePost({ id: _id || '', update: data }))
+    }
+  }
+
+  useEffect(() => {
     const data = {
       title: valueTitle,
       post: `${valuePost} ~ Edited`,
       date: new Date(),
+      photo: url,
     }
-    await dispatch(UpdatePost({ id: _id || '', update: data }))
-  }
+    if (url) {
+      dispatch(UpdatePost({ id: _id || '', update: data }))
+    }
+  }, [url])
   return (
     <div className={style.mainDiv}>
       <section className={style.mainContent}>
@@ -75,6 +100,19 @@ const EditPost: FC<DataInterFace> = ({ data }) => {
               className="absolute text-[4rem] text-red-600 hover:text-red-700"
             />
             <img className={style.img} src={String(valuePhotoUrl)} />
+
+            <label
+              onDrop={(e) => imgUploadDrag(e)}
+              className="text-[2rem] h-[2.2rem]    items-center justify-center text-gray-400   cursor-pointer w-[20rem] rounded-[6px] flex "
+              htmlFor="photo"
+            >
+              <input
+                onChange={(e) => imgUpload(e)}
+                id="photo"
+                className=" block w-full text-sm  text-[#ec2b58]  boxshaddow  border border-gray-300 rounded-lg cursor-pointer   bg-[#2e2d2d] dark:text-gray-400 focus:outline-none bg-[#2e2d2d]   dark:border-gray-600 dark:placeholder-gray-400"
+                type="file"
+              />
+            </label>
           </div>
         )}
 

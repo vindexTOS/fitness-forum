@@ -5,7 +5,7 @@ import Reigstration from './pages/auth/reigstration'
 import Home from './pages/MainPage'
 import ProtectedRoute from './pages/helper-components/ProtectedRoute'
 import UserHome from './pages/user-components/UserHome'
-import PostData from './pages/user-components/post-components/PostData'
+import PostData from './pages/user-components/make-post-components/PostData'
 import NavBar from './components/navigation/NavBar'
 import CreateForum from './pages/admin/CreateForum'
 import Thread from './pages/post-component/Thread'
@@ -16,9 +16,9 @@ import EditPost from './pages/post-component/Post-Update/EditPost'
 import UserEdit from './pages/user-components/user-content/UserEdit'
 function App() {
   const { forumID } = useParams()
-  useEffect(() => {
-    console.log(forumID)
-  }, [forumID])
+  // useEffect(() => {
+  //   console.log(forumID)
+  // }, [forumID])
   return (
     <>
       <NavBar />

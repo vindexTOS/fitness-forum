@@ -9,7 +9,7 @@ const createThread = async (req, res) => {
     if (name && description && forumID) {
       console.log('here')
       const forumObj = { name, avatar, description, forumID, adminID }
-      if (user.adminStatus) {
+      if (user.role === 'admin') {
         const forum = await Forum.create(forumObj)
         console.log('201')
         return res.status(201).json(forum)

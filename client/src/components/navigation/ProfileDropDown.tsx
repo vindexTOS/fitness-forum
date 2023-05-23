@@ -11,7 +11,7 @@ const ProfileDropDown = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const userLogin = useSelector((state: any) => state.LoginReducer.data)
-  const { _id, name, email, adminStatus, avatar } = userLogin.user || {}
+  const { _id, name, email, role, avatar } = userLogin.user || {}
   return (
     <div className={style.mainDiv}>
       <button className={style.btn} onClick={() => navigate(`/home`)}>

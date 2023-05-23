@@ -20,7 +20,7 @@ import {
 // importing react components
 import InputDiv from '../../components/auth-components/InputDiv'
 import ButtonAuth from '../../components/auth-components/ButtonAuth'
-import ImgUpload from '../user-components/post-components/ImgUpload'
+import ImgUpload from '../user-components/make-post-components/ImgUpload'
 import { FireBasePhotoThunk } from '../../redux/features/async-thunk/FireStoreThunks/ProfilePhotoThunk'
 import { useMainContext } from '../../context'
 

@@ -45,6 +45,7 @@ export const UpdateUser = createAsyncThunk(
           expires: new Date(decode.exp * 1000),
         })
         const userCookieData = jwt(cookies.get('jwt_authorization'))
+        return userCookieData
       })
       .catch((err) => console.log(err))
   },

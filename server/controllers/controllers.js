@@ -2,7 +2,7 @@ import Post from '../models/postModel.js'
 import User from '../models/userModel.js'
 import Forum from '../models/forumModel.js'
 import jwt from 'jsonwebtoken'
-
+import { checkUserPost } from '../middleware/auth.js'
 const getAllPosts = async (req, res) => {
   const page = parseInt(req.query.page) || 1
   const limit = parseInt(req.query.limit) || 10
@@ -36,7 +36,7 @@ const getAllPosts = async (req, res) => {
 const postData = async (req, res) => {
   const { title, post, photo, forumID, userID } = req.body
   const forum = await Forum.find({ forumID })
-  console.log(userID)
+
   try {
     // if (title && post && photo && forumID && userID) {
     const obj = { title, post, photo, forumID, userID }
@@ -61,16 +61,32 @@ const deleteData = async (req, res) => {
 }
 
 const updateData = async (req, res) => {
-  let { id } = req.params
-  id = id.replace('\n', '')
-  const post = await Post.findOneAndUpdate({ _id: id }, req.body, {
-    new: true,
-    runValidators: true,
-  })
-  if (!post) {
-    return res.status(404).json({ msg: `No Post With This ID ${id}` })
+  try {
+    let { id } = req.params
+    id = id.replace('\n', '')
+
+    const post = await Post.findById(id)
+
+    if (!post) {
+      return res.status(404).json({ msg: `No Post With This ID ${id}` })
+    }
+
+    if (String(req.user._id) !== String(post.userID)) {
+      console.log('not success')
+      return res
+        .status(403)
+        .json({ msg: 'You are not allowed to do this action' })
+    }
+
+    const updatedPost = await Post.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true,
+    })
+
+    return res.status(200).json({ post: updatedPost })
+  } catch (error) {
+    return res.status(500).json({ msg: 'Internal Server Error' })
   }
-  return res.status(200).json({ post })
 }
 
 const getUserData = async (req, res) => {
