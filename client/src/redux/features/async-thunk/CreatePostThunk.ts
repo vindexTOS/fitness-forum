@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-interface PostThunk {
+export interface PostThunk {
   title: string
   post: string
   photo?: string

@@ -3,7 +3,7 @@ import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti'
 import { BsThreeDots } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { DeletePost } from '../redux/features/async-thunk/DeletePostThunk'
+import { DeletePost } from '../../redux/features/async-thunk/DeleteAndUpdatePostThunk'
 import { useDispatch } from 'react-redux'
 import { ThunkDispatch } from '@reduxjs/toolkit'
 export type PostsComponentCardType = {
@@ -39,12 +39,12 @@ const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const [dropDown, setDropDown] = useState<boolean>(false)
 
-  const DeleteButton = () => {
-    if (userLogin && userLogin.user && userLogin.user._id) {
+  const SettingButtons = () => {
+    if (userLogin && userLogin.user && userLogin.user._id && _id) {
       return (
         <div className="absolute w-[100px] h-[100px] mt-5 ml-20 bg-[#262525] boxshaddow rounded-[10px] flex flex-col items-start   p-2">
           <button>Shear</button>
-          <button>Edit</button>
+          <button onClick={() => navigate(`/edit-post/${_id}`)}>Edit</button>
           {userLogin.user._id === user._id && (
             <button onClick={() => dispatch(DeletePost({ id: _id || '' }))}>
               Delete
@@ -65,7 +65,7 @@ const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
     <div className={style.mainDiv} onClick={() => console.log(userLogin)}>
       <div className={style.raiting}>
         <BsThreeDots title="setting" onClick={() => setDropDown(!dropDown)} />
-        {dropDown && <DeleteButton />}
+        {dropDown && <SettingButtons />}
         <div className={style.btn}>
           <TiArrowSortedUp className={style.icon} />{' '}
           <TiArrowSortedDown className={style.icon} />
@@ -84,7 +84,7 @@ const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
               </span>
             </p>
             <p className="text-gray-400">
-              Posted by{' '}
+              Posted by
               <span onClick={() => navigate(`/user/${userID}`)}>
                 {user?.name ? user?.name : 'User '}
               </span>

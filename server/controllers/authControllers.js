@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt'
+import Post from '../models/postModel.js'
 
 import jwt from 'jsonwebtoken'
 import userSchema from '../models/userModel.js'
@@ -52,7 +53,14 @@ const login = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ msg: 'Invalid password' })
     }
+
+    const userPosts = await Post.find({})
+    const userPostLength = userPosts.filter(
+      (val) => val.userID === String(user._id),
+    )
+
     user.password = null
+    user.postLength = userPostLength.length
     const token = jwt.sign({ user }, process.env.JWT_STRING, {
       expiresIn: '1h',
     })

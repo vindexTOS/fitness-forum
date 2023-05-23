@@ -11,6 +11,7 @@ const GetAllPostSlice = createSlice({
   initialState,
   reducers: {
     getAllPost: (state, action) => {
+      // console.log('hi')
       state.data = action.payload
     },
   },

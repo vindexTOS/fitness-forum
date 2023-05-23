@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import PostsComponentCard, {
   PostsComponentCardType,
-} from './PostsComponentCard'
+} from './post-component/PostsComponentCard'
 import { GetAllPostsThunk } from '../redux/features/async-thunk/GetAllPostsThunk'
 import { useSelector, useDispatch } from 'react-redux'
 import { ThunkDispatch } from '@reduxjs/toolkit'

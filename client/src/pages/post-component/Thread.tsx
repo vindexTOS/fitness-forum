@@ -2,13 +2,13 @@ import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { getForumIDparams } from '../redux/features/slice/ForumSlice'
-import { GetThreadThunk } from '../redux/features/async-thunk/GetThreadsThunk'
+import { getForumIDparams } from '../../redux/features/slice/ForumSlice'
+import { GetThreadThunk } from '../../redux/features/async-thunk/GetThreadsThunk'
 import { ThunkDispatch } from '@reduxjs/toolkit'
 import PostsComponentCard, {
   PostsComponentCardType,
 } from './PostsComponentCard'
-import MakePostComponent from '../components/MakePostComponent'
+import MakePostComponent from '../../components/MakePostComponent'
 const Thread = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
 

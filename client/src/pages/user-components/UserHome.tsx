@@ -1,16 +1,14 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getCookies, LogOut } from '../redux/features/slice/LoginSlice'
+import { getCookies, LogOut } from '../../redux/features/slice/LoginSlice'
 import { useNavigate, Navigate, Link } from 'react-router-dom'
-import PostData from './user-components/post-components/PostData'
-import jwt from 'jwt-decode'
-import Cookies from 'universal-cookie'
-import { getDataFromRegister } from '../redux/features/slice/LoginSlice'
-import { PostsComponentCardType } from './PostsComponentCard'
-import { useMainContext } from '../context'
-import { UserDataThunk } from '../redux/features/async-thunk/UserDataThunk'
+import PostData from './post-components/PostData'
+
+import { getDataFromRegister } from '../../redux/features/slice/LoginSlice'
+import { useMainContext } from '../../context'
+import { UserDataThunk } from '../../redux/features/async-thunk/UserDataThunk'
 import { ThunkDispatch } from '@reduxjs/toolkit'
-import { getAllPost } from '../redux/features/slice/GetAllPosts'
+import { GetAllPostsThunk } from '../../redux/features/async-thunk/GetAllPostsThunk'
 const UserHome = () => {
   const { imgUploadDrag, imgUpload, htmlImg } = useMainContext()
   const registerUser = useSelector((state: any) => state.RegisterReducer.data)
@@ -22,8 +20,8 @@ const UserHome = () => {
   useEffect(() => {
     if (!user) {
       dispatch(getDataFromRegister(registerUser))
-      dispatch(getAllPost(registerUser))
     }
+    dispatch(GetAllPostsThunk({ dispatch, pages: '1' }))
   }, [])
 
   const LogOutHandler = async () => {
@@ -44,7 +42,7 @@ const UserHome = () => {
 
   const allPostData = useSelector((state: any) => state.GetAllPostReducer.data)
   if (user && user.user) {
-    const { _id, name, email, adminStatus, avatar } = user.user
+    const { _id, name, email, adminStatus, avatar, postLength } = user.user
     const style = {
       mainDiv: `flex flex-col items-center py-20`,
     }
@@ -93,9 +91,15 @@ const UserHome = () => {
                 onClick={() => navigate(`/user/${_id}`)}
                 className="text-white hover:text-blue-300 hover:underline cursor-pointer"
               >
-                {/* {filteredDataBasedOnUser.length} */}
+                {postLength}
               </span>
             </h1>
+            <button
+              className="text-[2rem] text-blue-500"
+              onClick={() => navigate(`/edit-user/${_id}`)}
+            >
+              Edit
+            </button>
           </div>
         </div>
         <PostData />
