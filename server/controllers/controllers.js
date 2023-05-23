@@ -52,10 +52,17 @@ const deleteData = async (req, res) => {
   let { id } = req.params
 
   id = id.replace('\n', '')
-  const post = await Post.findOneAndDelete({ _id: id })
+  const post = await Post.findById(id)
   if (!post) {
     return res.status(404).json({ msg: `No task with ID ${id}` })
   }
+  if (String(req.user._id) !== String(post.userID)) {
+    console.log('not success')
+    return res
+      .status(403)
+      .json({ msg: 'You are not allowed to do this action' })
+  }
+  await Post.findOneAndDelete({ _id: id })
 
   return res.status(200).json({ post })
 }
