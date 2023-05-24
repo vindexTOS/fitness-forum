@@ -1,9 +1,10 @@
 import { ThunkDispatch, createAsyncThunk } from '@reduxjs/toolkit'
-import { getAllComments } from '../../slice/CommentSlice'
+import { getAllComments } from '../slice/CommentSlice'
 import axios from 'axios'
 type GetAllComments = {
   dispatch: ThunkDispatch<any, any, any>
   postID: string
+  pages: string
 }
 type CommentThunkType = {
   comment: string
@@ -26,7 +27,9 @@ export const PostCommentThunk = createAsyncThunk(
 export const GetCommentThunk = createAsyncThunk(
   'comment/get',
   async (val: GetAllComments) => {
-    const apiUrl = `http://localhost:3000/post/comment/${val.postID}`
+    const apiUrl = `http://localhost:3000/post/comment/${
+      val.postID
+    }/?page=${String(val.pages)}&limit=10`
 
     await axios
       .get(apiUrl)
@@ -34,6 +37,18 @@ export const GetCommentThunk = createAsyncThunk(
         val.dispatch(getAllComments(res.data))
         console.log(res)
       })
+      .catch((err) => console.log(err))
+  },
+)
+
+export const DeleteCommentThunk = createAsyncThunk(
+  'comment/delete',
+  async (commentID: string) => {
+    const apiUrl = `http://localhost:3000/post/comment/${commentID}`
+
+    await axios
+      .delete(apiUrl)
+      .then((res) => console.log(res))
       .catch((err) => console.log(err))
   },
 )

@@ -10,7 +10,7 @@ export const GetAllPostsThunk = createAsyncThunk(
   async (val: GetThreadType) => {
     const apiUrl = `http://localhost:3000/posts/?page=${String(
       val.pages,
-    )}&limit=10`
+    )}&limit=5`
 
     try {
       const data = await axios

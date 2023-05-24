@@ -88,10 +88,10 @@ const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
               <span onClick={() => navigate(`/user/${userID}`)}>
                 {user?.name ? user?.name : 'User '}
               </span>
-            </p>{' '}
+            </p>
             <p className="text-gray-500 text-[12px]">
               {date ? date.slice(0, 10) : ''}
-            </p>{' '}
+            </p>
           </div>
           <h1
             onClick={() => navigate(`/${forumID}/${_id}`)}
@@ -103,17 +103,17 @@ const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
 
         <div
           className="   w-[100%] flex items-center justify-center"
-          onClick={() => navigate(`/${forumID}/${_id}`)}
+          onClick={() => navigate(`/${forumID}/${_id}/1`)}
         >
           {realPhoto ? (
             <img
-              onClick={() => navigate(`/${forumID}/${_id}`)}
+              onClick={() => navigate(`/${forumID}/${_id}/1`)}
               className={style.img}
               src={String(realPhoto)}
             />
           ) : (
             <p
-              onClick={() => navigate(`/${forumID}/${_id}`)}
+              onClick={() => navigate(`/${forumID}/${_id}/1`)}
               className="w-[90%]   break-all  text-start "
             >
               {post}

@@ -35,6 +35,38 @@ export const getComments = async (req, res) => {
   if (!postCommentsArray) {
     return res.status(404).json({ msg: 'comment dont exist' })
   }
+  const page = parseInt(req.query.page) || 1
+  const limit = parseInt(req.query.limit) || 5
+  const startIndex = (page - 1) * limit
+  const endIndex = page * limit
+  const totalComments = postCommentsArray.length
+  const totalPages = Math.ceil(totalComments / limit)
+  postCommentsArray = postCommentsArray.reverse()
 
-  return res.status(200).json(postCommentsArray)
+  postCommentsArray = postCommentsArray.slice(startIndex, endIndex)
+  return res
+    .status(200)
+    .json({ comments: postCommentsArray, totalComments, totalPages })
+}
+
+export const deleteComment = async (req, res) => {
+  let { commentID } = req.params
+
+  commentID = commentID.replace('\n', '')
+
+  const comment = await Comment.findById(commentID)
+
+  if (!comment) {
+    return res.status(404).json({ msg: `No Comment With ID ${commentID}` })
+  }
+
+  if (String(req.user._id) !== String(comment.userID)) {
+    return res
+      .status(403)
+      .json({ msg: 'You are not allowed to do this action' })
+  }
+
+  await Comment.findByIdAndDelete({ _id: commentID })
+
+  return res.status(200).json({ comment })
 }
