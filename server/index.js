@@ -2,6 +2,7 @@ import express from 'express'
 import connectDB from './db/connect.js'
 import { config } from 'dotenv'
 import router from './routers/routers.js'
+import commentRouter from './routers/commentRouts.js'
 import userRouter from './routers/userRouter.js'
 import { notFound } from './middleware/not-found.js'
 import { errorHandler } from './middleware/error-handler.js'
@@ -15,6 +16,7 @@ app.use(express.json())
 app.use(cors())
 
 app.use('/', router)
+app.use('/post', commentRouter)
 
 app.use(notFound)
 app.use(errorHandler)

@@ -7,6 +7,7 @@ import ThreadGetReducer from './features/slice/ThreadSlice'
 import GetAllPostReducer from './features/slice/GetAllPosts'
 import FireBasePhotoReducer from './features/slice/FireBaseSlices/ProfilePhotoSlice'
 import GeneralReducer from './features/slice/GeneralSlice'
+import CommentReducer from './features/slice/CommentSlice'
 const store = configureStore({
   reducer: {
     GeneralReducer,
@@ -17,6 +18,7 @@ const store = configureStore({
     ThreadGetReducer,
     GetAllPostReducer,
     FireBasePhotoReducer,
+    CommentReducer,
   },
 })
 

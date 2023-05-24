@@ -5,7 +5,8 @@ import PostInnerCard from './PostInnerCard'
 import { UserDataThunk } from '../../redux/features/async-thunk/UserDataThunk'
 import { GetAllPostsThunk } from '../../redux/features/async-thunk/GetAllPostsThunk'
 import { ThunkDispatch } from '@reduxjs/toolkit'
-
+import CommentPost from './comment-section/CommentPost'
+import CommentsSection from './comment-section/CommentsSection'
 const PostInside = () => {
   const { postID } = useParams()
 
@@ -23,12 +24,14 @@ const PostInside = () => {
     const { name } = user ? user : { name: 'user name' }
     return (
       <section
-        className="w-[100%] h-[100vh]  flex justify-center items-center"
+        className="w-[100%] h-[100vh] flex-col flex justify-center items-center"
         onClick={() => console.log(user)}
       >
         <PostInnerCard
           data={{ _id, forumID, photo, post, userID, title, name, date }}
         />
+        <CommentPost data={{ name, postID: _id, userID }} />
+        <CommentsSection />
       </section>
     )
   } else {
