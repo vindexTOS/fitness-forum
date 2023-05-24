@@ -14,20 +14,10 @@ export type DataType = {
 }
 
 const CommentPost: FC<DataType> = ({ data }) => {
-  const cookies = new Cookies()
-  const token = cookies.get('jwt_authorization')
-  useEffect(() => {
-    //checking if user has a token if token exist we get user data from cookies
-    // token must be checked or app will crash
-    if (token) {
-      dispatch(getCookies())
-    }
-  }, [data])
-
   const comment = useSelector((state: any) => state.CommentReducer.comment)
   const userInfo = useSelector((state: any) => state.LoginReducer.data)
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
-  const { _id } = userInfo.user
+
   const { name, postID } = data
   const style = {
     mainDiv: `w-[80%]`,
@@ -35,16 +25,20 @@ const CommentPost: FC<DataType> = ({ data }) => {
   }
 
   const makeComment = () => {
-    const commentObj = { userID: _id, postID, comment }
-    if (comment) {
-      dispatch(PostCommentThunk({ data: commentObj }))
-    } else {
-      console.log('erro')
+    if (userInfo.user) {
+      const { _id } = userInfo?.user
+
+      const commentObj = { userID: _id, postID, comment }
+      if (comment) {
+        dispatch(PostCommentThunk({ data: commentObj }))
+      } else {
+        console.log('erro')
+      }
     }
   }
 
   return (
-    <div onClick={() => console.log(userInfo)} className={style.mainDiv}>
+    <div className={style.mainDiv}>
       <p>Comment as {name}</p>
       <textarea
         onChange={(e) => dispatch(getComment(e.target.value))}
