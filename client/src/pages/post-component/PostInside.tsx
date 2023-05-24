@@ -30,7 +30,7 @@ const PostInside = () => {
         <PostInnerCard
           data={{ _id, forumID, photo, post, userID, title, name, date }}
         />
-        <CommentPost data={{ name, postID: _id, userID }} />
+        <CommentPost data={{ name, postID: _id }} />
         <CommentsSection />
       </section>
     )

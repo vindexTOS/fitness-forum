@@ -1,4 +1,5 @@
 import Comment from '../models/commentModel.js'
+import User from '../models/userModel.js'
 
 export const makeComment = async (req, res) => {
   const { comment, postID, userID } = req.body
@@ -20,12 +21,16 @@ export const makeComment = async (req, res) => {
 }
 
 export const getComments = async (req, res) => {
-  console.log('get request')
   let { id } = req.params
   id = id.replace('\n', '')
 
   const postComment = await Comment.find({})
   let postCommentsArray = postComment.filter((val) => val.postID === id)
+  const users = await User.find({}, 'name avatar ')
+  postCommentsArray = postCommentsArray.map((comment) => {
+    const user = users.find((u) => String(u._id) === String(comment.userID))
+    return { ...comment._doc, user }
+  })
 
   if (!postCommentsArray) {
     return res.status(404).json({ msg: 'comment dont exist' })
