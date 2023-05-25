@@ -15,6 +15,7 @@ export type CommentType = {
     name: string
     _id: string
   }
+  reply: any
 }
 const CommentsSection = () => {
   const allComments = useSelector(

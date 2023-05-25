@@ -12,6 +12,10 @@ type CommentThunkType = {
   userID: string
 }
 
+type commentReply = {
+  reply: [{ comment: string; userID: string }]
+}
+
 export const PostCommentThunk = createAsyncThunk(
   'comment/post',
   async ({ data }: { data: CommentThunkType }) => {
@@ -48,6 +52,30 @@ export const DeleteCommentThunk = createAsyncThunk(
 
     await axios
       .delete(apiUrl)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+  },
+)
+
+export const UpdateCommentThunk = createAsyncThunk(
+  'comment/update',
+  async ({ commentID, comment }: { commentID: string; comment: string }) => {
+    const apiUrl = `http://localhost:3000/post/comment/${commentID}`
+
+    await axios
+      .patch(apiUrl, { comment })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+  },
+)
+
+export const Addreply = createAsyncThunk(
+  'comment-replay/patch',
+  async ({ replyID, reply }: { replyID: string; reply: any }) => {
+    const apiUrl = `http://localhost:3000/post/comment/reply/${replyID}`
+
+    await axios
+      .patch(apiUrl, reply)
       .then((res) => console.log(res))
       .catch((err) => console.log(err))
   },

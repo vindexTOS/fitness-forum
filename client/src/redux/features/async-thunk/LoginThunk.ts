@@ -20,31 +20,25 @@ export const LoginThunk = createAsyncThunk(
       const { email, password } = val
 
       try {
-        const data = await axios
-          .post(apiUrl, { email, password })
-          .then((res) => {
-            const token = res.data.token
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-            const decode: any = jwt(token)
+        const res = await axios.post(apiUrl, { email, password })
+        const token = res.data.token
+        localStorage.setItem('token', token)
 
-            cookies.set(`jwt_authorization`, token, {
-              expires: new Date(decode.exp * 1000),
-            })
-            const userCookieData = jwt(cookies.get('jwt_authorization'))
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
-            return userCookieData
-          })
-          .catch((err) => {
-            val.dispatch(getError(err.response.data.msg))
-            console.log(err)
-          })
-        // console.log(data)
-        return data
-      } catch (error) {
-        const err: any = error
-        val.dispatch(getError(err))
+        const decode: any = jwt(token)
 
-        console.log(error)
+        cookies.set('jwt_authorization', token, {
+          expires: new Date(decode.exp * 1000),
+        })
+
+        return decode
+      } catch (err) {
+        const errr: any = err
+        val.dispatch(getError(errr))
+
+        console.log(err)
+        throw err
       }
     }
   },

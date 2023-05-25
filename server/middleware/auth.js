@@ -33,7 +33,7 @@ const verifyToken = async (token, res) => {
 export const authMiddleware = async (req, res, next) => {
   // Get the token from the request headers
   const token = req?.header('Authorization')?.replace('Bearer ', '')
-
+  console.log(token)
   // Check if the token exists
   if (!token) {
     return res.status(401).json({ msg: 'No token, authorization denied' })

@@ -43,9 +43,14 @@ export const ContextProvider = ({
     // token must be checked or app will crash
     if (token) {
       dispatch(getCookies())
-    }
-  }, [data])
 
+      // Set the default headers
+    }
+  }, [data, token])
+  useEffect(() => {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+    axios.defaults.headers.common['Content-Type'] = 'application/json'
+  }, [])
   const { forumID } = useParams()
   const [postData, setPostData] = useState<any>()
   const getThread = async () => {

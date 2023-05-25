@@ -2,6 +2,8 @@ import React, { FC, useEffect } from 'react'
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import Cookies from 'universal-cookie'
+import { getCookies } from '../../redux/features/slice/LoginSlice'
 
 type PostsComponentCardType = {
   _id?: string

@@ -70,3 +70,49 @@ export const deleteComment = async (req, res) => {
 
   return res.status(200).json({ comment })
 }
+
+export const updateComment = async (req, res) => {
+  let { commentID } = req.params
+
+  commentID = commentID.replace('\n', '')
+
+  const comment = await Comment.findById(commentID)
+
+  if (!comment) {
+    return res.status(404).json({ msg: `No Comment With ID ${commentID}` })
+  }
+
+  if (String(req.user._id) !== String(comment.userID)) {
+    return res
+      .status(403)
+      .json({ msg: 'You are not allowed to do this action' })
+  }
+
+  await Comment.findByIdAndUpdate(commentID, req.body, {
+    new: true,
+    runValidators: true,
+  })
+  return res.status(200).json({ comment })
+}
+
+export const addReply = async (req, res) => {
+  let { replyID } = req.params
+  replyID = replyID.replace('\n', '')
+
+  console.log(req.body)
+  try {
+    const comment = await Comment.findById(replyID)
+
+    if (!comment) {
+      return res.status(404).json({ msg: `No Comment with ID ${replyID}` })
+    }
+
+    comment.reply.push(...req.body.reply)
+
+    await comment.save()
+
+    return res.status(200).json(comment)
+  } catch (error) {
+    return res.status(500).json({ msg: 'Server Error' })
+  }
+}

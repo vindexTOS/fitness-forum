@@ -15,7 +15,8 @@ const PostInside = () => {
   useEffect(() => {
     dispatch(UserDataThunk({ dispatch }))
     dispatch(GetAllPostsThunk({ dispatch, pages: '1' }))
-  }, [postID])
+  }, [postID, dispatch])
+
   const allPostData = useSelector((state: any) => state.GetAllPostReducer.data)
   const userData = useSelector((state: any) => state.GeneralReducer.userData)
   if (allPostData && allPostData.AllData && userData) {
@@ -24,7 +25,7 @@ const PostInside = () => {
     const user = userData && userData.find((val: any) => val._id === userID)
     const { name } = user ? user : { name: 'user name' }
     return (
-      <section className="w-[100%] h-[2800px]   pt-40  flex-col flex justify-center items-center">
+      <section className="w-[100%] ]   pt-40  flex-col flex justify-center items-center">
         <PostInnerCard
           data={{ _id, forumID, photo, post, userID, title, name, date }}
         />

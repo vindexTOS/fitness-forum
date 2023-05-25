@@ -32,7 +32,10 @@ const LoginSlice = createSlice({
     },
     getCookies: (state) => {
       const cookies = new Cookies()
-      state.data = jwt(cookies.get('jwt_authorization'))
+      const token = cookies.get('jwt_authorization')
+      // const token = localStorage.getItem('token')
+
+      state.data = jwt(token)
     },
     getError: (state, action: any) => {
       console.log(action.payload)
