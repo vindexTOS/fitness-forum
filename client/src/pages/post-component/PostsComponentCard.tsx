@@ -129,7 +129,7 @@ const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
     }
   }
   return (
-    <div className={style.mainDiv}>
+    <div onClick={() => console.log(votePostID)} className={style.mainDiv}>
       <div className={style.raiting}>
         <BsThreeDots title="setting" onClick={() => setDropDown(!dropDown)} />
         {dropDown && <SettingButtons />}

@@ -58,9 +58,10 @@ const getVotes = async (req, res) => {
   }
 }
 const deleteVote = async (req, res) => {
-  let { voteID } = req.body
-  voteID = voteID.replace('\n', '')
+  let { voteID } = req.params
+  console.log(req.body)
   const vote = await Votes.findById(voteID)
+  console.log(vote)
   if (!vote) {
     return res.status(404).json({ msg: 'no vote ' })
   }

@@ -32,5 +32,5 @@ router.patch('/api/v1/user/:userId', authMiddleware, updateUser)
 
 router.route('/post/upvote/:postID').patch(postUpVote)
 router.route('/votes/:userID').get(getVotes)
-router.route('/vote/delte:voteID').delete(deleteVote)
+router.route('/vote/delete/:voteID').delete(deleteVote)
 export default router

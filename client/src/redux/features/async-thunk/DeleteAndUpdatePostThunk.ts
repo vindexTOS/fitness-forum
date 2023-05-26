@@ -16,7 +16,7 @@ export const DeletePost = createAsyncThunk(
       .delete(apiUrl)
       .then((res) => console.log(res))
       .catch((err) => console.log(err))
-    const voteUrl = `http://localhost:3000/vote/delte${val.voteID}`
+    const voteUrl = `http://localhost:3000/vote/delete/${val.voteID}`
     await axios
       .delete(voteUrl)
       .then((res) => console.log(res))
