@@ -12,6 +12,8 @@ import { getCookies } from './redux/features/slice/LoginSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { storage } from './firebase/firebase'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
+import { GetVotes } from './redux/features/async-thunk/UpVoteDownVoteThunks'
+import { ThunkDispatch } from '@reduxjs/toolkit'
 
 type Cell = {
   image: any
@@ -33,7 +35,8 @@ export const ContextProvider = ({
 }: {
   children: React.ReactNode
 }) => {
-  const dispatch = useDispatch()
+  // dispatch
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const data = useSelector((state: any) => state.RegisterReducer.data)
   // gettomg jwt cookies from local cookies
   const cookies = new Cookies()
@@ -70,7 +73,13 @@ export const ContextProvider = ({
       console.log(error)
     }
   }
+  const userLogin = useSelector((state: any) => state.LoginReducer.data)
 
+  React.useEffect(() => {
+    if (userLogin.user) {
+      dispatch(GetVotes({ dispatch, userID: userLogin.user._id }))
+    }
+  }, [userLogin])
   const [image, setImage] = useState<any>(null)
   const [htmlImg, setHtmlImg] = useState<String | null>(null)
   const [imgUrl, setImgUrl] = useState<string>('')

@@ -15,7 +15,8 @@ const PostInside = () => {
   useEffect(() => {
     dispatch(UserDataThunk({ dispatch }))
     dispatch(GetAllPostsThunk({ dispatch, pages: '1' }))
-  }, [postID, dispatch])
+    console.log('PostInsdie')
+  }, [postID])
 
   const allPostData = useSelector((state: any) => state.GetAllPostReducer.data)
   const userData = useSelector((state: any) => state.GeneralReducer.userData)

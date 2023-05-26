@@ -15,13 +15,15 @@ const Home = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const allPostData = useSelector((state: any) => state.GetAllPostReducer.data)
   const userData = useSelector((state: any) => state.GeneralReducer.userData)
-
+  /// gettings votes
+  const userVotes = useSelector((state: any) => state.GeneralReducer.votesData)
   const navigation = useNavigate()
   const { pages } = useParams()
   useEffect(() => {
     dispatch(GetAllPostsThunk({ dispatch, pages }))
     dispatch(UserDataThunk({ dispatch }))
-  }, [dispatch, pages])
+    console.log('MainPage')
+  }, [pages])
 
   const pageRef = useRef<HTMLDivElement | null>(null)
   React.useEffect(() => {

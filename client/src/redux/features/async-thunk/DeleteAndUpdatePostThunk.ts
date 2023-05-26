@@ -4,6 +4,7 @@ import axios from 'axios'
 interface DeletAndUpdate {
   id: string
   update?: { title: string; post: string; date: Date }
+  voteID?: string
 }
 
 export const DeletePost = createAsyncThunk(
@@ -13,6 +14,11 @@ export const DeletePost = createAsyncThunk(
     console.log(val.id)
     await axios
       .delete(apiUrl)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err))
+    const voteUrl = `http://localhost:3000/vote/delte${val.voteID}`
+    await axios
+      .delete(voteUrl)
       .then((res) => console.log(res))
       .catch((err) => console.log(err))
   },

@@ -1,6 +1,10 @@
-import { createAsyncThunk } from '@reduxjs/toolkit'
+import { ThunkDispatch, createAsyncThunk } from '@reduxjs/toolkit'
+import { getVotesData } from '../slice/GeneralSlice'
 import axios from 'axios'
-
+type getVoteType = {
+  dispatch: ThunkDispatch<any, any, any>
+  userID: string
+}
 export const UpVoteThunk = createAsyncThunk(
   'upvote/patch',
   async ({
@@ -24,24 +28,15 @@ export const UpVoteThunk = createAsyncThunk(
   },
 )
 
-export const DeleteVote = createAsyncThunk(
-  'downvote/patch',
-  async ({
-    id,
+export const GetVotes = createAsyncThunk(
+  'getvote/get',
+  async (val: getVoteType) => {
+    const apiUrl = `http://localhost:3000/votes/${val.userID}`
 
-    userID,
-    voteType,
-  }: {
-    id: string
-
-    userID: string
-    voteType: boolean
-  }) => {
-    const apiUrl = `http://localhost:3000/post/${voteType}/${id}`
-
-    await axios
-      .delete(apiUrl, { data: { userID } })
-      .then((res) => console.log(res))
+    const data = await axios
+      .get(apiUrl)
+      .then((res) => res.data)
       .catch((err) => console.log(err))
+    val.dispatch(getVotesData(data))
   },
 )

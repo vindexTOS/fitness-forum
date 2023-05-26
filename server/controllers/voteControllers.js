@@ -27,4 +27,44 @@ const postUpVote = async (req, res) => {
   }
 }
 
-export { postUpVote }
+const getVotes = async (req, res) => {
+  const { userID } = req.params
+
+  try {
+    const votes = await Votes.aggregate([
+      { $match: { 'Votes.userID': userID } },
+      {
+        $project: {
+          postID: 1,
+          Votes: {
+            $filter: {
+              input: '$Votes',
+              as: 'vote',
+              cond: { $eq: ['$$vote.userID', userID] },
+            },
+          },
+        },
+      },
+    ])
+
+    if (votes.length === 0) {
+      return res.status(400).json({ msg: 'No votes for this user' })
+    }
+
+    return res.status(200).json({ voteData: votes })
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({ msg: 'Error' })
+  }
+}
+const deleteVote = async (req, res) => {
+  let { voteID } = req.body
+  voteID = voteID.replace('\n', '')
+  const vote = await Votes.findById(voteID)
+  if (!vote) {
+    return res.status(404).json({ msg: 'no vote ' })
+  }
+  await Votes.findOneAndDelete({ _id: voteID })
+  return res.status(200).json({ msg: 'post deleted' })
+}
+export { postUpVote, getVotes, deleteVote }

@@ -4,6 +4,7 @@ const initialState = {
   page: 1,
   forumData: [],
   userData: [],
+  votesData: [],
 }
 
 const GeneralSlices = createSlice({
@@ -19,8 +20,16 @@ const GeneralSlices = createSlice({
     getUserData: (state, action) => {
       state.userData = action.payload
     },
+    getVotesData: (state, action) => {
+      state.votesData = action.payload
+    },
   },
 })
 
-export const { navigatePage, getForumData, getUserData } = GeneralSlices.actions
+export const {
+  navigatePage,
+  getForumData,
+  getUserData,
+  getVotesData,
+} = GeneralSlices.actions
 export default GeneralSlices.reducer

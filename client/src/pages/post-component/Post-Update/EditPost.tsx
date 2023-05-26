@@ -12,6 +12,7 @@ const EditPost = () => {
   useEffect(() => {
     dispatch(UserDataThunk({ dispatch }))
     dispatch(GetAllPostsThunk({ dispatch, pages: '1' }))
+    console.log('edit Post')
   }, [postID])
   const allPostData = useSelector((state: any) => state.GetAllPostReducer.data)
   const userData = useSelector((state: any) => state.GeneralReducer.userData)

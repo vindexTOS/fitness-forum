@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 import Post from '../models/postModel.js'
+import Votes from '../models/upVoteModel.js'
 
 import jwt from 'jsonwebtoken'
 import userSchema from '../models/userModel.js'
@@ -55,6 +56,7 @@ const login = async (req, res) => {
     }
 
     const userPosts = await Post.find({})
+
     const userPostLength = userPosts.filter(
       (val) => val.userID === String(user._id),
     )

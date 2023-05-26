@@ -22,6 +22,7 @@ const UserHome = () => {
       dispatch(getDataFromRegister(registerUser))
     }
     dispatch(GetAllPostsThunk({ dispatch, pages: '1' }))
+    console.log('UserHome')
   }, [])
 
   const LogOutHandler = async () => {

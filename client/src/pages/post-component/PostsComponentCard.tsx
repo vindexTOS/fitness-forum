@@ -8,7 +8,7 @@ import { DeletePost } from '../../redux/features/async-thunk/DeleteAndUpdatePost
 import { ThunkDispatch } from '@reduxjs/toolkit'
 import {
   UpVoteThunk,
-  DeleteVote,
+  GetVotes,
 } from '../../redux/features/async-thunk/UpVoteDownVoteThunks'
 export type PostsComponentCardType = {
   _id: string
@@ -38,11 +38,15 @@ const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
   }
 
   const userData = useSelector((state: any) => state.GeneralReducer.userData)
+  const userVotes = useSelector((state: any) => state.GeneralReducer.votesData)
   const userLogin = useSelector((state: any) => state.LoginReducer.data)
   const user = userData && userData.find((val: any) => val._id === userID)
   //checking if user is author of the post
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const [dropDown, setDropDown] = useState<boolean>(false)
+  const votePostID = userVotes?.voteData?.find(
+    (val: any) => val.postID === String(_id),
+  )
 
   const SettingButtons = () => {
     if (userLogin && userLogin.user && userLogin.user._id && _id) {
@@ -51,7 +55,13 @@ const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
           <button>Shear</button>
           <button onClick={() => navigate(`/edit-post/${_id}`)}>Edit</button>
           {userLogin.user._id === user._id && (
-            <button onClick={() => dispatch(DeletePost({ id: _id || '' }))}>
+            <button
+              onClick={() =>
+                dispatch(
+                  DeletePost({ id: _id || '', voteID: String(votePostID._id) }),
+                )
+              }
+            >
               Delete
             </button>
           )}
@@ -65,9 +75,15 @@ const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
       )
     }
   }
+  // faking actual number so we can reduce server requests for voting number
+  const [voteNum, setVoteNum] = useState<number>(upvote)
+  // changing color based on return value , for now we fake the UI result so we dont make bunch of unessasary requests to server
+  // after user reloads page himself true data will be retraved from the server
+  const [userRatedPost, setUserRatedPost] = useState<string>(
+    String(votePostID?.Votes[0]?.voteType),
+  )
   const upVote = async () => {
-    // await dispatch(DeleteVote({ userID, id: _id, voteType: 'downvote' }))
-    dispatch(
+    await dispatch(
       UpVoteThunk({
         id: _id,
         userID: userLogin.user._id,
@@ -75,11 +91,12 @@ const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
         query: `upvote`,
       }),
     )
+    setVoteNum(voteNum + 1)
+    setUserRatedPost('true')
   }
 
   const downVote = async () => {
-    // await dispatch(DeleteVote({ userID, id: _id, voteType: 'upvote' }))
-    dispatch(
+    await dispatch(
       UpVoteThunk({
         id: _id,
         userID: userLogin.user._id,
@@ -87,19 +104,44 @@ const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
         query: `upvote`,
       }),
     )
+    setVoteNum(voteNum - 1)
+    setUserRatedPost('false')
+  }
+
+  // React.useEffect(() => {
+  //   if (userLogin.user) {
+  //     dispatch(GetVotes({ dispatch, userID: userLogin.user._id }))
+  //   }
+  //   setUserRatedPost(String(votePostID?.Votes[0]?.voteType))
+  // }, [])
+
+  const upVoteColor = (
+    arrowColor: string,
+    arrowColor2: string,
+    defaultColor: string,
+  ) => {
+    if (userRatedPost === 'true') {
+      return arrowColor
+    } else if (userRatedPost === 'false') {
+      return arrowColor2
+    } else if (userRatedPost === 'undefiend') {
+      return defaultColor
+    }
   }
   return (
-    <div
-      // onClick={() => console.log(userLogin.user._id)}
-      className={style.mainDiv}
-    >
+    <div className={style.mainDiv}>
       <div className={style.raiting}>
         <BsThreeDots title="setting" onClick={() => setDropDown(!dropDown)} />
         {dropDown && <SettingButtons />}
         <div className={style.btn}>
-          <TiArrowSortedUp onClick={() => upVote()} className={style.icon} />
-          {upvote}
+          <TiArrowSortedUp
+            style={{ color: upVoteColor('green', 'gray', 'gray') }}
+            onClick={() => upVote()}
+            className={style.icon}
+          />
+          {voteNum}
           <TiArrowSortedDown
+            style={{ color: upVoteColor('gray', 'red', 'gray') }}
             onClick={() => downVote()}
             className={style.icon}
           />
