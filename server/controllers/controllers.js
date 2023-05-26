@@ -1,6 +1,7 @@
 import Post from '../models/postModel.js'
 import User from '../models/userModel.js'
 import Forum from '../models/forumModel.js'
+import Vote from '../models/upVoteModel.js'
 import jwt from 'jsonwebtoken'
 import { checkUserPost } from '../middleware/auth.js'
 const getAllPosts = async (req, res) => {
@@ -16,6 +17,22 @@ const getAllPosts = async (req, res) => {
     // const posts = await Post.find({}).skip(startIndex).limit(limit)
     const AllData = await Post.find({})
     let posts = await Post.find({})
+    const vote = await Vote.find({})
+
+    posts.filter((val) => {
+      const findVote = vote.find((vote) => vote.postID === String(val._id))
+      if (findVote) {
+        let votes = 0
+        let Arr = findVote.Votes
+        for (let i = 0; i < Arr.length; i++) {
+          if (Arr[i].voteType) {
+            votes++
+          }
+          // console.log(votes)
+        }
+        val.upvote = votes
+      }
+    })
 
     posts = posts.reverse() // Reverse the order of the posts
 
@@ -38,11 +55,17 @@ const postData = async (req, res) => {
   const forum = await Forum.find({ forumID })
 
   try {
-    // if (title && post && photo && forumID && userID) {
     const obj = { title, post, photo, forumID, userID }
     const postObj = await Post.create(obj)
-    return res.status(201).json(postObj)
-    // }
+
+    const voteObj = {
+      postID: postObj._id,
+      Votes: [{ voteType: true, userID: userID }],
+    } // Access the newly created post's _id
+    const vote = await Vote.create(voteObj)
+
+    console.log(vote)
+    return res.status(201).json({ postObj, vote }) // Return both postObj and vote as JSON response
   } catch (error) {
     console.log(error)
     return res.status(500).json({ msg: error })

@@ -30,6 +30,10 @@ const postSchema = new mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+  upvote: {
+    type: Number,
+    default: 1,
+  },
 })
 
 export default mongoose.model('forum-post', postSchema)

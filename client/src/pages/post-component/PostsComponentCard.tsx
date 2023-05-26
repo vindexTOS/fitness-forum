@@ -1,25 +1,30 @@
 import React, { FC, useState } from 'react'
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti'
 import { BsThreeDots } from 'react-icons/bs'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { DeletePost } from '../../redux/features/async-thunk/DeleteAndUpdatePostThunk'
-import { useDispatch } from 'react-redux'
+
 import { ThunkDispatch } from '@reduxjs/toolkit'
+import {
+  UpVoteThunk,
+  DeleteVote,
+} from '../../redux/features/async-thunk/UpVoteDownVoteThunks'
 export type PostsComponentCardType = {
-  _id?: string
+  _id: string
   forumID?: string
   photo: null | any
   post: string
-  userID?: string
+  userID: string
   date?: string
   title: string
+  upvote: number
 }
 export type DataInterFace = {
   data: PostsComponentCardType
 }
 const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
-  const { _id, forumID, photo, post, userID, title, date } = data
+  const { _id, forumID, photo, post, userID, title, date, upvote } = data
   const navigate = useNavigate()
   const realPhoto = photo !== 'No Photo' && photo
   const style = {
@@ -60,15 +65,44 @@ const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
       )
     }
   }
+  const upVote = async () => {
+    // await dispatch(DeleteVote({ userID, id: _id, voteType: 'downvote' }))
+    dispatch(
+      UpVoteThunk({
+        id: _id,
+        userID: userLogin.user._id,
+        voteType: true,
+        query: `upvote`,
+      }),
+    )
+  }
 
+  const downVote = async () => {
+    // await dispatch(DeleteVote({ userID, id: _id, voteType: 'upvote' }))
+    dispatch(
+      UpVoteThunk({
+        id: _id,
+        userID: userLogin.user._id,
+        voteType: false,
+        query: `upvote`,
+      }),
+    )
+  }
   return (
-    <div className={style.mainDiv}>
+    <div
+      // onClick={() => console.log(userLogin.user._id)}
+      className={style.mainDiv}
+    >
       <div className={style.raiting}>
         <BsThreeDots title="setting" onClick={() => setDropDown(!dropDown)} />
         {dropDown && <SettingButtons />}
         <div className={style.btn}>
-          <TiArrowSortedUp className={style.icon} />{' '}
-          <TiArrowSortedDown className={style.icon} />
+          <TiArrowSortedUp onClick={() => upVote()} className={style.icon} />
+          {upvote}
+          <TiArrowSortedDown
+            onClick={() => downVote()}
+            className={style.icon}
+          />
         </div>
       </div>
       <section className={style.mainContent}>

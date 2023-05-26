@@ -16,6 +16,6 @@ commentRouter
   .delete(authMiddleware, deleteComment)
   .patch(authMiddleware, updateComment)
 
-commentRouter.route('/comment/reply/:replyID').patch(addReply)
+commentRouter.route('/comment/reply/:replyID').patch(authMiddleware, addReply)
 
 export default commentRouter
