@@ -7,7 +7,7 @@ import { GetThreadThunk } from '../../redux/features/async-thunk/GetThreadsThunk
 import { ThunkDispatch } from '@reduxjs/toolkit'
 import PostsComponentCard, {
   PostsComponentCardType,
-} from './PostsComponentCard'
+} from './Post-Card/PostsComponentCard'
 import MakePostComponent from '../../components/MakePostComponent'
 const Thread = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()

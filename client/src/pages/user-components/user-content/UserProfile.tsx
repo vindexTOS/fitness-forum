@@ -8,7 +8,7 @@ import UserNav from './UserNav'
 import { UserDataThunk } from '../../../redux/features/async-thunk/UserDataThunk'
 import PostsComponentCard, {
   PostsComponentCardType,
-} from '../../post-component/PostsComponentCard'
+} from '../../post-component/Post-Card/PostsComponentCard'
 import { DeletePost } from '../../../redux/features/async-thunk/DeleteAndUpdatePostThunk'
 import { getCookies } from '../../../redux/features/slice/LoginSlice'
 const UserProfile = () => {

@@ -5,6 +5,7 @@ const initialState = {
   forumData: [],
   userData: [],
   votesData: [],
+  shareBoolean: false,
 }
 
 const GeneralSlices = createSlice({
@@ -23,6 +24,9 @@ const GeneralSlices = createSlice({
     getVotesData: (state, action) => {
       state.votesData = action.payload
     },
+    sharePopUp: (state) => {
+      state.shareBoolean = !state.shareBoolean
+    },
   },
 })
 
@@ -31,5 +35,6 @@ export const {
   getForumData,
   getUserData,
   getVotesData,
+  sharePopUp,
 } = GeneralSlices.actions
 export default GeneralSlices.reducer

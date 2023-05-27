@@ -40,3 +40,5 @@ export const GetVotes = createAsyncThunk(
     val.dispatch(getVotesData(data))
   },
 )
+
+

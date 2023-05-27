@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 // components
-import PostsComponentCard from '../../post-component/PostsComponentCard'
+import PostsComponentCard from '../../post-component/Post-Card/PostsComponentCard'
 import LoadingComponent from './LoadingComponent'
 import ErrorComponent from './ErrorComponent'
 import TitleInputComponent from './TitleInputComponent'

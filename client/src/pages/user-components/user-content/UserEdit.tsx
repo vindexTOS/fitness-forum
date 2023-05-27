@@ -57,7 +57,7 @@ const UserEdit = () => {
             type="file"
           />
         </label>
-        <img src={valueAvatar} />
+        <img className="w-[200px] h-[200px]" src={valueAvatar} />
         <button onClick={() => EditUser()}>SAVE</button>
       </div>
     )
