@@ -22,13 +22,24 @@ const PostInside = () => {
   const userData = useSelector((state: any) => state.GeneralReducer.userData)
   if (allPostData && allPostData.AllData && userData) {
     const findData = allPostData.AllData?.find((val: any) => postID === val._id)
-    const { _id, forumID, photo, post, userID, title, date } = findData || {}
+    const { _id, forumID, photo, post, userID, title, date, upvote } =
+      findData || {}
     const user = userData && userData.find((val: any) => val._id === userID)
     const { name } = user ? user : { name: 'user name' }
     return (
       <section className="w-[100%]   pt-40  flex-col flex justify-center items-center">
         <PostInnerCard
-          data={{ _id, forumID, photo, post, userID, title, name, date }}
+          data={{
+            _id,
+            forumID,
+            photo,
+            post,
+            userID,
+            title,
+            name,
+            date,
+            upvote,
+          }}
         />
         <CommentPost data={{ name, postID: _id }} />
         <CommentsSection />

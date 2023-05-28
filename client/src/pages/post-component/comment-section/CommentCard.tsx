@@ -12,6 +12,7 @@ import { ThunkDispatch } from '@reduxjs/toolkit'
 import CommentReplyComponent from './CommentReplyComponent'
 import { useSelector } from 'react-redux'
 import Replies from './Replies'
+import { useNavigate } from 'react-router-dom'
 type DataType = {
   data: CommentType
 }
@@ -33,7 +34,7 @@ const CommentCard: FC<DataType> = ({ data }) => {
   useOutClick(dropDownRef, handleDropDownCancle)
   const style = {
     commentDiv: `bg-[#363434] py-5 flex flex-col p-4 rounded-[5px] gap-2     relative`,
-    nameDiv: `flex max_smm:flex-col items-start  gap-5 py-5 bg-[#262525] px-5 max_smm:px-0  rounded-[8px]`,
+    nameDiv: `flex max_smm:flex-col items-start  gap-5 py-5  max_smm:px-10 bg-[#262525] px-5 max_smm:px-0  rounded-[8px]`,
     img: `w-[50px] h-[50px] rounded-[10%]`,
   }
   if (data) {
@@ -43,7 +44,7 @@ const CommentCard: FC<DataType> = ({ data }) => {
     const { comment, userID, postID, date, _id } = data
     const { name, avatar } = data?.user
     const [editComment, setEdditComment] = React.useState<string>(comment)
-
+    const navigate = useNavigate()
     const deleteData = async () => {
       await dispatch(DeleteCommentThunk(_id))
       dispatch(GetCommentThunk({ dispatch, postID, pages: '1' }))
@@ -108,14 +109,17 @@ const CommentCard: FC<DataType> = ({ data }) => {
         </div>
 
         <div className={style.nameDiv}>
-          <div className="flex flex-col items-center  gap-2  ">
+          <div
+            className="flex flex-col items-center  gap-2"
+            onClick={() => navigate(`/user/${userID}`)}
+          >
             <img className={style.img} src={avatar} />
             <h1>{name}</h1>
           </div>
 
           <div className="w-[100%] flex items-center justify-center flex-col">
             {!edit ? (
-              <p className="px-10 max_smm:px-2 max_smm:text-[12px] break-all  max_smm:text-center py-4 rounded-[8px] ">
+              <p className="px-10 max_smm:px-0 max_smm:text-[12px] break-all  max_smm:w-[110%]     max_smm:text-center py-4 rounded-[8px] ">
                 {comment}
               </p>
             ) : (
@@ -128,15 +132,25 @@ const CommentCard: FC<DataType> = ({ data }) => {
                 <button onClick={() => EditData()}>Edit</button>
               </div>
             )}
-            <p className="text-[10px]">{date.slice(0, 16)}</p>
+            <p className="text-[10px]">{date.slice(0, 10)}</p>
           </div>
         </div>
-        <h1
-          onClick={() => setReplyDrop(!replyDrop)}
-          className="text-end cursor-pointer"
-        >
-          replay
-        </h1>
+        {name ? (
+          <h1
+            onClick={() => navigate('/login')}
+            className={`text-end cursor-pointer  `}
+          >
+            Log-in to reply
+          </h1>
+        ) : (
+          <h1
+            onClick={() => setReplyDrop(!replyDrop)}
+            className={`text-end cursor-pointer  `}
+          >
+            replay
+          </h1>
+        )}
+
         {replyDrop && (
           <CommentReplyComponent
             name={loggedINUserData.user.name}

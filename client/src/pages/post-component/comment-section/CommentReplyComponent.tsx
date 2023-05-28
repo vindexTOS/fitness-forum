@@ -43,31 +43,34 @@ const CommentReplyComponent: FC<loggedUserType> = ({
       setReplyDrop(false)
     }
   }
+  if (name && avatar) {
+    return (
+      <div className={style.mainDiv}>
+        <div className="flex flex-col w-[10%]  max_smm:flex-row  max_smm:w-[90%]  items-center  gap-4">
+          {/* <img src={avatar} className="w-[50px] h-[50px] rounded-[10px]" /> */}
 
-  return (
-    <div className={style.mainDiv}>
-      <div className="flex flex-col w-[10%]  max_smm:flex-row  max_smm:w-[90%]  items-center  gap-4">
-        <img src={avatar} className="w-[50px] h-[50px] rounded-[10px]" />
-
-        <p className="text-[12px] w-[6rem]">
-          Reply as <span>{name}</span>
-        </p>
+          <p className="text-[12px] w-[6rem]">
+            Reply as <span>{name}</span>
+          </p>
+        </div>
+        <textarea
+          onClick={() => setZoomTextArea(!zoomTextArea)}
+          onChange={(e) => setReplyComment(e.target.value)}
+          placeholder={`reply to ${commentUser}`}
+          className={`px-10 h-[100px] bg-gray-800 outline-none  w-[80%]  max_smm:w-[100%]  py-4 rounded-[8px] ${
+            zoomTextArea &&
+            ` max_smm:h-[300px] max_smm:absolute max_smm:right-1 bottom-60  max_smm:w-[100%]`
+          }`}
+          //   onChange={(e) => setEdditComment(e.target.value)}
+        ></textarea>
+        <button className={style.btn} onClick={() => replyHanndler()}>
+          Comment
+        </button>
       </div>
-      <textarea
-        onClick={() => setZoomTextArea(!zoomTextArea)}
-        onChange={(e) => setReplyComment(e.target.value)}
-        placeholder={`reply to ${commentUser}`}
-        className={`px-10 h-[100px] bg-gray-800 outline-none  w-[80%]  max_smm:w-[100%]  py-4 rounded-[8px] ${
-          zoomTextArea &&
-          ` max_smm:h-[300px] max_smm:absolute max_smm:right-1 bottom-60  max_smm:w-[100%]`
-        }`}
-        //   onChange={(e) => setEdditComment(e.target.value)}
-      ></textarea>
-      <button className={style.btn} onClick={() => replyHanndler()}>
-        Comment
-      </button>
-    </div>
-  )
+    )
+  } else {
+    return <div>no</div>
+  }
 }
 
 export default CommentReplyComponent

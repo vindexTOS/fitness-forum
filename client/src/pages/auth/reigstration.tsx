@@ -7,11 +7,10 @@ import React, { useEffect, useState } from 'react'
 import { ThunkDispatch } from '@reduxjs/toolkit'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import Cookies from 'universal-cookie'
 
 // importing redux functions slices and thunk
 import { RegisterThunk } from '../../redux/features/async-thunk/Register'
-import { getCookies } from '../../redux/features/slice/LoginSlice'
+import { getError } from '../../redux/features/slice/LoginSlice'
 import {
   getName,
   getEmail,
@@ -30,7 +29,7 @@ const Reigstration = () => {
   const navigate = useNavigate()
   // dispatching , using ThunkDispatch is very importent to Dispatch asyncThunk functions
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
-  const err = useSelector((state: any) => state.RegisterReducer.error)
+  const realError = useSelector((state: any) => state.LoginReducer.realErro)
   const url = useSelector((state: any) => state.FireBasePhotoReducer.url)
   /// photo upload
 
@@ -55,14 +54,23 @@ const Reigstration = () => {
   }
 
   useEffect(() => {
+    if (!name) {
+      dispatch(getError('Name input is empty'))
+    }
+    if (!email) {
+      dispatch(getError('Email input is empty'))
+    }
+    if (!password) {
+      dispatch(getError('Passwod input is empty'))
+    }
+
     if (name && email && password && url) {
       console.log(url)
-      dispatch(RegisterThunk({ name, email, password, url }))
+      dispatch(RegisterThunk({ name, email, password, url, dispatch }))
     } else if (name && email && password) {
       console.log(url)
-      dispatch(RegisterThunk({ name, email, password, url }))
+      dispatch(RegisterThunk({ name, email, password, url, dispatch }))
     }
-    console.log(url)
     //checking if we get token from the database so we can sign user in right away
     if (data.user) {
       //re daecting user to home page
@@ -70,6 +78,13 @@ const Reigstration = () => {
       console.log('home')
     }
   }, [url, switcher])
+  useEffect(() => {
+    if (realError) {
+      setTimeout(() => {
+        dispatch(getError(''))
+      }, 3000)
+    }
+  }, [realError])
   const style = {
     section: `w-[100vw] pt-40 flex flex-col items-center justify-center`,
     formDiv: `flex flex-col gap-2 bg-[#403f3f] p-10 rounded-[20px]`,
@@ -90,12 +105,16 @@ const Reigstration = () => {
             </div>
           ) : null}
           <InputDiv
+            error={realError}
+            errorType={'Name input is empty'}
             holder="name"
             Icon={RiFileUserFill}
             type={'text'}
             fun={getName}
           />
           <InputDiv
+            error={realError}
+            errorType={'Email input is empty'}
             holder="email"
             Icon={AiOutlineMail}
             type={'email'}
@@ -103,6 +122,8 @@ const Reigstration = () => {
           />
 
           <InputDiv
+            error={realError}
+            errorType={'Passwod input is empty'}
             holder="password"
             Icon={RiLockPasswordFill}
             type={'password'}
@@ -114,6 +135,11 @@ const Reigstration = () => {
             title="Register"
             func={RegisterFun}
           />
+          {realError && (
+            <p className="text-center text-[#ec2b58] border-2 py-2 px-2 rounded-[6px] border-[#ec2b58]">
+              {realError}!!!
+            </p>
+          )}
         </div>
         <p className="text-[#f51b51]">
           If you already have an account sign

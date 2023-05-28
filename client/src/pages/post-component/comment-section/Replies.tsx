@@ -12,7 +12,7 @@ const Replies: FC<ReplyType> = ({ replyData }) => {
   const replyUser = usersData.find((val: any) => val._id === userID)
   const { name, avatar } = replyUser
   return (
-    <div className="ml-10  m  gap-2 p-2    bg-[#262525] rounded-[10px] flex flex-col">
+    <div className="ml-10  m  gap-2 p-2     bg-[#262525] rounded-[10px] flex flex-col">
       <div className="flex justify-between   px-1">
         <div className="flex items-center  gap-2 ">
           <img src={avatar} className="w-[40px] h-[40px] rounded-[10px]" />

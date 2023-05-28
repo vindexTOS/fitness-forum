@@ -6,8 +6,8 @@ import {
   GetCommentThunk,
 } from '../../../redux/features/async-thunk/CommentThunk'
 import { getComment } from '../../../redux/features/slice/CommentSlice'
-import Cookies from 'universal-cookie'
-import { getCookies } from '../../../redux/features/slice/LoginSlice'
+import { useNavigate } from 'react-router-dom'
+
 type CommentProp = {
   name: string
   postID: string
@@ -20,7 +20,7 @@ const CommentPost: FC<DataType> = ({ data }) => {
   const comment = useSelector((state: any) => state.CommentReducer.comment)
   const userInfo = useSelector((state: any) => state.LoginReducer.data)
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
-
+  const navigate = useNavigate()
   const { postID } = data
   const makeComment = async () => {
     if (userInfo.user) {
@@ -38,9 +38,9 @@ const CommentPost: FC<DataType> = ({ data }) => {
   }
 
   const style = {
-    mainDiv: `w-[80%] bg-[#262525] flex items-center jusify-center gap-5 py-5 flex-col`,
+    mainDiv: `w-[80%]  max_smm:w-[100%] bg-[#262525] flex items-center jusify-center gap-5 py-10 flex-col`,
     p: `w-[90%] text-gray-400 flex  gap-2`,
-    textarea: `w-[90%] text-gray-300 h-[200px] max-h-[400px] min-h-[150px] rounded-[3px] bg-[#363434] p-2 outline-none`,
+    textarea: `w-[90%]  max_smm:w-[100%] text-gray-300 h-[200px] max-h-[400px] min-h-[150px] rounded-[3px] bg-[#363434] p-2 outline-none`,
     btn: `  text-white bg-gradient-to-r from-[#cf1b4e] via-[#cf1b4e] to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 shadow-lg shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80 font-medium rounded-lg text-sm    text-center w-[9rem] h-[2rem] `,
   }
   if (userInfo && userInfo?.user) {
@@ -67,7 +67,26 @@ const CommentPost: FC<DataType> = ({ data }) => {
       </div>
     )
   } else {
-    return <div>loading</div>
+    return (
+      <div className={style.mainDiv}>
+        <h1 className="text-white text-[1rem]">
+          If you want to comment on this post{' '}
+          <span
+            onClick={() => navigate(`/login`)}
+            className="text-blue-300 font-bold hover:text-blue-400 hover:underline cursor-pointer"
+          >
+            Log-in
+          </span>{' '}
+          or{' '}
+          <span
+            onClick={() => navigate(`/register`)}
+            className="text-red-400 font-bold hover:text-red-500 hover:underline cursor-pointer"
+          >
+            Register
+          </span>
+        </h1>
+      </div>
+    )
   }
 }
 

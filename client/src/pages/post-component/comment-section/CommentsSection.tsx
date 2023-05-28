@@ -29,7 +29,7 @@ const CommentsSection = () => {
     }
   }, [postID])
   const style = {
-    comment: `bg-[#262525] text-gray-400 w-[80%] flex flex-col gap-2`,
+    comment: `bg-[#262525] text-gray-400 w-[80%]  max_smm:w-[100%] flex flex-col gap-2`,
   }
 
   if (allComments) {

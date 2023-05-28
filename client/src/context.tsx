@@ -17,7 +17,7 @@ import { ThunkDispatch } from '@reduxjs/toolkit'
 
 type Cell = {
   image: any
-  htmlImg: String | null
+  htmlImg: String | string | null
   getThread: () => void
   imgUploadDrag: (e: React.DragEvent<HTMLLabelElement>) => void
   removeImgFromHtml: () => void

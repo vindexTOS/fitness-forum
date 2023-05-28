@@ -30,9 +30,6 @@ const RegisterSlice = createSlice({
     getPassword: (state: initialStateType, action) => {
       state.password = action.payload
     },
-    errorHandle: (state: initialStateType, action) => {
-      state.error = action.payload
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -55,9 +52,4 @@ const RegisterSlice = createSlice({
 })
 
 export default RegisterSlice.reducer
-export const {
-  getName,
-  getEmail,
-  getPassword,
-  errorHandle,
-} = RegisterSlice.actions
+export const { getName, getEmail, getPassword } = RegisterSlice.actions

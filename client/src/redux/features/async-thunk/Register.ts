@@ -1,13 +1,14 @@
-import { createAsyncThunk } from '@reduxjs/toolkit'
-import axios, { AxiosResponse } from 'axios'
+import { ThunkDispatch, createAsyncThunk } from '@reduxjs/toolkit'
+import axios from 'axios'
 import jwt from 'jwt-decode'
 import Cookies from 'universal-cookie'
-
+import { getError } from '../slice/LoginSlice'
 interface RegisterPayload {
   name: string
   email: string
   password: string
   url: string
+  dispatch: ThunkDispatch<any, any, any>
 }
 
 const RegisterThunk = createAsyncThunk(
@@ -31,10 +32,16 @@ const RegisterThunk = createAsyncThunk(
             const userCookieData = jwt(cookies.get('jwt_authorization'))
             return userCookieData
           })
-          .catch((err) => console.log(err))
+          .catch((err) => {
+            val.dispatch(getError(err.response.data.msg))
+            console.log(err)
+          })
 
         return data
       } catch (error) {
+        const errr: any = error
+        val.dispatch(getError(errr.response.data.msg))
+
         console.log(error)
       }
     }
