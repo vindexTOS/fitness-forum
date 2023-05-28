@@ -11,7 +11,7 @@ const CommentPages = ({ postID }: { postID: string }) => {
     (state: any) => state.CommentReducer.allComments,
   )
   return (
-    <div className="h-[10rem] gap-3 items-center justify-center flex w-[600px] outline ">
+    <div className="   gap-3 items-center justify-center flex   outline ">
       {new Array(allComments.totalPages)
         .fill('')
         .map((val: string, index: number) => (

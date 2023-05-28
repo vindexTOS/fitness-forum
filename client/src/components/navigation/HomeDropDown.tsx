@@ -12,35 +12,41 @@ const HomeDropDown = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const navigate = useNavigate()
   const style = {
-    mainDiv: `h-[480px] w-[15rem] bg-[#262525]  noSelection  border-[#ec2b58]  border-b-[1px] border-l-[1px] border-r-[1px] boxshaddow absolute top-[3rem] left-[8.7rem] z-20`,
+    mainDiv: `h-[480px]  w-[15rem] bg-[#262525]  noSelection  border-[#ec2b58]  border-b-[1px] border-l-[1px] border-r-[1px] boxshaddow absolute top-[3rem] left-[8.7rem] z-20`,
     threadDiv: `flex flex-col p-5 gap-2`,
   }
   useEffect(() => {
     // getting thread speficit data from db
     dispatch(GetForumThunk({ dispatch }))
   }, [])
+  const [search, setSearch] = React.useState<string>('')
   return (
     <div className={style.mainDiv}>
       <div className={style.threadDiv}>
         <input
+          onChange={(e) => setSearch(e.target.value)}
           type="text"
-          className="bg-[#262525] border-[#ec2b58] border-[1px] rounded-[5px] "
+          className="bg-[#262525] border-[#ec2b58] text-white border-[1px] rounded-[5px] "
           placeholder=" Filter"
         />
         <p className="text-gray-500 text-[10px]">COMMUNITIES</p>
         <div className="flex flex-col gap-2 h-[100px]  overflow-y-scroll overflox-x-hidden element-without-scrollbar ">
-          {forumData.map((val: any) => {
-            return (
-              <div
-                onClick={() => navigate(`/threads/${val.forumID}/page/1`)}
-                key={val._id}
-                className="flex items-center hover:bg-black p-1 rounded-[5px] cursor-pointer "
-              >
-                <img className="rounded-[50%] w-[30px]" src={val.avatar} />
-                <p className="text-gray-400">threads/{val.name}</p>
-              </div>
+          {forumData
+            .filter((val: any) =>
+              val.name.toLowerCase().includes(search.toLowerCase()),
             )
-          })}
+            .map((val: any) => {
+              return (
+                <div
+                  onClick={() => navigate(`/threads/${val.forumID}/page/1`)}
+                  key={val._id}
+                  className="flex items-center hover:bg-black p-1 rounded-[5px] cursor-pointer "
+                >
+                  <img className="rounded-[50%] w-[30px]" src={val.avatar} />
+                  <p className="text-gray-400">threads/{val.name}</p>
+                </div>
+              )
+            })}
         </div>
       </div>
       <div className={style.threadDiv}>

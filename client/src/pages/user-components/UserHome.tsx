@@ -46,6 +46,13 @@ const UserHome = () => {
     const { _id, name, email, role, avatar, postLength } = user.user
     const style = {
       mainDiv: `flex flex-col items-center py-20`,
+      profileDiv: `bg-[#2e2d2d] flex  max_smm:items-center max_md2:flex-col justify-around  rounded-[5px] w-[900px]  max_lg:w-[90%] py-10 flex px-5 gap-2 boxshaddow `,
+      profileInfo: `bg-[#232323] max_smm:w-[90%]  rounded-lg flex flex-col p-2 justify-around max_smm:text-[12px] max_smm:`,
+      imgEditDiv: `flex  max_smm:w-[90%] items-center justify-between w-[290px] py-5  rounded-lg gap-2 flex-col bg-[#232323]   `,
+
+      img: ` w-[250px] h-[250px] max_smm:w-[90%] rounded-lg`,
+      btn: `relative  max_smm:w-[90%]  w-[250px] flex items-center justify-center p-0.5 mb-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-[#cf1b4e] group-hover:from-purple-500 group-hover:to-[#cf1b4e] hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800`,
+      btnSpan: `relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 w-[99%]`,
     }
     // const filteredDataBasedOnUser = allPostData?.AllData.filter(
     //   (val: PostsComponentCardType) => _id === val.userID,
@@ -53,25 +60,29 @@ const UserHome = () => {
 
     return (
       <div className={style.mainDiv}>
-        <div className="bg-[#2e2d2d]  rounded-[5px] w-[900px] py-10 flex px-2 gap-2">
+        <div className={style.profileDiv}>
           {' '}
           {/* <button onClick={LogOutHandler}>LOG OUT</button> */}
-          <h1 onClick={() => console.log(user)}>LOG</h1>
+          {/* <h1 onClick={() => console.log(user)}>LOG</h1> */}
           {/* <h1 onClick={() => dispatch(getCookies())}>LOG</h1> */}
           {/* <h1>{_id}</h1> */}
-          <label onDrop={(e) => imgUploadDrag(e)} className=" " htmlFor="photo">
-            <img
-              className=" w-[250px] rounded-[5px]"
-              src={htmlImg ? htmlImg : avatar}
-            />
-            <input
-              onChange={(e) => imgUpload(e)}
-              id="photo"
-              className="  hidden"
-              type="file"
-            />
-          </label>
-          <div>
+          <div className={style.imgEditDiv}>
+            <img className={style.img} src={htmlImg ? htmlImg : avatar} />
+            <button
+              className={style.btn}
+              onClick={() => navigate(`/edit-user/${_id}`)}
+            >
+              <span className={style.btnSpan}>Edit</span>
+            </button>
+          </div>
+          <div className={style.profileInfo}>
+            <h1 className="text-[#cf1b4e] flex  gap-1">
+              Email: <span className="text-white"> {email}</span>
+            </h1>
+            <h1 className="text-[#cf1b4e] flex  gap-1">
+              Registration Date:{' '}
+              <span className="text-white"> {user.user.date.slice(0, 10)}</span>
+            </h1>
             <h1 className="text-[#cf1b4e] flex  gap-1">
               Role
               {role === 'admin' ? (
@@ -83,9 +94,7 @@ const UserHome = () => {
             <h1 className="text-[#cf1b4e] flex  gap-1">
               Name: <span className="text-white">{name}</span>
             </h1>
-            <h1 className="text-[#cf1b4e] flex  gap-1">
-              Email: <span className="text-white"> {email}</span>
-            </h1>
+
             <h1 className="text-[#cf1b4e] flex  gap-1">
               Posts:
               <span
@@ -95,12 +104,6 @@ const UserHome = () => {
                 {postLength}
               </span>
             </h1>
-            <button
-              className="text-[2rem] text-blue-500"
-              onClick={() => navigate(`/edit-user/${_id}`)}
-            >
-              Edit
-            </button>
           </div>
         </div>
         <PostData />

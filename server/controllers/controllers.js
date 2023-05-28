@@ -1,6 +1,7 @@
 import Post from '../models/postModel.js'
 import User from '../models/userModel.js'
 import Forum from '../models/forumModel.js'
+import Comments from '../models/commentModel.js'
 import Vote from '../models/upVoteModel.js'
 import jwt from 'jsonwebtoken'
 import { checkUserPost } from '../middleware/auth.js'

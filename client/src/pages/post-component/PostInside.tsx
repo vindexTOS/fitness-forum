@@ -26,7 +26,7 @@ const PostInside = () => {
     const user = userData && userData.find((val: any) => val._id === userID)
     const { name } = user ? user : { name: 'user name' }
     return (
-      <section className="w-[100%] ]   pt-40  flex-col flex justify-center items-center">
+      <section className="w-[100%]   pt-40  flex-col flex justify-center items-center">
         <PostInnerCard
           data={{ _id, forumID, photo, post, userID, title, name, date }}
         />

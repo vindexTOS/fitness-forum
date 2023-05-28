@@ -3,9 +3,7 @@ import { BsFillPersonFill } from 'react-icons/bs'
 import { AiFillHome } from 'react-icons/ai'
 import { useNavigate, Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { IoIosAddCircleOutline } from 'react-icons/io'
-import { MdCreateNewFolder } from 'react-icons/md'
-import { FaRegUserCircle } from 'react-icons/fa'
+import useOutClick from '../../Hooks/useOutClick'
 import { MdOutlineFitnessCenter } from 'react-icons/md'
 import ProfileDropDown from './ProfileDropDown'
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md'
@@ -16,36 +14,34 @@ const NavBar = () => {
   const style = {
     color: `#232323`,
     color2: `#ec2b58`,
-    nav: `w-[100vw] fixed gap-5 h-[50px] bg-[#232323] border-b-[1px] border-[#ec2b58] boxshaddow flex items-center justify-between px-20 z-40`,
-    subDiv: `flex items-center justify-center gap-5 noSelection`,
-    home: `flex  items-center justify-around  px-5 py-[2px]   hover:outline outline-[#ec2b58] outline-[1px]  w-[16rem] rounded-[30px] cursor-pointer  `,
+    nav: `w-[100vw] fixed gap-5 h-[50px] bg-[#232323] border-b-[1px] border-[#ec2b58] boxshaddow flex items-center justify-between px-20 z-40 max_smm:px-3`,
+    subDiv: `flex items-center justify-center gap-5 max_smm:justify-around max_smm:w-[100%] noSelection rounded-[50%] `,
+    home: `flex  items-center justify-around  px-5 py-[2px]   hover:outline outline-[#ec2b58] outline-[1px] max_smm:w-[13rem] max_smm:m-0  w-[16rem] rounded-[30px] cursor-pointer  `,
     homeP: `text-[#ec2b58] text-[1.2rem] font-medium`,
-    auth: `border-2 p-1 rounded-[20px] text-[#ec2b58] border-[#ec2b58] flex items-center justify-around  w-[10rem] cursor-pointer hover:border-[#e64369]  text-[#e64369] `,
+    auth: `border-2 p-1 rounded-[20px] max_smm:w-[50px] text-[#ec2b58] border-[#ec2b58] flex items-center justify-around  w-[10rem] cursor-pointer hover:border-[#e64369]  text-[#e64369] `,
     icon: `text-[#ec2b58] text-[2rem] cursor-pointer`,
+    avatar: `w-[2.3rem] h-[2.3rem] rounded-[50%] ourline outline-[1px] outline-[#2e2d2d] boxshaddow cursor-pointer`,
   }
   const navigate = useNavigate()
   const user = useSelector((state: any) => state.LoginReducer.data)
   const dropDownRef = React.useRef<HTMLDivElement | null>(null)
 
-  React.useEffect(() => {
-    const handleOutclick = (e: { target: any }) => {
-      if (dropDownRef.current && !dropDownRef.current.contains(e.target)) {
-        setHomeDrop(false)
-        setDropDown(false)
-      }
-    }
-    document.addEventListener('mousedown', handleOutclick)
-    return () => {
-      document.removeEventListener('mousedown', handleOutclick)
-    }
-  }, [dropDownRef])
+  const hanndleCloseDown = () => {
+    setHomeDrop(false)
+    setDropDown(false)
+  }
+  useOutClick(dropDownRef, hanndleCloseDown)
+
   return (
     <nav ref={dropDownRef} className={style.nav}>
       <div className={style.subDiv}>
-        <MdOutlineFitnessCenter
-          className={style.icon}
+        <div
           onClick={() => navigate('/')}
-        />
+          className="bg-[#ec2b58]  cursor-pointer w-[2.5rem] h-[2.5rem] rounded-[50%] flex items-center flex-col justify-center "
+        >
+          <MdOutlineFitnessCenter className={`w-[2rem] text-white`} />
+          <h1 className="text-[10px] text-white">FitHub</h1>
+        </div>
         <div
           onClick={() => {
             setHomeDrop(!homeDrop)
@@ -65,30 +61,24 @@ const NavBar = () => {
         {homeDrop && <HomeDropDown />}
       </div>
       <div className={style.subDiv}>
-        {user && user.user && user.user.role && (
-          <Link to="/create-thread">
-            <MdCreateNewFolder className={style.icon} />
-          </Link>
-        )}
-        {user && user.user && (
-          <Link to="/create-post">
-            <IoIosAddCircleOutline className={style.icon} />{' '}
-          </Link>
-        )}
         <div>
           {user && user.user ? (
-            <FaRegUserCircle
-              className={style.icon}
+            <img
+              className={style.avatar}
               onClick={() => setDropDown(!dropDown)}
+              src={user.user.avatar}
             />
           ) : (
             <div className={style.auth} onClick={() => navigate('/login')}>
-              <BsFillPersonFill /> <h1>{`Authorization`}</h1>
+              <BsFillPersonFill />{' '}
+              <h1 className="max_smm:hidden">{`Authorization`}</h1>
             </div>
           )}
         </div>
       </div>
-      {dropDown && <ProfileDropDown />}
+      {dropDown && (
+        <ProfileDropDown dropDown={dropDown} setDropDown={setDropDown} />
+      )}
     </nav>
   )
 }

@@ -120,14 +120,14 @@ const PostData = () => {
   }, [])
   const style = {
     mainDiv: `w-[100%]  h-[100vh] flex flex-col items-center justify-center gap-5 pt-40`,
-    textDiv: `bg-[#2e2d2d] rounded-[5px] flex flex-col p-5 gap-3 w-[900px]`,
-    header: `text-gray-400 font-medium text-[1.4rem]`,
+    textDiv: `bg-[#2e2d2d] rounded-[5px] flex flex-col p-5 gap-3 w-[900px] max_x:w-[90%] `,
+    header: `text-gray-400 font-medium text-[1.4rem] max_smm:text-[12px]`,
   }
   if (user && user.user) {
     return (
       <div className={style.mainDiv}>
         <div className={style.textDiv}>
-          <div className="flex justify-between">
+          <div className="flex justify-between  ">
             <h1 className={style.header} onClick={() => console.log(forumData)}>
               Create a post
             </h1>
@@ -150,7 +150,7 @@ const PostData = () => {
             />
           </div>
         </div>
-        <div className={`w-[900px]`}>
+        <div className={`w-[900px] max_x:w-[90%]`}>
           <PostsComponentCard data={dataObj} />
         </div>{' '}
       </div>

@@ -30,6 +30,7 @@ const CommentPost: FC<DataType> = ({ data }) => {
       if (comment) {
         await dispatch(PostCommentThunk({ data: commentObj }))
         dispatch(GetCommentThunk({ dispatch, postID, pages: '1' }))
+        dispatch(getComment(''))
       } else {
         console.log('erro')
       }
@@ -53,6 +54,7 @@ const CommentPost: FC<DataType> = ({ data }) => {
           </span>
         </p>
         <textarea
+          value={comment}
           placeholder="Whar are your thoughts?"
           onChange={(e) => dispatch(getComment(e.target.value))}
           className={style.textarea}

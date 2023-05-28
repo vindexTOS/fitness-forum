@@ -38,7 +38,7 @@ const LoginSlice = createSlice({
       state.data = jwt(token)
     },
     getError: (state, action: any) => {
-      console.log(action.payload)
+      // console.log(action.payload)
       state.realErro = action.payload
     },
     LogOut: (state) => {

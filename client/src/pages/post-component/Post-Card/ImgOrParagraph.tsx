@@ -23,7 +23,7 @@ const ImgOrParagraph: FC<ImgOrParaTypes> = ({
       {realPhoto ? (
         <img
           onClick={() => navigate(`/${forumID}/${_id}/1`)}
-          className={`h-[400px] max-w-[80%] `}
+          className={`h-[400px] max-w-[80%] max_smm:h-[300px]  `}
           src={String(realPhoto)}
         />
       ) : (

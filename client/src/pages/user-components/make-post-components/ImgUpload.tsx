@@ -7,7 +7,7 @@ type ImgProp = {
 const ImgUpload: FC<ImgProp> = ({ htmlImg }) => {
   const { imgUploadDrag, imgUpload, removeImgFromHtml } = useMainContext()
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center max_md2:w-[40%]">
       <label
         onDrop={(e) => imgUploadDrag(e)}
         className="text-[2rem] h-[2.2rem]    items-center justify-center text-gray-400   cursor-pointer w-[20rem] rounded-[6px] flex "

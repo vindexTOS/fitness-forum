@@ -13,16 +13,16 @@ const ChoseThreadComponent: FC<ChoseThreadProp> = ({
   const [threadImg, setThreadImg] = useState<string>('')
   const [dropDown, setDropDown] = useState<boolean>(false)
   return (
-    <div>
+    <div className="max_smm:w-[60%]">
       <div
         onClick={() => setDropDown(!dropDown)}
-        className=" cursor-pointer text-white outline outline-[1px] outline-[#ec2b58] w-[16rem]  items-center justify-center flex  gap-5 py-2 px-2 rounded-[10px]"
+        className=" cursor-pointer text-white outline outline-[1px] outline-[#ec2b58] w-[16rem] max_smm:w-[100%]  items-center justify-center flex max_smm:p-1 gap-5 py-2 px-2 rounded-[10px]"
       >
         <img
-          className="w-[30px] h-[30px] bg-yellow-300 rounded-[50%] "
+          className="w-[30px]  h-[30px]  max_smm:w-[20px] max_smm:h-[20px] bg-yellow-300 rounded-[50%] "
           src={threadImg}
         />{' '}
-        <p className="w-[9rem]">thread/{threads}</p>
+        <p className="w-[9rem]   max_smm:text-[10px]">thread/{threads}</p>
         {!dropDown ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
       </div>
       {dropDown && (

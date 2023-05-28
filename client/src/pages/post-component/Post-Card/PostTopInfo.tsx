@@ -37,7 +37,7 @@ const PostTopInfo: FC<HeaderInfoType> = ({
             {forumID}
           </span>
         </p>
-        <div className="text-gray-400 flex  max_smm:text-[9px] max_smm:w-[5rem] gap-1">
+        <div className="text-gray-400 flex   max_smm:text-[9px] max_smm:w-[5rem] gap-1">
           <p>Posted by</p>
           <span
             className="text-pink-600 hover:underline hoveR:text-pink-700"

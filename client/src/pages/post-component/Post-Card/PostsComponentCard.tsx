@@ -96,7 +96,7 @@ const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
   const style = {
     mainDiv: `w-[100%] relative rounded-[5px] bg-[#212121]   outline outline-[1px] outline-gray-600 hover:outline-[#ec2b58] max-h-[600px]  max_smm:max-h-[1200px] flex  cursor-pointer      text-white`,
     headerDiv: `flex flex-col items-start w-[100%] `,
-    mainContent: `flex flex-col items-center  justify-center w-[100%] px-10 p-6 `,
+    mainContent: `flex flex-col items-center  justify-center w-[100%]  max_smm:gap-10    px-10 p-6 `,
     img: `h-[400px] max-w-[80%] `,
 
     btn: `flex flex-col items-center py-2`,

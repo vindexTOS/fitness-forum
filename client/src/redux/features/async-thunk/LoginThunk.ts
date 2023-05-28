@@ -35,7 +35,7 @@ export const LoginThunk = createAsyncThunk(
         return decode
       } catch (err) {
         const errr: any = err
-        val.dispatch(getError(errr))
+        val.dispatch(getError(errr.response.data.msg))
 
         console.log(err)
         throw err

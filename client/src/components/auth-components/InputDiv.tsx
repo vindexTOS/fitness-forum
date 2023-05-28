@@ -2,13 +2,24 @@ import React, { FC, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { AnyAction } from 'redux'
 import { IconType } from 'react-icons'
+import { motion as m } from 'framer-motion'
+
 type inputDivProps = {
   type: string
   fun: (e: string) => AnyAction
   Icon: IconType
   holder: string
+  error?: string
+  errorType?: string
 }
-const InputDiv: FC<inputDivProps> = ({ type, fun, Icon, holder }) => {
+const InputDiv: FC<inputDivProps> = ({
+  type,
+  fun,
+  Icon,
+  holder,
+  error,
+  errorType,
+}) => {
   const dispatch = useDispatch()
   const style = {
     color: `#232323`,
@@ -19,7 +30,16 @@ const InputDiv: FC<inputDivProps> = ({ type, fun, Icon, holder }) => {
   }
 
   return (
-    <div className={style.mainDiv}>
+    <m.div
+      animate={{
+        x: error === errorType ? [20, 0, -20, 0, 20, 0, -20, 0] : [],
+        outline: error === errorType ? '2px solid red' : '',
+      }}
+      transition={{
+        duration: 0.2,
+      }}
+      className={style.mainDiv}
+    >
       <label htmlFor={type}>
         <Icon className={style.icon} />
       </label>
@@ -31,7 +51,7 @@ const InputDiv: FC<inputDivProps> = ({ type, fun, Icon, holder }) => {
         id={type}
         placeholder={holder.toUpperCase()}
       />
-    </div>
+    </m.div>
   )
 }
 
