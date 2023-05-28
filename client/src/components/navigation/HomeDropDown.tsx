@@ -10,6 +10,9 @@ import HomeDropThreadDiv from './HomeDropThreadDiv'
 const HomeDropDown = () => {
   const { forumData } = useSelector((state: any) => state.GeneralReducer)
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
+  const notification = useSelector(
+    (state: any) => state.NotificationReducer.notificationData,
+  )
   const navigate = useNavigate()
   const style = {
     mainDiv: `h-[480px]  w-[15rem] bg-[#262525]  noSelection  border-[#ec2b58]  border-b-[1px] border-l-[1px] border-r-[1px] boxshaddow absolute top-[3rem] left-[8.7rem] z-20`,
@@ -21,7 +24,7 @@ const HomeDropDown = () => {
   }, [])
   const [search, setSearch] = React.useState<string>('')
   return (
-    <div className={style.mainDiv}>
+    <div className={style.mainDiv} onClick={() => console.log(notification)}>
       <div className={style.threadDiv}>
         <input
           onChange={(e) => setSearch(e.target.value)}

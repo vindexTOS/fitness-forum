@@ -29,7 +29,7 @@ const ImgOrParagraph: FC<ImgOrParaTypes> = ({
       ) : (
         <p
           onClick={() => navigate(`/${forumID}/${_id}/1`)}
-          className="w-[100%]   break-all  text-start "
+          className="w-[100%]   break-words text-start "
         >
           {post}
         </p>

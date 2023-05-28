@@ -14,7 +14,7 @@ import { storage } from './firebase/firebase'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { GetVotes } from './redux/features/async-thunk/UpVoteDownVoteThunks'
 import { ThunkDispatch } from '@reduxjs/toolkit'
-
+import { NotificationData } from './redux/features/async-thunk/NotificationThunk'
 type Cell = {
   image: any
   htmlImg: String | string | null
@@ -54,8 +54,8 @@ export const ContextProvider = ({
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
     axios.defaults.headers.common['Content-Type'] = 'application/json'
   }, [])
+
   const { forumID } = useParams()
-  const [postData, setPostData] = useState<any>()
   const getThread = async () => {
     console.log('clicked')
 
@@ -78,6 +78,7 @@ export const ContextProvider = ({
   React.useEffect(() => {
     if (userLogin.user) {
       dispatch(GetVotes({ dispatch, userID: userLogin.user._id }))
+      dispatch(NotificationData({ dispatch, userID: userLogin.user._id }))
     }
   }, [userLogin])
   const [image, setImage] = useState<any>(null)

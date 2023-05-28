@@ -21,7 +21,7 @@ const MakePostComponent = () => {
   //   }
   const user = useSelector((state: any) => state.LoginReducer.data)
 
-  const img = useSelector((state: any) => state.FireBasePhotoReducer.image)
+  // const img = useSelector((state: any) => state.FireBasePhotoReducer.image)
   const navigate = useNavigate()
   return (
     <div onClick={() => navigate(`/create-post`)} className={style.mainDiv}>

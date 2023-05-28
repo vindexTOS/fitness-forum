@@ -8,7 +8,7 @@ type UserDataThunkProp = {
 }
 type UserInfo = {
   name: string
-
+  description: string
   avatar: string
 }
 export const UserDataThunk = createAsyncThunk(

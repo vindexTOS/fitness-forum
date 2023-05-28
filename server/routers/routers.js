@@ -30,7 +30,7 @@ router.get('/forums', getForum)
 router.get('/api/v1/user', getUserData)
 router.patch('/api/v1/user/:userId', authMiddleware, updateUser)
 
-router.route('/post/upvote/:postID').patch(postUpVote)
+router.route('/post/upvote/:postID').patch(authMiddleware, postUpVote)
 router.route('/votes/:userID').get(getVotes)
-router.route('/vote/delete/:voteID').delete(deleteVote)
+router.route('/vote/delete/:voteID').delete(authMiddleware, deleteVote)
 export default router

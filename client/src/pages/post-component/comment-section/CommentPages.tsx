@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { GetCommentThunk } from '../../../redux/features/async-thunk/CommentThunk'
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from 'react-icons/rx'
 import useScrollHandler from '../../../Hooks/useScrollHandler'
-import { UpVoteThunk } from '../../../redux/features/async-thunk/UpVoteDownVoteThunks'
+
 const CommentPages = ({ postID }: { postID: string }) => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const navigation = useNavigate()
@@ -61,6 +61,7 @@ const CommentPages = ({ postID }: { postID: string }) => {
       }
     }
   }
+
   return (
     <div
       className={`flex gap-5  h-[4rem] items-start justify-center ${

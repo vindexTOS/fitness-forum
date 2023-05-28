@@ -20,7 +20,7 @@ const Replies: FC<ReplyType> = ({ replyData }) => {
         </div>
         <p className="text-[12px]">Reply Date {date.slice(0, 10)}</p>
       </div>
-      <div className="w-[100%] bg-[#363434] p-2 break-all  rounded-[10px]">
+      <div className="w-[100%] bg-[#363434] p-2 break-words  rounded-[10px]">
         {comment}
       </div>
     </div>

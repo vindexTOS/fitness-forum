@@ -131,7 +131,7 @@ const PostInnerCard: FC<DataInterFace> = ({ data }) => {
 
         {realPhoto && <img className={style.img} src={String(realPhoto)} />}
 
-        <p className="w-[90%]  max_smm:w-[100%]  max_smm:text-center  break-all  text-start ">
+        <p className="w-[90%]  max_smm:w-[100%]  max_smm:text-center  break-words  text-start ">
           {post}
         </p>
       </section>

@@ -8,6 +8,7 @@ import GetAllPostReducer from './features/slice/GetAllPosts'
 import FireBasePhotoReducer from './features/slice/FireBaseSlices/ProfilePhotoSlice'
 import GeneralReducer from './features/slice/GeneralSlice'
 import CommentReducer from './features/slice/CommentSlice'
+import NotificationReducer from './features/slice/NotificationSlice'
 const store = configureStore({
   reducer: {
     GeneralReducer,
@@ -19,6 +20,7 @@ const store = configureStore({
     GetAllPostReducer,
     FireBasePhotoReducer,
     CommentReducer,
+    NotificationReducer,
   },
 })
 

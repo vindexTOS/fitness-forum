@@ -122,7 +122,7 @@ const updateData = async (req, res) => {
 
 const getUserData = async (req, res) => {
   try {
-    const user = await User.find({}, 'name avatar ')
+    const user = await User.find({}, 'name avatar description')
 
     return res.status(200).json(user)
   } catch (error) {

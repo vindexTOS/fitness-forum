@@ -5,6 +5,8 @@ import {
   GetCommentThunk,
 } from '../../../redux/features/async-thunk/CommentThunk'
 import { ThunkDispatch } from '@reduxjs/toolkit'
+import { NotificationThunk } from '../../../redux/features/async-thunk/NotificationThunk'
+import { useSelector } from 'react-redux'
 type loggedUserType = {
   avatar: string
   name: string
@@ -13,6 +15,7 @@ type loggedUserType = {
   rootCommentID: string
   postID: string
   setReplyDrop: React.Dispatch<React.SetStateAction<boolean>>
+  userID: string
 }
 
 const CommentReplyComponent: FC<loggedUserType> = ({
@@ -23,15 +26,25 @@ const CommentReplyComponent: FC<loggedUserType> = ({
   rootCommentID,
   postID,
   setReplyDrop,
+  userID,
 }) => {
   const style = {
     mainDiv: `w-[100%] h-[150px]   max_smm:flex-col  max_smm:h-[300px] bg-[#232323] p-5 gap-4 flex items-end  rounded-[5px] boxshaddow`,
     btn: `  text-white bg-gradient-to-r from-[#cf1b4e] via-[#cf1b4e] to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 shadow-lg shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80 font-medium rounded-lg text-sm    text-center w-[9rem] h-[2rem] `,
   }
+  const loggedInUser = useSelector((state: any) => state.LoginReducer.data)
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const [replyComment, setReplyComment] = useState<string>('')
   const [zoomTextArea, setZoomTextArea] = useState<boolean>(false)
+
   const replyHanndler = async () => {
+    const notificationObj = {
+      receiverID: userID,
+      postID,
+      reply: replyComment,
+      isRead: true,
+      authorsID: loggedInUser.user._id,
+    }
     if (replyComment) {
       await dispatch(
         Addreply({
@@ -39,13 +52,17 @@ const CommentReplyComponent: FC<loggedUserType> = ({
           reply: { reply: [{ comment: replyComment, userID: loggedINUserId }] },
         }),
       )
+      await dispatch(NotificationThunk(notificationObj))
       dispatch(GetCommentThunk({ dispatch, postID, pages: '1' }))
       setReplyDrop(false)
     }
   }
   if (name && avatar) {
     return (
-      <div className={style.mainDiv}>
+      <div
+        className={style.mainDiv}
+        // onClick={() => console.log(notificationObj)}
+      >
         <div className="flex flex-col w-[10%]  max_smm:flex-row  max_smm:w-[90%]  items-center  gap-4">
           {/* <img src={avatar} className="w-[50px] h-[50px] rounded-[10px]" /> */}
 

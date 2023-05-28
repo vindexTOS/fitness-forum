@@ -4,6 +4,7 @@ import { config } from 'dotenv'
 import router from './routers/routers.js'
 import commentRouter from './routers/commentRouts.js'
 import userRouter from './routers/userRouter.js'
+import notificationRouter from './routers/notificationRouts.js'
 import { notFound } from './middleware/not-found.js'
 import { errorHandler } from './middleware/error-handler.js'
 import cookieParser from 'cookie-parser'
@@ -17,7 +18,7 @@ app.use(cors())
 
 app.use('/', router)
 app.use('/post', commentRouter)
-
+app.use('/notification', notificationRouter)
 app.use(notFound)
 app.use(errorHandler)
 

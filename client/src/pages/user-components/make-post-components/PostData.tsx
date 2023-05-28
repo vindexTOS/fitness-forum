@@ -156,7 +156,27 @@ const PostData = () => {
       </div>
     )
   } else {
-    return <div>Register or Sign In if you want to post </div>
+    return (
+      <div className="w-[100%] h-[100vh] flex items-center justify-center  ">
+        <h1 className="text-[2rem] text-white gap-2 flex">
+          <span
+            className="text-red-400 hover:underline hover:text-red-500 cursor-pointer"
+            onClick={() => navigate('/register')}
+          >
+            {' '}
+            Register
+          </span>{' '}
+          or
+          <span
+            onClick={() => navigate('/login')}
+            className="text-blue-400 hover:underline hover:text-blue-500 cursor-pointer"
+          >
+            Log-in
+          </span>{' '}
+          if you want to post{' '}
+        </h1>
+      </div>
+    )
   }
 }
 

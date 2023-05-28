@@ -41,7 +41,7 @@ const PostInside = () => {
             upvote,
           }}
         />
-        <CommentPost data={{ name, postID: _id }} />
+        <CommentPost data={{ userID, name, postID: _id }} />
         <CommentsSection />
         <CommentPages postID={_id} />
       </section>

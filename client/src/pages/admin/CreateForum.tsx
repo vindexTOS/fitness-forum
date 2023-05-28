@@ -54,7 +54,7 @@ const CreateForum = () => {
     }
   }, [url])
   const style = {
-    mainDiv: `w-[100%] h-[100vh] gap-5 flex flex-col  max_sm8:pt-80 items-center justify-center  `,
+    mainDiv: `w-[100%]  h-[100vh] gap-5 flex flex-col  max_sm8:pt-80 items-center justify-center  `,
     m: `bg-[#2e2d2d]  max_sm8:w-[90%]  w-[50%] h-[300px] rounded-[5px]  `,
     t: `bg-[#2e2d2d] text-[#ec2b58] w-[100%]   max_sm8:h-[300px]  h-[100%] outline outline-[1px] outline-[#ec2b58] boxshaddow rounded-[5px] p-2 `,
     btn: `text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`,

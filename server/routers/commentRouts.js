@@ -6,6 +6,7 @@ import {
   updateComment,
   addReply,
 } from '../controllers/commentControllers.js'
+
 import { authMiddleware } from '../middleware/auth.js'
 const commentRouter = express.Router()
 
@@ -17,5 +18,4 @@ commentRouter
   .patch(authMiddleware, updateComment)
 
 commentRouter.route('/comment/reply/:replyID').patch(authMiddleware, addReply)
-
 export default commentRouter

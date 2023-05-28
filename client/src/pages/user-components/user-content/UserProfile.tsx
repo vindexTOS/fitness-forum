@@ -24,8 +24,8 @@ const UserProfile = () => {
     const user = userData.find((val: any) => userID === val._id)
 
     const style = {
-      section: ` w-[100%] h-[100%] flex gap-40   justify-center py-40 `,
-      contentDiv: `w-[40%]`,
+      section: ` w-[100%] h-[100%] flex gap-40   max_xml:gap-1 justify-center py-40 `,
+      contentDiv: `w-[40%] max_xml:w-[70%] max_xml:mt-[35rem]  max_smm:w-[95%]`,
     }
     const filteredDataBasedOnUser = allPostData?.AllData.filter(
       (val: PostsComponentCardType) => userID === val.userID,

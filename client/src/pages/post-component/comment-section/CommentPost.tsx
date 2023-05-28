@@ -5,12 +5,17 @@ import {
   PostCommentThunk,
   GetCommentThunk,
 } from '../../../redux/features/async-thunk/CommentThunk'
+import {
+  NotificationThunk,
+  notificationType,
+} from '../../../redux/features/async-thunk/NotificationThunk'
 import { getComment } from '../../../redux/features/slice/CommentSlice'
 import { useNavigate } from 'react-router-dom'
 
 type CommentProp = {
   name: string
   postID: string
+  userID: string
 }
 export type DataType = {
   data: CommentProp
@@ -21,14 +26,22 @@ const CommentPost: FC<DataType> = ({ data }) => {
   const userInfo = useSelector((state: any) => state.LoginReducer.data)
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const navigate = useNavigate()
-  const { postID } = data
+  const { postID, userID } = data
   const makeComment = async () => {
     if (userInfo.user) {
       const { _id, name } = userInfo?.user
 
       const commentObj = { userID: _id, postID, comment }
+      const notificationObj: notificationType = {
+        receiverID: userID,
+        postID,
+        reply: comment,
+        isRead: true,
+        authorsID: _id,
+      }
       if (comment) {
         await dispatch(PostCommentThunk({ data: commentObj }))
+        dispatch(NotificationThunk(notificationObj))
         dispatch(GetCommentThunk({ dispatch, postID, pages: '1' }))
         dispatch(getComment(''))
       } else {

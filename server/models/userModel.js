@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  description: {
+    type: String,
+    require: false,
+  },
   date: {
     type: Date,
     default: new Date(),

@@ -117,9 +117,9 @@ const CommentCard: FC<DataType> = ({ data }) => {
             <h1>{name}</h1>
           </div>
 
-          <div className="w-[100%] flex items-center justify-center flex-col">
+          <div className="w-[100%] flex  max_smm:items-center justify-center flex-col">
             {!edit ? (
-              <p className="px-10 max_smm:px-0 max_smm:text-[12px] break-all  max_smm:w-[110%]     max_smm:text-center py-4 rounded-[8px] ">
+              <p className="px-10 max_smm:px-0 max_smm:text-[12px] break-words max_smm:w-[110%]     max_smm:text-center py-4 rounded-[8px] ">
                 {comment}
               </p>
             ) : (
@@ -135,7 +135,7 @@ const CommentCard: FC<DataType> = ({ data }) => {
             <p className="text-[10px]">{date.slice(0, 10)}</p>
           </div>
         </div>
-        {name ? (
+        {!name ? (
           <h1
             onClick={() => navigate('/login')}
             className={`text-end cursor-pointer  `}
@@ -160,6 +160,7 @@ const CommentCard: FC<DataType> = ({ data }) => {
             rootCommentID={_id}
             postID={postID}
             setReplyDrop={setReplyDrop}
+            userID={userID}
           />
         )}
         {/* <h2 onClick={() => console.log(userData)}>On click</h2> */}
