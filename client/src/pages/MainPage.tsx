@@ -22,7 +22,7 @@ const Home = () => {
   const navigation = useNavigate()
   const { pages } = useParams()
   useEffect(() => {
-    dispatch(GetAllPostsThunk({ dispatch, pages }))
+    dispatch(GetAllPostsThunk({ dispatch, pages, search: '' }))
 
     dispatch(UserDataThunk({ dispatch }))
     console.log('MainPage')

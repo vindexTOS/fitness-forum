@@ -8,16 +8,30 @@ import { checkUserPost } from '../middleware/auth.js'
 const getAllPosts = async (req, res) => {
   const page = parseInt(req.query.page) || 1
   const limit = parseInt(req.query.limit) || 10
+  const searchQuery = req.query.search
+
   const startIndex = (page - 1) * limit
   const endIndex = page * limit
 
-  const totalPosts = await Post.countDocuments()
+  let query = {}
+
+  if (searchQuery) {
+    query = {
+      $or: [
+        { title: { $regex: searchQuery, $options: 'i' } },
+        { post: { $regex: searchQuery, $options: 'i' } },
+      ],
+    }
+  }
+
+  const totalPosts = await Post.countDocuments(query)
   const totalPages = Math.ceil(totalPosts / limit)
+
   try {
-    // const AllData = await Post.find({})
-    // const posts = await Post.find({}).skip(startIndex).limit(limit)
     const AllData = await Post.find({})
-    let posts = await Post.find({})
+
+    let posts = await Post.find(query)
+
     const vote = await Vote.find({})
 
     posts.filter((val) => {
@@ -29,7 +43,6 @@ const getAllPosts = async (req, res) => {
           if (Arr[i].voteType) {
             votes++
           }
-          // console.log(votes)
         }
         val.upvote = votes
       }
@@ -50,7 +63,6 @@ const getAllPosts = async (req, res) => {
     return res.status(400).json({ msg: 'server error' })
   }
 }
-
 const postData = async (req, res) => {
   const { title, post, photo, forumID, userID } = req.body
   const forum = await Forum.find({ forumID })

@@ -11,6 +11,7 @@ import HomeDropDown from './HomeDropDown'
 import { IoIosNotifications } from 'react-icons/io'
 import Notification from './Notification-components/Notification'
 import NotificationsList from './Notification-components/NotificationsList'
+import SearchBar from './SearchBar'
 const NavBar = () => {
   const [dropDown, setDropDown] = useState<boolean>(false)
   const [homeDrop, setHomeDrop] = useState<boolean>(false)
@@ -20,7 +21,7 @@ const NavBar = () => {
     color2: `#ec2b58`,
     nav: `w-[100vw] fixed gap-5 h-[50px] bg-[#232323] border-b-[1px] border-[#ec2b58] boxshaddow flex items-center justify-between px-20 z-40 max_smm:px-3`,
     subDiv: `flex items-center justify-center gap-5 max_smm:justify-around max_smm:w-[100%] noSelection rounded-[50%] `,
-    home: `flex  items-center justify-around  px-5 py-[2px]   hover:outline outline-[#ec2b58] outline-[1px] max_smm:w-[13rem] max_smm:m-0  w-[16rem] rounded-[30px] cursor-pointer  `,
+    home: `flex   items-center justify-around  px-5 py-[2px]   hover:outline outline-[#ec2b58] outline-[1px] max_smm:w-[13rem] max_smm:m-0  w-[16rem] rounded-[30px] cursor-pointer  `,
     homeP: `text-[#ec2b58] text-[1.2rem] font-medium`,
     auth: `border-2 p-1 rounded-[20px] max_smm:w-[50px] text-[#ec2b58] border-[#ec2b58] flex items-center justify-around  w-[10rem] cursor-pointer hover:border-[#e64369]  text-[#e64369] `,
     icon: `text-[#ec2b58] text-[2rem] cursor-pointer`,
@@ -42,7 +43,7 @@ const NavBar = () => {
       <div className={style.subDiv}>
         <div
           onClick={() => navigate('/')}
-          className="bg-[#ec2b58]  cursor-pointer w-[2.5rem] h-[2.5rem] rounded-[50%] flex items-center flex-col justify-center "
+          className="bg-[#ec2b58]   max_md2:hidden cursor-pointer w-[2.5rem] h-[2.5rem] rounded-[50%] flex items-center flex-col justify-center "
         >
           <MdOutlineFitnessCenter className={`w-[2rem] text-white`} />
           <h1 className="text-[10px] text-white">FitHub</h1>
@@ -64,21 +65,26 @@ const NavBar = () => {
           )}
         </div>
         {homeDrop && <HomeDropDown />}
-      </div>
+      </div>{' '}
+      <SearchBar />
       <div className={style.subDiv}>
         <div>
           {user && user.user ? (
             <div className="flex items-center justify-center gap-4 relative">
               <IoIosNotifications
                 className={style.icon}
-                onClick={() => setDropDownNotif(!dropDownNotif)}
+                onClick={() => {
+                  setDropDownNotif(!dropDownNotif), setDropDown(false)
+                }}
               />
               <div className="absolute left-0 top-6 ">
                 <Notification />
               </div>
               <img
                 className={style.avatar}
-                onClick={() => setDropDown(!dropDown)}
+                onClick={() => {
+                  setDropDown(!dropDown), setDropDownNotif(false)
+                }}
                 src={user.user.avatar}
               />
             </div>

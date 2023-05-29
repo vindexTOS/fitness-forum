@@ -4,6 +4,7 @@ const initialState = {
   data: [],
   error: null,
   loading: false,
+  search: '',
 }
 
 const GetAllPostSlice = createSlice({
@@ -13,6 +14,9 @@ const GetAllPostSlice = createSlice({
     getAllPost: (state, action) => {
       // console.log('hi')
       state.data = action.payload
+    },
+    getSearch: (state, action) => {
+      state.search = action.payload
     },
   },
   //   extraReducers: (builder) => {
@@ -35,6 +39,6 @@ const GetAllPostSlice = createSlice({
   //   },
 })
 
-export const { getAllPost } = GetAllPostSlice.actions
+export const { getAllPost, getSearch } = GetAllPostSlice.actions
 
 export default GetAllPostSlice.reducer

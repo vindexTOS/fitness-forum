@@ -4,13 +4,14 @@ import axios from 'axios'
 interface GetThreadType {
   dispatch: ThunkDispatch<any, any, any>
   pages: any
+  search: string
 }
 export const GetAllPostsThunk = createAsyncThunk(
   'allposts/get',
   async (val: GetThreadType) => {
     const apiUrl = `http://localhost:3000/posts/?page=${String(
       val.pages,
-    )}&limit=5`
+    )}&limit=5${val.search}`
 
     try {
       const data = await axios
