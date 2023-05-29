@@ -26,6 +26,7 @@ function App() {
         <Route path="/" element={<REDIRECT />} />
         <Route path="/posts/page/:pages" element={<Home />} />
         <Route path="/:forumID/:postID/:pages" element={<PostInside />} />
+        <Route path="/:postID/:pages" element={<PostInside />} />
         <Route path="/threads/:forumID/page/:threadpage" element={<Thread />} />
         <Route path="/user/:userID" element={<UserProfile />} />
         <Route path="/home" element={<UserHome />} />

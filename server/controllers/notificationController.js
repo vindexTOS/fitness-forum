@@ -23,9 +23,32 @@ export const getNotifications = async (req, res) => {
     const notifications = await Notification.find({
       receiverID: notificationID,
     })
-    res.status(200).json(notifications)
+    notifications.reverse()
+    return res.status(200).json(notifications)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: 'Failed to retrieve notifications' })
+    return res.status(500).json({ message: 'Failed to retrieve notifications' })
+  }
+}
+
+export const readNotification = async (req, res) => {
+  const { notificationID } = req.params
+  console.log(notificationID)
+  try {
+    const notificationCheck = await Notification.findById({
+      _id: notificationID,
+    })
+    if (!notificationCheck) {
+      return res.status(400).json({ msg: 'No notification with that ID' })
+    }
+    const isRead = req.body.isRead
+    const notification = await Notification.findByIdAndUpdate(
+      { _id: notificationID },
+      { isRead: isRead },
+      { new: true },
+    )
+    res.status(200).json({ msg: notification })
+  } catch (error) {
+    return res.status(404).json({ msg: 'Notification server Error' })
   }
 }

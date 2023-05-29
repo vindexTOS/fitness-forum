@@ -14,6 +14,10 @@ type getNotification = {
   userID: string
 }
 
+type notificationUpdateType = {
+  isRead: boolean
+  notificationID: string
+}
 export const NotificationThunk = createAsyncThunk(
   'notification/post',
   async (obj: notificationType) => {
@@ -36,6 +40,18 @@ export const NotificationData = createAsyncThunk(
         console.log(res.data)
         obj.dispatch(getNotifciation(res.data))
       })
+      .catch((err) => console.log(err))
+  },
+)
+
+export const NotificationRead = createAsyncThunk(
+  'notificatio/patch',
+  async (obj: notificationUpdateType) => {
+    const apiUrl = `http://localhost:3000/notification/${obj.notificationID}`
+
+    await axios
+      .patch(apiUrl, obj)
+      .then((res) => console.log(res))
       .catch((err) => console.log(err))
   },
 )

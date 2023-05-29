@@ -23,6 +23,7 @@ const Home = () => {
   const { pages } = useParams()
   useEffect(() => {
     dispatch(GetAllPostsThunk({ dispatch, pages }))
+
     dispatch(UserDataThunk({ dispatch }))
     console.log('MainPage')
   }, [pages])

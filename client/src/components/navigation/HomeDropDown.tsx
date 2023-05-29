@@ -7,6 +7,7 @@ import { GetForumThunk } from '../../redux/features/async-thunk/GetForumThunk'
 import { ThunkDispatch } from '@reduxjs/toolkit'
 import { useNavigate } from 'react-router-dom'
 import HomeDropThreadDiv from './HomeDropThreadDiv'
+import Notification from './Notification-components/Notification'
 const HomeDropDown = () => {
   const { forumData } = useSelector((state: any) => state.GeneralReducer)
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
@@ -69,6 +70,12 @@ const HomeDropDown = () => {
           Icon={IoIosNotifications}
           link="/"
         />
+        {notification.length > 0 && (
+          <div className="absolute bottom-[6rem]">
+            <Notification />
+          </div>
+        )}
+
         <HomeDropThreadDiv title="Messages" Icon={AiFillMessage} link="/" />
         <HomeDropThreadDiv title="User Settings" Icon={FaUser} link="/home" />
       </div>

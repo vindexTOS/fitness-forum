@@ -8,9 +8,13 @@ import { MdOutlineFitnessCenter } from 'react-icons/md'
 import ProfileDropDown from './ProfileDropDown'
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md'
 import HomeDropDown from './HomeDropDown'
+import { IoIosNotifications } from 'react-icons/io'
+import Notification from './Notification-components/Notification'
+import NotificationsList from './Notification-components/NotificationsList'
 const NavBar = () => {
   const [dropDown, setDropDown] = useState<boolean>(false)
   const [homeDrop, setHomeDrop] = useState<boolean>(false)
+  const [dropDownNotif, setDropDownNotif] = useState<boolean>(false)
   const style = {
     color: `#232323`,
     color2: `#ec2b58`,
@@ -29,6 +33,7 @@ const NavBar = () => {
   const hanndleCloseDown = () => {
     setHomeDrop(false)
     setDropDown(false)
+    setDropDownNotif(false)
   }
   useOutClick(dropDownRef, hanndleCloseDown)
 
@@ -63,11 +68,20 @@ const NavBar = () => {
       <div className={style.subDiv}>
         <div>
           {user && user.user ? (
-            <img
-              className={style.avatar}
-              onClick={() => setDropDown(!dropDown)}
-              src={user.user.avatar}
-            />
+            <div className="flex items-center justify-center gap-4 relative">
+              <IoIosNotifications
+                className={style.icon}
+                onClick={() => setDropDownNotif(!dropDownNotif)}
+              />
+              <div className="absolute left-0 top-6 ">
+                <Notification />
+              </div>
+              <img
+                className={style.avatar}
+                onClick={() => setDropDown(!dropDown)}
+                src={user.user.avatar}
+              />
+            </div>
           ) : (
             <div className={style.auth} onClick={() => navigate('/login')}>
               <BsFillPersonFill />{' '}
@@ -79,6 +93,7 @@ const NavBar = () => {
       {dropDown && (
         <ProfileDropDown dropDown={dropDown} setDropDown={setDropDown} />
       )}
+      {dropDownNotif && <NotificationsList />}
     </nav>
   )
 }
