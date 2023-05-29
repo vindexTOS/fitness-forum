@@ -2,19 +2,24 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import NotificationCard, { NotificationCardType } from './NotificationCard'
 
-const NotificationsList = () => {
+const NotificationsPage = () => {
   const notification = useSelector(
     (state: any) => state.NotificationReducer.notificationData,
   )
   const style = {
-    mainDiv: ` flex   flex-col  gap-1 w-[400px] max_smm:w-[300px]  element-without-scrollbar  h-[350px]  max-h-[550px] overflow-y-scroll  bg-[#232323] border-[#ec2b58] border-b-[1px] border-l-[1px] absolute right-[7rem] top-[3.2rem] max_smm:right-2  boxshaddow rounded-[2px]`,
+    mainDiv: `  flex flex-col  pt-20 px-20 max_md:px-0  gap-2 element-without-scrollbar w-[100%]  h-[100%]     overflow-y-scroll  bg-[#232323]      rounded-[2px]`,
   }
   const userLogin = useSelector((state: any) => state.LoginReducer.data)
-
   if (notification.length > 0 && userLogin.user) {
     const { _id } = userLogin.user
+
     return (
       <div className={style.mainDiv}>
+        <div>
+          <h1 className="text-[3rem] text-gray-200 text-center">
+            Your Notifications
+          </h1>
+        </div>
         {notification
           .filter((val: any) => val.authorsID !== String(_id))
           .map((data: NotificationCardType) => (
@@ -24,11 +29,13 @@ const NotificationsList = () => {
     )
   } else {
     return (
-      <div className={`${style.mainDiv} items-center justify-center`}>
-        <h1 className="text-white ">You have no notifications</h1>
+      <div className="w-[100%] h-[100vh]   flex items-center justify-center">
+        <div className={`${style.mainDiv} items-center justify-center`}>
+          <h1 className="text-white ">You have no notifications</h1>
+        </div>
       </div>
     )
   }
 }
 
-export default NotificationsList
+export default NotificationsPage

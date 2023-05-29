@@ -55,7 +55,7 @@ const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
         query: `upvote`,
       }),
     )
-    setVoteNum(voteNum + 1)
+    setVoteNum(upvote + 1)
     setUserRatedPost('true')
   }
 
@@ -68,7 +68,7 @@ const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
         query: `upvote`,
       }),
     )
-    setVoteNum(voteNum - 1)
+    setVoteNum(upvote - 1)
     setUserRatedPost('false')
   }
 

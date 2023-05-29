@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { GetAllPostsThunk } from '../../../redux/features/async-thunk/GetAllPostsThunk'
 import { ThunkDispatch } from '@reduxjs/toolkit'
-import UserContent from './UserContent'
+
 import UserNav from './UserNav'
 import { UserDataThunk } from '../../../redux/features/async-thunk/UserDataThunk'
 import PostsComponentCard, {
@@ -17,7 +17,7 @@ const UserProfile = () => {
   const userData = useSelector((state: any) => state.GeneralReducer.userData)
   const { userID } = useParams()
   useEffect(() => {
-    dispatch(GetAllPostsThunk({ dispatch, pages: '1' }))
+    dispatch(GetAllPostsThunk({ dispatch, pages: '1', search: '' }))
     dispatch(UserDataThunk({ dispatch }))
   }, [])
   if (allPostData && allPostData.AllData && userData) {

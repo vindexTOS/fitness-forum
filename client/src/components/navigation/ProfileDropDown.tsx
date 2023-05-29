@@ -33,7 +33,7 @@ const ProfileDropDown: FC<ProfileDropProps> = ({ dropDown, setDropDown }) => {
         <img className={style.img} src={avatar} />
         <p className="text-white w-[6rem]">Your Profile</p>
       </button>
-      {userLogin && userLogin?.user && userLogin?.user?.role && (
+      {userLogin && userLogin?.user && userLogin?.user?.role === 'admin' && (
         <button
           className={style.btn}
           onClick={() => navigate('/create-thread')}

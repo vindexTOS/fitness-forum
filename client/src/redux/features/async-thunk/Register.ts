@@ -3,11 +3,20 @@ import axios from 'axios'
 import jwt from 'jwt-decode'
 import Cookies from 'universal-cookie'
 import { getError } from '../slice/LoginSlice'
+
+export type DescriptionType = {
+  bench?: number
+  squat?: number
+  deadlift?: number
+  about?: string
+}
 interface RegisterPayload {
   name: string
   email: string
   password: string
-  url: string
+  url?: string
+  description: DescriptionType
+
   dispatch: ThunkDispatch<any, any, any>
 }
 
@@ -17,11 +26,11 @@ const RegisterThunk = createAsyncThunk(
     const apiUrl = `http://localhost:3000/register`
     const cookies = new Cookies()
     if (val.name && val.email && val.password) {
-      const { name, email, password, url } = val
+      const { name, email, password, url, description } = val
 
       try {
         const data = await axios
-          .post(apiUrl, { name, email, password, avatar: url })
+          .post(apiUrl, { name, email, password, avatar: url, description })
           .then((res) => {
             const token = res.data.token
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`

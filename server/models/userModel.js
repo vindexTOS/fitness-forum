@@ -30,8 +30,18 @@ const userSchema = new mongoose.Schema({
     default: 0,
   },
   description: {
-    type: String,
-    require: false,
+    about: {
+      type: String,
+    },
+    bench: {
+      type: Number,
+    },
+    squat: {
+      type: Number,
+    },
+    deadlift: {
+      type: Number,
+    },
   },
   date: {
     type: Date,

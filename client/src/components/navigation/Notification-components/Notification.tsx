@@ -16,12 +16,18 @@ const Notification = () => {
       (val: any) => val.isRead && val.authorsID !== String(_id),
     )
 
-    return <div className={style.mainDiv}>{notificationLength.length}</div>
+    return (
+      <div
+        className={`${style.mainDiv} ${
+          String(notificationLength.length) === String(0) ? 'hidden' : ''
+        }`}
+      >
+        {notificationLength.length}
+      </div>
+    )
   } else {
     return (
-      <div className={`${notification.length > 0 ? 'hidden' : 'hidden'}`}>
-        0
-      </div>
+      <div className={`${notification.length < 0 ? 'hidden' : 'hidden'}`}></div>
     )
   }
 }

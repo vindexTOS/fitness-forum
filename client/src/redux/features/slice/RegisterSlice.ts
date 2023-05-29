@@ -6,6 +6,10 @@ type initialStateType = {
   password: string
   error: string | null
   loading: boolean
+  bench?: number
+  squat?: number
+  deadlift?: number
+  about?: string
 }
 
 const initialState = {
@@ -15,6 +19,10 @@ const initialState = {
   password: '',
   error: null,
   loading: false,
+  bench: 0,
+  squat: 0,
+  deadlift: 0,
+  about: '',
 }
 
 const RegisterSlice = createSlice({
@@ -29,6 +37,18 @@ const RegisterSlice = createSlice({
     },
     getPassword: (state: initialStateType, action) => {
       state.password = action.payload
+    },
+    getBench: (state: initialStateType, action) => {
+      state.bench = action.payload
+    },
+    getSquat: (state: initialStateType, action) => {
+      state.squat = action.payload
+    },
+    getDeadlift: (state: initialStateType, action) => {
+      state.deadlift = action.payload
+    },
+    getAbout: (state: initialStateType, action) => {
+      state.about = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -52,4 +72,12 @@ const RegisterSlice = createSlice({
 })
 
 export default RegisterSlice.reducer
-export const { getName, getEmail, getPassword } = RegisterSlice.actions
+export const {
+  getName,
+  getEmail,
+  getPassword,
+  getAbout,
+  getDeadlift,
+  getSquat,
+  getBench,
+} = RegisterSlice.actions

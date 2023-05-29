@@ -1,18 +1,19 @@
 import React, { FC } from 'react'
 import { AiOutlineStar } from 'react-icons/ai'
 import { MdOutlineDateRange } from 'react-icons/md'
+import { DescriptionType } from '../../../redux/features/async-thunk/Register'
 type UserNavProps = {
   user: {
     name: string
     avatar: string
     date?: string
-    description: string
+    description: DescriptionType
   }
   userDataLength: number
 }
 const UserNav: FC<UserNavProps> = ({ user, userDataLength }) => {
   const { name, avatar, date, description } = user
-
+  const { about } = description
   const style = {
     nav: `bg-[#383737] w-[300px] h-[470px]  max-h-[1200px] flex max_xml:absolute  max_xml:w-[70%]  max_smm:w-[95%] flex-col items-center py-5  gap-20 rounded-[9px] boxshaddow`,
     img: ` w-[200px] h-[200px] rounded-[50%] `,
@@ -26,7 +27,7 @@ const UserNav: FC<UserNavProps> = ({ user, userDataLength }) => {
       <div className={style.profileDiv}>
         <img className={style.img} src={avatar} />
         <h1 className={style.nameHeader}>{name}</h1>
-        <p className={style.p}>{description}</p>
+        <p className={style.p}>{about}</p>
       </div>
       <div className={style.karmaAndDateDiv}>
         <div>

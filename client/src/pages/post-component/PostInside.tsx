@@ -14,7 +14,7 @@ const PostInside = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   useEffect(() => {
     dispatch(UserDataThunk({ dispatch }))
-    dispatch(GetAllPostsThunk({ dispatch, pages: '1' }))
+    dispatch(GetAllPostsThunk({ dispatch, pages: '1', search: '' }))
     console.log('PostInsdie')
   }, [postID])
 

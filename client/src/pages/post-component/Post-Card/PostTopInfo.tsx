@@ -43,7 +43,7 @@ const PostTopInfo: FC<HeaderInfoType> = ({
             className="text-pink-600 hover:underline hoveR:text-pink-700"
             onClick={() => navigate(`/user/${userID}`)}
           >
-            {user?.name ? user?.name : 'User '}
+            {user?.name ? user?.name : ''}
           </span>
         </div>
         <p className="text-gray-500 max_smm:text-[9px] max_smm:w-[4rem] text-[12px]">

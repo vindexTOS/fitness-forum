@@ -68,7 +68,7 @@ const HomeDropDown = () => {
         <HomeDropThreadDiv
           title="Notifications"
           Icon={IoIosNotifications}
-          link="/"
+          link="/notifications"
         />
         {notification.length > 0 && (
           <div className="absolute bottom-[6rem]">

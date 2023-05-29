@@ -14,6 +14,7 @@ import PostInside from './pages/post-component/PostInside'
 import UserProfile from './pages/user-components/user-content/UserProfile'
 import EditPost from './pages/post-component/Post-Update/EditPost'
 import UserEdit from './pages/user-components/user-content/UserEdit'
+import NotificationsPage from './components/navigation/Notification-components/NotificationPage'
 function App() {
   const { forumID } = useParams()
   // useEffect(() => {
@@ -36,6 +37,7 @@ function App() {
         <Route path="/create-post" element={<PostData />} />
         <Route path="edit-post/:postID" element={<EditPost />} />
         <Route path="edit-user/:userID" element={<UserEdit />} />
+        <Route path="/notifications" element={<NotificationsPage />} />
       </Routes>
     </>
   )

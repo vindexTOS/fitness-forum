@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getCookies, LogOut } from '../../redux/features/slice/LoginSlice'
 import { useNavigate, Navigate, Link } from 'react-router-dom'
 import PostData from './make-post-components/PostData'
-
 import { getDataFromRegister } from '../../redux/features/slice/LoginSlice'
 import { useMainContext } from '../../context'
 import { UserDataThunk } from '../../redux/features/async-thunk/UserDataThunk'
@@ -21,7 +20,7 @@ const UserHome = () => {
     if (!user) {
       dispatch(getDataFromRegister(registerUser))
     }
-    dispatch(GetAllPostsThunk({ dispatch, pages: '1' }))
+    dispatch(GetAllPostsThunk({ dispatch, pages: '1', search: '' }))
     console.log('UserHome')
   }, [])
 
@@ -65,7 +64,7 @@ const UserHome = () => {
     // const filteredDataBasedOnUser = allPostData?.AllData.filter(
     //   (val: PostsComponentCardType) => _id === val.userID,
     // )
-
+    const { about } = description
     return (
       <div className={style.mainDiv}>
         <div className={style.profileDiv}>
@@ -120,7 +119,7 @@ const UserHome = () => {
           </div>
           <div className="flex flex-col  w-[100%]  items-start max_smm:px-5 px-20">
             <h1 className="text-white text-[1.2rem] ">About me </h1>
-            <p className="text-white ">{description}</p>{' '}
+            <p className="text-white ">{about}</p>
           </div>
         </div>
         <PostData />
