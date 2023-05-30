@@ -15,6 +15,20 @@ import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { GetVotes } from './redux/features/async-thunk/UpVoteDownVoteThunks'
 import { ThunkDispatch } from '@reduxjs/toolkit'
 import { NotificationData } from './redux/features/async-thunk/NotificationThunk'
+
+type userEditState = {
+  name: string
+  avatar: string
+  about: string
+  bench: number
+  deadlift: number
+  squat: number
+}
+type userEditAction = {
+  type: string
+  payload: any
+}
+
 type Cell = {
   image: any
   htmlImg: String | string | null
@@ -26,6 +40,9 @@ type Cell = {
   uploadFileToFirebaseStorage: () => void
   imgUrl: string
   setHtmlImg: React.Dispatch<React.SetStateAction<String | null>>
+  valueName: string
+  userEditState: userEditState
+  userEditDispatch: React.Dispatch<userEditAction>
 }
 
 const context = createContext<Cell | null>(null)
@@ -137,6 +154,51 @@ export const ContextProvider = ({
     }
   }
 
+  const user = useSelector((state: any) => state.LoginReducer.data)
+  const userEditReduccer = (state: userEditState, action: userEditAction) => {
+    switch (action.type) {
+      case 'edit-name':
+        return { ...state, name: state.name = action.payload }
+      case 'edit-avatar':
+        return { ...state, avatar: state.avatar = action.payload }
+      case 'edit-about':
+        return { ...state, about: state.about = action.payload }
+      case 'edit-bench':
+        return { ...state, bench: state.bench = action.payload }
+      case 'edit-squat':
+        return { ...state, squat: state.squat = action.payload }
+      case 'edit-deadlift':
+        return { ...state, deadlift: state.deadlift = action.payload }
+      default:
+        return state
+    }
+  }
+
+  const [userEditState, userEditDispatch] = useReducer(userEditReduccer, {
+    name: '',
+    avatar: '',
+    about: '',
+    bench: 0,
+    deadlift: 0,
+    squat: 0,
+  })
+
+  const [valueName, setValueName] = useState<string>('')
+
+  useEffect(() => {
+    if (user && user.user && user.user.description) {
+      const { _id, name, avatar, description } = user.user
+      const { about, bench, deadlift, squat } = description || {}
+      // setValueName(name)
+      userEditDispatch({ type: 'edit-name', payload: name })
+      userEditDispatch({ type: 'edit-avatar', payload: avatar })
+      userEditDispatch({ type: 'edit-about', payload: about })
+      userEditDispatch({ type: 'edit-bench', payload: bench })
+      userEditDispatch({ type: 'edit-squat', payload: squat })
+      userEditDispatch({ type: 'edit-deadlift', payload: deadlift })
+    }
+  }, [user.user])
+
   return (
     <context.Provider
       value={{
@@ -149,6 +211,9 @@ export const ContextProvider = ({
         uploadFileToFirebaseStorage,
         imgUrl,
         setHtmlImg,
+        valueName,
+        userEditState,
+        userEditDispatch,
       }}
     >
       {children}

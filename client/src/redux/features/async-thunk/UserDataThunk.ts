@@ -3,13 +3,15 @@ import { getUserData } from '../slice/GeneralSlice'
 import axios from 'axios'
 import Cookies from 'universal-cookie'
 import jwt from 'jwt-decode'
+import { DescriptionType } from './Register'
 type UserDataThunkProp = {
   dispatch: ThunkDispatch<any, any, any>
 }
 type UserInfo = {
   name: string
-  description: string
+
   avatar: string
+  description: DescriptionType
 }
 export const UserDataThunk = createAsyncThunk(
   'user-data/get',
