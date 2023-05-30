@@ -8,8 +8,9 @@ import { useMainContext } from '../../context'
 import { UserDataThunk } from '../../redux/features/async-thunk/UserDataThunk'
 import { ThunkDispatch } from '@reduxjs/toolkit'
 import { GetAllPostsThunk } from '../../redux/features/async-thunk/GetAllPostsThunk'
+import DefaultUser from '../../assets/default-user.webp'
 const UserHome = () => {
-  const { imgUploadDrag, imgUpload, htmlImg } = useMainContext()
+  const { htmlImg } = useMainContext()
   const registerUser = useSelector((state: any) => state.RegisterReducer.data)
   const user = useSelector((state: any) => state.LoginReducer.data)
 
@@ -75,7 +76,10 @@ const UserHome = () => {
           {/* <h1>{_id}</h1> */}
           <div className="flex w-[100%] justify-around max_smm:items-center max_md2:flex-col gap-2">
             <div className={style.imgEditDiv}>
-              <img className={style.img} src={htmlImg ? htmlImg : avatar} />
+              <img
+                className={style.img}
+                src={avatar ? avatar : DefaultUser || htmlImg}
+              />
               <button
                 className={style.btn}
                 onClick={() => navigate(`/edit-user/${_id}`)}

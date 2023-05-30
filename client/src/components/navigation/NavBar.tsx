@@ -12,6 +12,7 @@ import { IoIosNotifications } from 'react-icons/io'
 import Notification from './Notification-components/Notification'
 import NotificationsList from './Notification-components/NotificationsList'
 import SearchBar from './SearchBar'
+import DefaultUser from '../../assets/default-user.webp'
 const NavBar = () => {
   const [dropDown, setDropDown] = useState<boolean>(false)
   const [homeDrop, setHomeDrop] = useState<boolean>(false)
@@ -85,7 +86,7 @@ const NavBar = () => {
                 onClick={() => {
                   setDropDown(!dropDown), setDropDownNotif(false)
                 }}
-                src={user.user.avatar}
+                src={user.user.avatar ? user.user.avatar : DefaultUser}
               />
             </div>
           ) : (

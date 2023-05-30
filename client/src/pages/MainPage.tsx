@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom'
 import { UserDataThunk } from '../redux/features/async-thunk/UserDataThunk'
 import useScrollHandler from '../Hooks/useScrollHandler'
 import useScrollToDiv from '../Hooks/useScrollToDiv'
+import PostCardLoading from '../components/loading-skeletons/PostCardLoading'
 const Home = () => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const allPostData = useSelector((state: any) => state.GetAllPostReducer.data)
@@ -40,8 +41,13 @@ const Home = () => {
   }, [pages])
 
   const { scrollRef, handleScroll } = useScrollHandler()
-
-  if (allPostData && userData) {
+  const [loading, setLoading] = React.useState<boolean>(false)
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(true)
+    }, 1000)
+  }, [])
+  if (allPostData && userData && loading) {
     // const location = useLocation()
     const reversedArray = allPostData.posts
     const pageSlider = (direction: string) => {
@@ -107,7 +113,15 @@ const Home = () => {
       </section>
     )
   } else {
-    return <div>loading</div>
+    return (
+      <section className={style.section}>
+        <div ref={pageRef} className={style.cardMapDiv}>
+          {new Array(5).fill('').map((val: string, index: number) => (
+            <PostCardLoading />
+          ))}
+        </div>
+      </section>
+    )
   }
 }
 

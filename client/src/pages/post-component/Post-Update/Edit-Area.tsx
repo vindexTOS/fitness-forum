@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react'
 import { BsTrash3 } from 'react-icons/bs'
 import { useSelector, useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { UpdatePost } from '../../../redux/features/async-thunk/DeleteAndUpdatePostThunk'
 import { ThunkDispatch } from '@reduxjs/toolkit'
 import { FireBasePhotoThunk } from '../../../redux/features/async-thunk/FireStoreThunks/ProfilePhotoThunk'
@@ -26,7 +26,7 @@ const EditPost: FC<DataInterFace> = ({ data }) => {
   const realPhoto = photo !== 'No Photo' && photo
   const url = useSelector((state: any) => state.FireBasePhotoReducer.url)
   const user = useSelector((state: any) => state.LoginReducer.data)
-
+  const navigate = useNavigate()
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const style = {
     mainDiv: `w-[80%]  relative rounded-[5px] bg-[#212121]  mt-60      flex  cursor-pointer      text-white`,
@@ -53,6 +53,7 @@ const EditPost: FC<DataInterFace> = ({ data }) => {
       }
 
       dispatch(UpdatePost({ id: _id || '', update: data }))
+      navigate(`/${forumID}/${_id}/1`)
     }
   }
 

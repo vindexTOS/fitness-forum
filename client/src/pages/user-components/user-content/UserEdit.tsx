@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useMainContext } from '../../../context'
 import { FireBasePhotoThunk } from '../../../redux/features/async-thunk/FireStoreThunks/ProfilePhotoThunk'
 import { getBench } from '../../../redux/features/slice/RegisterSlice'
+import DefaultUser from '../../../assets/default-user.webp'
 const UserEdit = () => {
   const {
     imgUploadDrag,
@@ -23,12 +24,12 @@ const UserEdit = () => {
 
   if (user && user.user && user.user.description) {
     const style = {
-      mainDiv: `w-[100%] h-[100vh] max_sm8:flex-col max_sm8:pb-20  max_sm8:pt-40 flex items-center justify-center gap-3`,
+      mainDiv: `w-[100%] h-[100vh]  max_sm8:flex-col max_sm8:pb-20  max_sm8:pt-40 flex items-center justify-center gap-3`,
       btn: `relative  max_sm8:ml-4 max_smm:w-[90%]  w-[100%] flex items-center justify-center p-0.5 mb-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-[#cf1b4e] group-hover:from-purple-500 group-hover:to-[#cf1b4e] hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800`,
       btnSpan: `relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 w-[100%]`,
       m: `bg-[#2e2d2d]  max_sm8:w-[90%]  max_smm1:flex flex-col max_smm1:gap-2   w-[50%] h-[300px] max_smm1:h-[500px] rounded-[5px]  `,
       t: `bg-[#2e2d2d] text-[#ec2b58] w-[100%]   max_sm8:h-[300px]  h-[100%] outline outline-[1px] outline-[#ec2b58] boxshaddow rounded-[5px] p-2 `,
-      input: `flex items-center bg-[#2e2d2d]  justify-around w-[20rem] h-[2.2rem] rounded-[5px] boxshaddow`,
+      input: `flex items-center bg-[#2e2d2d]   max_XL3:w-[100%] text-white justify-around w-[20rem] h-[2.2rem] rounded-[5px] boxshaddow`,
     }
     // dispatch(getBench(bench))
 
@@ -66,7 +67,7 @@ const UserEdit = () => {
     return (
       <div className={style.mainDiv} onClick={() => console.log()}>
         {/* <button onClick={() => console.log(url)}>ONcli</button> */}
-        <div className="flex flex-col items-center justify-center mt-5">
+        <div className="flex flex-col items-center justify-center mt-5 ">
           <label
             onDrop={(e) => imgUploadDrag(e)}
             className="text-[2rem] h-[2.2rem]   flex-col  items-center justify-center text-gray-400   cursor-pointer w-[250px]  h-[300px] rounded-[6px] flex "
@@ -74,7 +75,7 @@ const UserEdit = () => {
           >
             <img
               className="w-[250px] h-[250px] rounded-t-[9px]"
-              src={userEditState.avatar}
+              src={userEditState.avatar ? userEditState.avatar : DefaultUser}
             />
 
             <input
@@ -106,7 +107,8 @@ const UserEdit = () => {
             placeholder="Add description about yourself "
             className={style.t}
           ></textarea>
-          <div className="flex justify-between max_smm1:flex-col items-center justify-center gap-2">
+          <div className="flex justify-between   max_XL3:flex-col items-center justify-center gap-2">
+            <label className="text-white">Bench</label>
             <input
               className={style.input}
               type="number"
@@ -119,6 +121,7 @@ const UserEdit = () => {
                 })
               }
             />
+            <label className="text-white">Squat</label>
             <input
               className={style.input}
               type="number"
@@ -131,6 +134,7 @@ const UserEdit = () => {
                 })
               }
             />
+            <label className="text-white">Deadlift</label>
             <input
               className={style.input}
               type="number"

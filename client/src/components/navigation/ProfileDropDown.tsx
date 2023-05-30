@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { MdCreateNewFolder } from 'react-icons/md'
 import { IoIosAddCircleOutline } from 'react-icons/io'
-
+import DefaultUser from '../../assets/default-user.webp'
 type ProfileDropProps = {
   setDropDown: React.Dispatch<React.SetStateAction<boolean>>
   dropDown: boolean
@@ -30,7 +30,7 @@ const ProfileDropDown: FC<ProfileDropProps> = ({ dropDown, setDropDown }) => {
   return (
     <div className={style.mainDiv}>
       <button className={style.btn} onClick={() => navigate(`/home`)}>
-        <img className={style.img} src={avatar} />
+        <img className={style.img} src={avatar ? avatar : DefaultUser} />
         <p className="text-white w-[6rem]">Your Profile</p>
       </button>
       {userLogin && userLogin?.user && userLogin?.user?.role === 'admin' && (

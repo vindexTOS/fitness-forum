@@ -2,6 +2,8 @@ import React, { FC } from 'react'
 import { AiOutlineStar } from 'react-icons/ai'
 import { MdOutlineDateRange } from 'react-icons/md'
 import { DescriptionType } from '../../../redux/features/async-thunk/Register'
+import { useMainContext } from '../../../context'
+import DefaultUser from '../../../assets/default-user.webp'
 type UserNavProps = {
   user: {
     name: string
@@ -12,10 +14,11 @@ type UserNavProps = {
   userDataLength: number
 }
 const UserNav: FC<UserNavProps> = ({ user, userDataLength }) => {
-  const { name, avatar, date, description } = user
-  const { about } = description
+  const { userEditState } = useMainContext()
+  const { date } = user
+
   const style = {
-    nav: `bg-[#383737] w-[300px] h-[470px]  max-h-[1200px] flex max_xml:absolute  max_xml:w-[70%]  max_smm:w-[95%] flex-col items-center py-5  gap-20 rounded-[9px] boxshaddow`,
+    nav: `bg-[#383737] w-[300px]   max-h-[600px] flex max_xml:absolute  max_xml:w-[70%]  max_smm:w-[95%] flex-col items-center py-5  gap-20 rounded-[9px] boxshaddow`,
     img: ` w-[200px] h-[200px] rounded-[50%] `,
     profileDiv: `flex flex-col items-center justify-center gap-2`,
     nameHeader: `text-gray-400 text-[1.4rem]`,
@@ -25,9 +28,21 @@ const UserNav: FC<UserNavProps> = ({ user, userDataLength }) => {
   return (
     <nav className={style.nav}>
       <div className={style.profileDiv}>
-        <img className={style.img} src={avatar} />
-        <h1 className={style.nameHeader}>{name}</h1>
-        <p className={style.p}>{about}</p>
+        <img
+          className={style.img}
+          src={userEditState.avatar ? userEditState.avatar : DefaultUser}
+        />
+        <h1 className={style.nameHeader}>{userEditState.name}</h1>
+        <p className={style.p}>{userEditState.about}</p>
+        <ul
+          className={
+            'max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400'
+          }
+        >
+          <li>Bench {userEditState.bench}Kg</li>
+          <li>Deadlift {userEditState.deadlift}Kg</li>
+          <li>squat{userEditState.squat}Kg</li>
+        </ul>
       </div>
       <div className={style.karmaAndDateDiv}>
         <div>

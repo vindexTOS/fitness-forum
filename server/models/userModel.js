@@ -32,15 +32,19 @@ const userSchema = new mongoose.Schema({
   description: {
     about: {
       type: String,
+      default: 'about',
     },
     bench: {
       type: Number,
+      default: 0,
     },
     squat: {
       type: Number,
+      default: 0,
     },
     deadlift: {
       type: Number,
+      default: 0,
     },
   },
   date: {
