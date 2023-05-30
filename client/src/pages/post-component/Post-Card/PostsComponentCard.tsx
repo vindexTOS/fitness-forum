@@ -105,7 +105,7 @@ const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
   }
 
   return (
-    <div onClick={() => console.log(votePostID)} className={style.mainDiv}>
+    <div className={style.mainDiv}>
       <UpVote
         _id={_id}
         userID={userID}
@@ -113,6 +113,7 @@ const PostsComponentCard: FC<DataInterFace> = ({ data }) => {
         upVoteColor={upVoteColor}
         upVote={upVote}
         voteNum={voteNum}
+        upvote={upvote}
       />
       <section className={style.mainContent}>
         <PostTopInfo

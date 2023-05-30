@@ -37,7 +37,7 @@ const PostCardLoading = () => {
         </div>
         {/*  */}
         <div className="   w-[100%] flex items-center justify-center">
-          <p className="w-[100%] h-[300px]  break-words text-start flex  flex-col gap-3">
+          <div className="w-[100%] h-[300px]  break-words text-start flex  flex-col gap-3">
             <p className="w-[90%] h-[1.2rem] bg-gray-600 rounded-[20px]"></p>
             <p className="w-[70%] h-[1.2rem] bg-gray-600 rounded-[20px]"></p>
             <p className="w-[80%] h-[1.2rem] bg-gray-600 rounded-[20px]"></p>
@@ -48,7 +48,7 @@ const PostCardLoading = () => {
             <p className="w-[70%] h-[1.2rem] bg-gray-600 rounded-[20px]"></p>
             <p className="w-[80%] h-[1.2rem] bg-gray-600 rounded-[20px]"></p>
             <p className="w-[90%] h-[1.2rem] bg-gray-600 rounded-[20px]"></p>
-          </p>
+          </div>
         </div>
         {/*  */}
       </section>

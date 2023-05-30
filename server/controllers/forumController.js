@@ -2,13 +2,29 @@ import Forum from '../models/forumModel.js'
 import User from '../models/userModel.js'
 import Post from '../models/postModel.js'
 const createThread = async (req, res) => {
-  const { name, avatar, description, forumID, adminID } = req.body
+  const {
+    name,
+    avatar,
+    description,
+    forumID,
+    adminID,
+    color1,
+    color2,
+  } = req.body
   const user = await User.findOne({ _id: adminID })
 
   try {
     if (name && description && forumID) {
       console.log('here')
-      const forumObj = { name, avatar, description, forumID, adminID }
+      const forumObj = {
+        name,
+        avatar,
+        description,
+        forumID,
+        adminID,
+        color1,
+        color2,
+      }
       if (user.role === 'admin') {
         const forum = await Forum.create(forumObj)
         console.log('201')

@@ -10,7 +10,7 @@ const Notification = () => {
     mainDiv: `w-[20px]  h-[20px] rounded-[50%] bg-green-400 text-white flex items-center justify-center`,
   }
 
-  if (notification.length > 0) {
+  if (notification.length > 0 && userLogin.user) {
     const { _id } = userLogin.user
     const notificationLength = notification.filter(
       (val: any) => val.isRead && val.authorsID !== String(_id),

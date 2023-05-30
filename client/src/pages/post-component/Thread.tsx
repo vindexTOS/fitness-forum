@@ -11,6 +11,7 @@ import PostsComponentCard, {
 import MakePostComponent from '../../components/MakePostComponent'
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from 'react-icons/rx'
 import useScrollHandler from '../../Hooks/useScrollHandler'
+import PostCardLoading from '../../components/loading-skeletons/PostCardLoading'
 const Thread = () => {
   const { forumID, threadpage } = useParams()
   const pages = threadpage
@@ -46,7 +47,20 @@ const Thread = () => {
       }
     }
   }
-  if (PostsAndThreadData && PostsAndThreadData.forumData) {
+  const style = {
+    section: `w-[100%] h-[100%] flex flex-col items-center justify-center `,
+    nav: `w-[100%] h-[250px]  flex  items-center  justify-center  gap-5`,
+    avatar: `w-[100px] rounded-[50%]`,
+    header: `text-[2rem] font-bold text-red-500`,
+    cardMapDiv: `flex flex-col gap-5 items-center justify-center py-10 w-[800px] max_sm8:w-[95%] `,
+  }
+  const [loading, setLoading] = React.useState<boolean>(false)
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(true)
+    }, 1000)
+  }, [])
+  if (PostsAndThreadData && PostsAndThreadData.forumData && loading) {
     const data = PostsAndThreadData
     const {
       avatar,
@@ -56,14 +70,6 @@ const Thread = () => {
       color1,
       color2,
     } = data.forumData
-
-    const style = {
-      section: `w-[100%] h-[100%] flex flex-col items-center justify-center `,
-      nav: `w-[100%] h-[250px]  flex  items-center  justify-center  gap-5`,
-      avatar: `w-[100px] rounded-[50%]`,
-      header: `text-[2rem] font-bold text-red-500`,
-      cardMapDiv: `flex flex-col gap-5 items-center justify-center py-10 w-[800px] max_sm8:w-[95%] `,
-    }
 
     return (
       <section className={style.section}>
@@ -116,7 +122,15 @@ const Thread = () => {
       </section>
     )
   } else {
-    return <div>Loading</div>
+    return (
+      <section className={style.section}>
+        <div ref={pageRef} className={style.cardMapDiv}>
+          {new Array(5).fill('').map((val: string, index: number) => (
+            <PostCardLoading key={index} />
+          ))}
+        </div>
+      </section>
+    )
   }
 }
 

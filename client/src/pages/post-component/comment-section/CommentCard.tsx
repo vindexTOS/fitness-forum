@@ -13,14 +13,15 @@ import CommentReplyComponent from './CommentReplyComponent'
 import { useSelector } from 'react-redux'
 import Replies from './Replies'
 import { useNavigate } from 'react-router-dom'
+import { useMainContext } from '../../../context'
 type DataType = {
   data: CommentType
 }
 const CommentCard: FC<DataType> = ({ data }) => {
+  const { replyDrop, setReplyDrop } = useMainContext()
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
 
   const [dropDown, setDropDown] = React.useState<boolean>(false)
-  const [replyDrop, setReplyDrop] = React.useState<boolean>(false)
   const [edit, setEdit] = React.useState<boolean>(false)
 
   const dropDownRef = React.useRef<HTMLDivElement | null>(null)
@@ -43,6 +44,8 @@ const CommentCard: FC<DataType> = ({ data }) => {
     )
     const { comment, userID, postID, date, _id } = data
     const { name, avatar } = data?.user
+    const userLogin = useSelector((state: any) => state.LoginReducer.data)
+
     const [editComment, setEdditComment] = React.useState<string>(comment)
     const navigate = useNavigate()
     const deleteData = async () => {
@@ -98,7 +101,7 @@ const CommentCard: FC<DataType> = ({ data }) => {
       setEdit(false)
     }
     return (
-      <div ref={dropDownRef} className={style.commentDiv}>
+      <div className={style.commentDiv}>
         {popUp && <PopUpDelete />}
         <div className="w-[100%] flex items-end justify-end">
           <BiDotsVerticalRounded
@@ -132,10 +135,12 @@ const CommentCard: FC<DataType> = ({ data }) => {
                 <button onClick={() => EditData()}>Edit</button>
               </div>
             )}
-            <p className="text-[10px]">{date.slice(0, 10)}</p>
+            <p onClick={() => console.log(name)} className="text-[10px]">
+              {date.slice(0, 10)}
+            </p>
           </div>
         </div>
-        {!name ? (
+        {!userLogin?.user?.name ? (
           <h1
             onClick={() => navigate('/login')}
             className={`text-end cursor-pointer  `}

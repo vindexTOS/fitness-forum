@@ -4,6 +4,7 @@ import { GetCommentThunk } from '../../../redux/features/async-thunk/CommentThun
 import { ThunkDispatch } from '@reduxjs/toolkit'
 import { useParams } from 'react-router-dom'
 import CommentCard from './CommentCard'
+import CommentsCardLoading from '../../../components/loading-skeletons/CommentsCardLoading'
 export type CommentType = {
   comment: string
   _id: string
@@ -31,8 +32,13 @@ const CommentsSection = () => {
   const style = {
     comment: `bg-[#262525] text-gray-400 w-[80%]  max_smm:w-[100%] flex flex-col gap-2`,
   }
-
-  if (allComments) {
+  const [loading, setLoading] = React.useState<boolean>(false)
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(true)
+    }, 1000)
+  }, [])
+  if (allComments && loading) {
     return (
       <div
         className={style.comment}
@@ -44,7 +50,13 @@ const CommentsSection = () => {
       </div>
     )
   } else {
-    return <div>Loading</div>
+    return (
+      <div className={style.comment}>
+        {new Array(10).fill('').map((val: string, index: number) => (
+          <CommentsCardLoading key={index} />
+        ))}
+      </div>
+    )
   }
 }
 

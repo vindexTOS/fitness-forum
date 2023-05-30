@@ -15,15 +15,24 @@ import {
 } from '../../redux/features/slice/ForumSlice'
 import { ThunkDispatch } from '@reduxjs/toolkit'
 import { useMainContext } from '../../context'
+import { SketchPicker } from 'react-color'
+import DefaultUser from '../../assets/default-user.webp'
 const CreateForum = () => {
   const { htmlImg, image } = useMainContext()
+  const [color1, setColor1] = useState<string>('')
+  const [color2, setColor2] = useState<string>('')
   const user = useSelector((state: any) => state.LoginReducer.data)
   const url = useSelector((state: any) => state.FireBasePhotoReducer.url)
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
   const { name, avatar, description, forumID, adminID } = useSelector(
     (state: any) => state.ThreadReducer,
   )
-
+  const handleColor = (color: any) => {
+    setColor1(color.hex)
+  }
+  const handleColor2 = (color: any) => {
+    setColor2(color.hex)
+  }
   const createThread = async () => {
     if (image && description && forumID && name) {
       await dispatch(FireBasePhotoThunk({ image, dispatch }))
@@ -43,6 +52,8 @@ const CreateForum = () => {
         description,
         forumID,
         adminID: user.user._id,
+        color1,
+        color2,
       }
 
       dispatch(CreateThreadThunk(val))
@@ -54,10 +65,13 @@ const CreateForum = () => {
     }
   }, [url])
   const style = {
-    mainDiv: `w-[100%]  h-[100vh] gap-5 flex flex-col  max_sm8:pt-80 items-center justify-center  `,
+    mainDiv: `w-[100%]  h-[100%] gap-5 flex flex-col py-60 max_sm8:pt-80 items-center justify-center  `,
     m: `bg-[#2e2d2d]  max_sm8:w-[90%]  w-[50%] h-[300px] rounded-[5px]  `,
     t: `bg-[#2e2d2d] text-[#ec2b58] w-[100%]   max_sm8:h-[300px]  h-[100%] outline outline-[1px] outline-[#ec2b58] boxshaddow rounded-[5px] p-2 `,
     btn: `text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2`,
+    nav: `w-[50%]  max_smm1:w-[90%] h-[250px]  flex  items-center  justify-center  gap-5`,
+    header: `text-[2rem] font-bold text-red-500`,
+    avatar: `w-[100px] rounded-[50%]`,
   }
 
   if (user && user.user && user.user.role) {
@@ -93,6 +107,19 @@ const CreateForum = () => {
           <h1 className="text-white text-[1.2rem]">Upload thread avatar</h1>
           <ImgUpload htmlImg={htmlImg} />
         </div>
+        <div className="flex flex-col items-center  gap-2">
+          <h1 className="text-white text-[1.2rem]">Pick Thread Colors</h1>
+          <div className="    flex gap-2">
+            <SketchPicker color={color1} onChangeComplete={handleColor} />
+            <SketchPicker color={color2} onChangeComplete={handleColor2} />
+          </div>
+        </div>
+        <nav style={{ backgroundColor: `${color1}` }} className={style.nav}>
+          <img className={style.avatar} src={avatar ? avatar : DefaultUser} />
+          <h1 style={{ color: `${color2}` }} className={style.header}>
+            {name ? name : 'Thread Name'}
+          </h1>
+        </nav>
         {htmlImg && <img className="w-[200px] h-[200px]" src={htmlImg} />}
 
         <button className={style.btn} onClick={createThread}>

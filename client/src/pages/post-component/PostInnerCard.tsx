@@ -47,7 +47,9 @@ const PostInnerCard: FC<DataInterFace> = ({ data }) => {
     String(votePostID?.Votes[0]?.voteType),
   )
   const [voteNum, setVoteNum] = useState<number>(upvote)
-
+  useEffect(() => {
+    setVoteNum(upvote)
+  }, [upvote])
   const upVote = async () => {
     await dispatch(
       UpVoteThunk({
@@ -96,6 +98,7 @@ const PostInnerCard: FC<DataInterFace> = ({ data }) => {
             userID={userID}
             downVote={downVote}
             upVoteColor={upVoteColor}
+            upvote={upvote}
             upVote={upVote}
             voteNum={voteNum}
           />

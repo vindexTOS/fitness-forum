@@ -22,8 +22,8 @@ const NotificationsPage = () => {
         </div>
         {notification
           .filter((val: any) => val.authorsID !== String(_id))
-          .map((data: NotificationCardType) => (
-            <NotificationCard {...data} />
+          .map((data: NotificationCardType, index: number) => (
+            <NotificationCard key={index} {...data} />
           ))}
       </div>
     )

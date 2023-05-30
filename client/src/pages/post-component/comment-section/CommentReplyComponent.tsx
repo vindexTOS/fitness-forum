@@ -7,6 +7,7 @@ import {
 import { ThunkDispatch } from '@reduxjs/toolkit'
 import { NotificationThunk } from '../../../redux/features/async-thunk/NotificationThunk'
 import { useSelector } from 'react-redux'
+import { useMainContext } from '../../../context'
 type loggedUserType = {
   avatar: string
   name: string
@@ -52,9 +53,11 @@ const CommentReplyComponent: FC<loggedUserType> = ({
           reply: { reply: [{ comment: replyComment, userID: loggedINUserId }] },
         }),
       )
-      await dispatch(NotificationThunk(notificationObj))
+
+      dispatch(NotificationThunk(notificationObj))
       dispatch(GetCommentThunk({ dispatch, postID, pages: '1' }))
       setReplyDrop(false)
+      setReplyComment('')
     }
   }
   if (name && avatar) {

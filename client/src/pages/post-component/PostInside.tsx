@@ -21,7 +21,7 @@ const PostInside = () => {
   const allPostData = useSelector((state: any) => state.GetAllPostReducer.data)
   const userData = useSelector((state: any) => state.GeneralReducer.userData)
   if (allPostData && allPostData.AllData && userData) {
-    const findData = allPostData.AllData?.find((val: any) => postID === val._id)
+    const findData = allPostData.posts?.find((val: any) => postID === val._id)
     const { _id, forumID, photo, post, userID, title, date, upvote } =
       findData || {}
     const user = userData && userData.find((val: any) => val._id === userID)

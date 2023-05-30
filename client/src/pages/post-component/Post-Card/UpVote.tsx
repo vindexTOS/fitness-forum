@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react'
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti'
 import { BsThreeDots } from 'react-icons/bs'
 import SettingButtons from './SettingButtons'
+import { useSelector } from 'react-redux'
 
 type UpVoteType = {
   _id: string
@@ -14,6 +15,7 @@ type UpVoteType = {
   downVote: () => void
   upVote: () => void
   voteNum: number
+  upvote: number
 }
 
 const UpVote: FC<UpVoteType> = ({

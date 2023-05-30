@@ -76,7 +76,6 @@ const HomeDropDown = () => {
           </div>
         )}
 
-        <HomeDropThreadDiv title="Messages" Icon={AiFillMessage} link="/" />
         <HomeDropThreadDiv title="User Settings" Icon={FaUser} link="/home" />
       </div>
       {/* <h1 onClick={() => console.log(forumData)}>cli</h1> */}

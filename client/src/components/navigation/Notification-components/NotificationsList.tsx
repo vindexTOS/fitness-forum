@@ -17,8 +17,8 @@ const NotificationsList = () => {
       <div className={style.mainDiv}>
         {notification
           .filter((val: any) => val.authorsID !== String(_id))
-          .map((data: NotificationCardType) => (
-            <NotificationCard {...data} />
+          .map((data: NotificationCardType, index: number) => (
+            <NotificationCard key={String(data.authorsID + index)} {...data} />
           ))}
       </div>
     )

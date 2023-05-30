@@ -117,7 +117,7 @@ const Home = () => {
       <section className={style.section}>
         <div ref={pageRef} className={style.cardMapDiv}>
           {new Array(5).fill('').map((val: string, index: number) => (
-            <PostCardLoading />
+            <PostCardLoading key={index} />
           ))}
         </div>
       </section>

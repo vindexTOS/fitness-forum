@@ -43,6 +43,8 @@ type Cell = {
   valueName: string
   userEditState: userEditState
   userEditDispatch: React.Dispatch<userEditAction>
+  replyDrop: boolean
+  setReplyDrop: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const context = createContext<Cell | null>(null)
@@ -198,6 +200,7 @@ export const ContextProvider = ({
       userEditDispatch({ type: 'edit-deadlift', payload: deadlift })
     }
   }, [user.user])
+  const [replyDrop, setReplyDrop] = React.useState<boolean>(false)
 
   return (
     <context.Provider
@@ -214,6 +217,8 @@ export const ContextProvider = ({
         valueName,
         userEditState,
         userEditDispatch,
+        replyDrop,
+        setReplyDrop,
       }}
     >
       {children}
