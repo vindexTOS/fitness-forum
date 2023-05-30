@@ -15,7 +15,8 @@ type UserNavProps = {
 }
 const UserNav: FC<UserNavProps> = ({ user, userDataLength }) => {
   const { userEditState } = useMainContext()
-  const { date } = user
+  const { date, name, avatar, description } = user
+  const { about, bench, deadlift, squat } = description
 
   const style = {
     nav: `bg-[#383737] w-[300px]   max-h-[600px] flex max_xml:absolute  max_xml:w-[70%]  max_smm:w-[95%] flex-col items-center py-5  gap-20 rounded-[9px] boxshaddow`,
@@ -26,22 +27,19 @@ const UserNav: FC<UserNavProps> = ({ user, userDataLength }) => {
     p: `text-gray-200 break-words	 `,
   }
   return (
-    <nav className={style.nav}>
+    <nav className={style.nav} onClick={() => console.log(user)}>
       <div className={style.profileDiv}>
-        <img
-          className={style.img}
-          src={userEditState.avatar ? userEditState.avatar : DefaultUser}
-        />
-        <h1 className={style.nameHeader}>{userEditState.name}</h1>
-        <p className={style.p}>{userEditState.about}</p>
+        <img className={style.img} src={avatar ? avatar : DefaultUser} />
+        <h1 className={style.nameHeader}>{name}</h1>
+        <p className={style.p}>{about}</p>
         <ul
           className={
             'max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400'
           }
         >
-          <li>Bench {userEditState.bench}Kg</li>
-          <li>Deadlift {userEditState.deadlift}Kg</li>
-          <li>squat{userEditState.squat}Kg</li>
+          <li>Bench {bench}Kg</li>
+          <li>Deadlift {deadlift}Kg</li>
+          <li>squat{squat}Kg</li>
         </ul>
       </div>
       <div className={style.karmaAndDateDiv}>

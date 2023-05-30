@@ -33,7 +33,7 @@ const UserProfile = () => {
     const userDataLength = filteredDataBasedOnUser.length
 
     return (
-      <section onClick={() => console.log()} className={style.section}>
+      <section className={style.section}>
         <div className={style.contentDiv}>
           {filteredDataBasedOnUser.map((val: PostsComponentCardType) => (
             <PostsComponentCard data={val} key={val._id} />
