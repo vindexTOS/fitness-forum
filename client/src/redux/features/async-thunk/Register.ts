@@ -23,7 +23,9 @@ interface RegisterPayload {
 const RegisterThunk = createAsyncThunk(
   'Register/mongo',
   async (val: RegisterPayload) => {
-    const apiUrl = `http://localhost:3000/register`
+    // const apiUrl = `http://localhost:3000/register`
+    const apiUrl = `https://fitness-forum-back.onrender.com/register`
+
     const cookies = new Cookies()
     if (val.name && val.email && val.password) {
       const { name, email, password, url, description } = val

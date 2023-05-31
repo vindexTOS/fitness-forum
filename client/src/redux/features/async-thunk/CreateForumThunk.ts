@@ -1,4 +1,4 @@
-import { ThunkDispatch, createAsyncThunk } from '@reduxjs/toolkit'
+import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 interface ThreadType {
@@ -15,7 +15,9 @@ export const CreateThreadThunk = createAsyncThunk(
   'thread/post',
   async (val: ThreadType) => {
     const { name, avatar, description, forumID, adminID, color1, color2 } = val
-    const apiUrl = `http://localhost:3000/create-thread`
+    // const apiUrl = `http://localhost:3000/create-thread`
+    const apiUrl = `https://fitness-forum-back.onrender.com/create-thread`
+
     console.log('triggered')
     try {
       if (name && description && forumID && adminID) {

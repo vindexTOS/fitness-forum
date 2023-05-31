@@ -16,7 +16,8 @@ type UserInfo = {
 export const UserDataThunk = createAsyncThunk(
   'user-data/get',
   async (val: UserDataThunkProp) => {
-    const apiUrl = `http://localhost:3000/api/v1/user`
+    // const apiUrl = `http://localhost:3000/api/v1/user`
+    const apiUrl = `https://fitness-forum-back.onrender.com/api/v1/user`
 
     const data = await axios
       .get(apiUrl)
@@ -30,7 +31,8 @@ export const UserDataThunk = createAsyncThunk(
 export const UpdateUser = createAsyncThunk(
   'user/update',
   async ({ userID, obj }: { userID: string; obj: UserInfo }) => {
-    const apiUrl = `http://localhost:3000/api/v1/user/${userID}`
+    // const apiUrl = `http://localhost:3000/api/v1/user/${userID}`
+    const apiUrl = `https://fitness-forum-back.onrender.com/api/v1/user/${userID}`
 
     await axios
       .patch(apiUrl, obj)

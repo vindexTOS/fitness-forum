@@ -19,7 +19,10 @@ type commentReply = {
 export const PostCommentThunk = createAsyncThunk(
   'comment/post',
   async ({ data }: { data: CommentThunkType }) => {
-    const apiUrl = `http://localhost:3000/post/comment`
+    // const apiUrl = `http://localhost:3000/post/comment`
+
+    const apiUrl = `https://fitness-forum-back.onrender.com/post/comment`
+
     const { comment, userID, postID } = data
     await axios
       .post(apiUrl, { comment, userID, postID })
@@ -31,7 +34,10 @@ export const PostCommentThunk = createAsyncThunk(
 export const GetCommentThunk = createAsyncThunk(
   'comment/get',
   async (val: GetAllComments) => {
-    const apiUrl = `http://localhost:3000/post/comment/${
+    // const apiUrl = `http://localhost:3000/post/comment/${
+    //   val.postID
+    // }/?page=${String(val.pages)}&limit=10`
+    const apiUrl = `https://fitness-forum-back.onrender.com/post/comment/${
       val.postID
     }/?page=${String(val.pages)}&limit=10`
 
@@ -48,7 +54,8 @@ export const GetCommentThunk = createAsyncThunk(
 export const DeleteCommentThunk = createAsyncThunk(
   'comment/delete',
   async (commentID: string) => {
-    const apiUrl = `http://localhost:3000/post/comment/${commentID}`
+    // const apiUrl = `http://localhost:3000/post/comment/${commentID}`
+    const apiUrl = `https://fitness-forum-back.onrender.com/post/comment/${commentID}`
 
     await axios
       .delete(apiUrl)
@@ -60,7 +67,8 @@ export const DeleteCommentThunk = createAsyncThunk(
 export const UpdateCommentThunk = createAsyncThunk(
   'comment/update',
   async ({ commentID, comment }: { commentID: string; comment: string }) => {
-    const apiUrl = `http://localhost:3000/post/comment/${commentID}`
+    // const apiUrl = `http://localhost:3000/post/comment/${commentID}`
+    const apiUrl = `https://fitness-forum-back.onrender.com/post/comment/${commentID}`
 
     await axios
       .patch(apiUrl, { comment })
@@ -72,7 +80,8 @@ export const UpdateCommentThunk = createAsyncThunk(
 export const Addreply = createAsyncThunk(
   'comment-replay/patch',
   async ({ replyID, reply }: { replyID: string; reply: any }) => {
-    const apiUrl = `http://localhost:3000/post/comment/reply/${replyID}`
+    // const apiUrl = `http://localhost:3000/post/comment/reply/${replyID}`
+    const apiUrl = `https://fitness-forum-back.onrender.com/post/comment/reply/${replyID}`
 
     await axios
       .patch(apiUrl, reply)

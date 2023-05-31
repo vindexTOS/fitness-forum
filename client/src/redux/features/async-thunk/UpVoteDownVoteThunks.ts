@@ -19,7 +19,8 @@ export const UpVoteThunk = createAsyncThunk(
     query: string
     voteType: boolean
   }) => {
-    const apiUrl = `http://localhost:3000/post/${query}/${id}`
+    // const apiUrl = `http://localhost:3000/post/${query}/${id}`
+    const apiUrl = `https://fitness-forum-back.onrender.com/post/${query}/${id}`
 
     await axios
       .patch(apiUrl, { userID, voteType })
@@ -31,7 +32,8 @@ export const UpVoteThunk = createAsyncThunk(
 export const GetVotes = createAsyncThunk(
   'getvote/get',
   async (val: getVoteType) => {
-    const apiUrl = `http://localhost:3000/votes/${val.userID}`
+    // const apiUrl = `http://localhost:3000/votes/${val.userID}`
+    const apiUrl = `https://fitness-forum-back.onrender.com/votes/${val.userID}`
 
     const data = await axios
       .get(apiUrl)
@@ -40,5 +42,3 @@ export const GetVotes = createAsyncThunk(
     val.dispatch(getVotesData(data))
   },
 )
-
-

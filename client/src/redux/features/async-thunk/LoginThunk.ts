@@ -13,7 +13,9 @@ interface LoginThunkType {
 export const LoginThunk = createAsyncThunk(
   'Login/mongo',
   async (val: LoginThunkType) => {
-    const apiUrl = `http://localhost:3000/login`
+    // const apiUrl = `http://localhost:3000/login`
+    const apiUrl = `https://fitness-forum-back.onrender.com/login`
+
     const cookies = new Cookies()
 
     if (val.email && val.password) {

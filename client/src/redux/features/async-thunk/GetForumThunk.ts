@@ -8,7 +8,8 @@ interface GetThreadType {
 export const GetForumThunk = createAsyncThunk(
   'thread/get',
   async (val: GetThreadType) => {
-    let apiUrl = `http://localhost:3000/forums`
+    // const apiUrl = `http://localhost:3000/forums`
+    const apiUrl = `https://fitness-forum-back.onrender.com/forums`
     try {
       const data = await axios
         .get(apiUrl)

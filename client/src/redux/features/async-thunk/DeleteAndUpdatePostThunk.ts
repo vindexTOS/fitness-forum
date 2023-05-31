@@ -10,13 +10,17 @@ interface DeletAndUpdate {
 export const DeletePost = createAsyncThunk(
   'post/delete',
   async (val: DeletAndUpdate) => {
-    const apiUrl = `http://localhost:3000/post/${val.id}`
+    // const apiUrl = `http://localhost:3000/post/${val.id}`
+    const apiUrl = `https://fitness-forum-back.onrender.com/post/${val.id}`
+
     console.log(val.id)
     await axios
       .delete(apiUrl)
       .then((res) => console.log(res))
       .catch((err) => console.log(err))
-    const voteUrl = `http://localhost:3000/vote/delete/${val.voteID}`
+    // const voteUrl = `http://localhost:3000/vote/delete/${val.voteID}`
+    const voteUrl = `https://fitness-forum-back.onrender.com/vote/delete/${val.voteID}`
+
     await axios
       .delete(voteUrl)
       .then((res) => console.log(res))
@@ -27,7 +31,9 @@ export const DeletePost = createAsyncThunk(
 export const UpdatePost = createAsyncThunk(
   'post/update',
   async (val: DeletAndUpdate) => {
-    const apiUrl = `http://localhost:3000/post/${val.id}`
+    // const apiUrl = `http://localhost:3000/post/${val.id}`
+    const apiUrl = `https://fitness-forum-back.onrender.com/post/${val.id}`
+
     console.log(val.id)
     await axios
       .patch(apiUrl, val.update)

@@ -21,7 +21,9 @@ type notificationUpdateType = {
 export const NotificationThunk = createAsyncThunk(
   'notification/post',
   async (obj: notificationType) => {
-    const apiUrl = `http://localhost:3000/notification/create`
+    // const apiUrl = `http://localhost:3000/notification/create`
+    const apiUrl = `https://fitness-forum-back.onrender.com/create`
+
     await axios
       .post(apiUrl, obj)
       .then((res) => console.log(res))
@@ -32,7 +34,8 @@ export const NotificationThunk = createAsyncThunk(
 export const NotificationData = createAsyncThunk(
   'notification/get',
   async (obj: getNotification) => {
-    const apiUrl = `http://localhost:3000/notification/${obj.userID}`
+    // const apiUrl = `http://localhost:3000/notification/${obj.userID}`
+    const apiUrl = `https://fitness-forum-back.onrender.com/notification/${obj.userID}`
 
     await axios
       .get(apiUrl)
@@ -47,7 +50,8 @@ export const NotificationData = createAsyncThunk(
 export const NotificationRead = createAsyncThunk(
   'notificatio/patch',
   async (obj: notificationUpdateType) => {
-    const apiUrl = `http://localhost:3000/notification/${obj.notificationID}`
+    // const apiUrl = `http://localhost:3000/notification/${obj.notificationID}`
+    const apiUrl = `https://fitness-forum-back.onrender.com/notification/${obj.notificationID}`
 
     await axios
       .patch(apiUrl, obj)

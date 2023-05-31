@@ -12,7 +12,9 @@ export interface PostThunk {
 export const CreatePostThunk = createAsyncThunk(
   'post/post',
   async (val: PostThunk) => {
-    const apiUrl = `http://localhost:3000/posts`
+    // const apiUrl = `http://localhost:3000/posts`
+    const apiUrl = `https://fitness-forum-back.onrender.com/posts`
+
     const { title, post, photo, forumID, userID } = val
     try {
       const withPhoto = { title, post, photo, forumID, userID }

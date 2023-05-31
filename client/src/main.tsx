@@ -7,7 +7,7 @@ import { ContextProvider } from './context.tsx'
 import store from './redux/store.ts'
 import { Provider } from 'react-redux'
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
+ 
     <BrowserRouter>
       <Provider store={store}>
         <ContextProvider>
@@ -15,5 +15,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         </ContextProvider>
       </Provider>
     </BrowserRouter>
-  </React.StrictMode>,
+  
 )

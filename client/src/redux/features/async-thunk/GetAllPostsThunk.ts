@@ -9,7 +9,11 @@ interface GetThreadType {
 export const GetAllPostsThunk = createAsyncThunk(
   'allposts/get',
   async (val: GetThreadType) => {
-    const apiUrl = `http://localhost:3000/posts/?page=${String(
+    // const apiUrl = `http://localhost:3000/posts/?page=${String(
+    //   val.pages,
+    // )}&limit=5${val.search}`
+
+    const apiUrl = `https://fitness-forum-back.onrender.com/posts/?page=${String(
       val.pages,
     )}&limit=5${val.search}`
 
