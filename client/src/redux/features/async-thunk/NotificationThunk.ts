@@ -22,7 +22,7 @@ export const NotificationThunk = createAsyncThunk(
   'notification/post',
   async (obj: notificationType) => {
     // const apiUrl = `http://localhost:3000/notification/create`
-    const apiUrl = `https://fitness-forum-back.onrender.com/create`
+    const apiUrl = `https://fitness-forum-back.onrender.com/notification/create`
 
     await axios
       .post(apiUrl, obj)

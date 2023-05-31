@@ -14,7 +14,7 @@ const NotificationsList = () => {
   if (notification.length > 0 && userLogin.user) {
     const { _id } = userLogin.user
     return (
-      <div className={style.mainDiv}>
+      <div className={style.mainDiv} onClick={() => console.log(notification)}>
         {notification
           .filter((val: any) => val.authorsID !== String(_id))
           .map((data: NotificationCardType, index: number) => (

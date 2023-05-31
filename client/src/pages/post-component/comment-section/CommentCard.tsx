@@ -18,8 +18,9 @@ type DataType = {
   data: CommentType
 }
 const CommentCard: FC<DataType> = ({ data }) => {
-  const { replyDrop, setReplyDrop } = useMainContext()
+  // const { replyDrop, setReplyDrop } = useMainContext()
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>()
+  const [replyDrop, setReplyDrop] = React.useState<boolean>(false)
 
   const [dropDown, setDropDown] = React.useState<boolean>(false)
   const [edit, setEdit] = React.useState<boolean>(false)
