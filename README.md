@@ -1,17 +1,25 @@
-Live link : https://fithub-forum.netlify.app 
-Initialisation
-install all dapandaces with yarn install or npm install on both client and server folders 
-create .env file inside of server folder with  MONGO_URL for your own mongodb atlas data base and add your own data base link to it 
-create JWT_STRING with password of your choising for authentications 
+# Fithub Forum
 
-yarn start or npm start to run the server 
-yarn run dev to start the front end 
+**Live Link**: [https://fithub-forum.netlify.app](https://fithub-forum.netlify.app)
 
+## Initialisation
 
-App is basic fittnes based reddit clone made with React Vite TypeScript TailwindCss ReduxTool kit and as for back end Node express.js mongoDB and firebase storage for photos 
+1. Install all dependencies by running `yarn install` or `npm install` in both the client and server folders.
+2. Create a `.env` file inside the server folder and add the following environment variables:
+   - `MONGO_URL`: Your own MongoDB Atlas database link.
+   - `JWT_STRING`: A password of your choice for authentication.
+3. Start the server by running `yarn start` or `npm start`.
+4. Start the front-end development server by running `yarn run dev`.
 
-App features :
-roles [adming, user] 
-users can make posts and comments and do CRUD operations on them, all users can do CRUD operations on there profile and change profile information
-admins with addition of above can create threads aka subs for different topics 
-app has upvote functionality and notififactions for replys and posts, navigate different threads, different pages
+## App Features
+
+- **Roles**: Fithub Forum supports two user roles: `admin` and `user`.
+- **Post and Comment Operations**: Users can create posts, make comments, and perform CRUD operations on their own content.
+- **Profile Management**: All users can manage their profiles and update their profile information.
+- **Thread Creation**: Admins have the additional ability to create threads (subs) for different fitness topics.
+- **Upvote Functionality**: Users can upvote posts and comments.
+- **Notifications**: Users receive notifications for replies and new posts.
+- **Navigation**: Users can navigate through different threads and pages.
+
+---
+
