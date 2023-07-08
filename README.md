@@ -1,7 +1,10 @@
-# Fithub Forum
-
 **Live Link**: [https://fithub-forum.netlify.app](https://fithub-forum.netlify.app)
 
+
+# Fithub Forum
+
+![Alt Text]( https://firebasestorage.googleapis.com/v0/b/img-upload-7d368.appspot.com/o/Reddit%20Clone.jpg?alt=media&token=8783248c-25f1-45ed-9aff-9d33790dd4fa
+)
 ## Initialisation
 
 1. Install all dependencies by running `yarn install` or `npm install` in both the client and server folders.
