@@ -3,11 +3,11 @@ import mongoose from 'mongoose'
 const postSchema = new mongoose.Schema({
   title: {
     type: String,
-    require: [true, 'Add title to your post'],
+    required: [true, 'Add title to your post'],
   },
   post: {
     type: String,
-    require: [true, 'Add post content'],
+    required: [true, 'Add post content'],
 
     trim: true,
   },
@@ -18,13 +18,13 @@ const postSchema = new mongoose.Schema({
 
   forumID: {
     type: String,
-    require: [true, 'Forum should be specified'],
+    required: [true, 'Forum should be specified'],
     default: 'general',
   },
 
   userID: {
     type: String,
-    require: true,
+    required: true,
   },
   date: {
     type: Date,

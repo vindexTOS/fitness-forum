@@ -16,7 +16,7 @@ export const GetForumThunk = createAsyncThunk(
         .then((res) => res.data)
         .catch((err) => console.log(err))
 
-      val.dispatch(getForumData(data))
+      return data
     } catch (error) {
       console.log(error)
     }

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-
+import { NotificationData } from '../async-thunk/NotificationThunk'
 const initialState = {
   notificationData: {},
 }
@@ -11,6 +11,11 @@ const NotificationSlice = createSlice({
     getNotifciation: (state, action) => {
       state.notificationData = action.payload
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(NotificationData.fulfilled, (state, action) => {
+      state.notificationData = action.payload
+    })
   },
 })
 

@@ -37,13 +37,12 @@ export const NotificationData = createAsyncThunk(
     // const apiUrl = `http://localhost:3000/notification/${obj.userID}`
     const apiUrl = `https://fitness-forum-back.onrender.com/notification/${obj.userID}`
 
-    await axios
+    const data = await axios
       .get(apiUrl)
-      .then((res) => {
-        console.log(res.data)
-        obj.dispatch(getNotifciation(res.data))
-      })
+      .then((res) => res.data)
       .catch((err) => console.log(err))
+
+    return data
   },
 )
 

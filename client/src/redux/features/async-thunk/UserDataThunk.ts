@@ -24,7 +24,7 @@ export const UserDataThunk = createAsyncThunk(
       .then((res) => res.data)
       .catch((err) => console.log(err))
 
-    val.dispatch(getUserData(data))
+    return data
   },
 )
 

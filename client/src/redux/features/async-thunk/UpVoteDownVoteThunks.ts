@@ -39,6 +39,6 @@ export const GetVotes = createAsyncThunk(
       .get(apiUrl)
       .then((res) => res.data)
       .catch((err) => console.log(err))
-    val.dispatch(getVotesData(data))
+    return data
   },
 )

@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 const forumSchema = new mongoose.Schema({
   name: {
     type: String,
-    require: [true, 'Forum should have name'],
+    required: [true, 'Forum should have name'],
     trim: true,
     maxLength: [50, 'Forum name cant be more than 50 letters'],
   },
@@ -13,13 +13,13 @@ const forumSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    require: [true, 'forum should have description'],
+    required: [true, 'forum should have description'],
     trim: true,
     maxLength: [5000, "Description can't be more then 5000 letters"],
   },
   forumID: {
     type: String,
-    require: [true, 'froum must have id'],
+    required: [true, 'froum must have id'],
     trim: true,
     default: function () {
       return this.name
@@ -27,7 +27,7 @@ const forumSchema = new mongoose.Schema({
   },
   adminID: {
     type: String,
-    require: true,
+    required: true,
   },
   color1: {
     type: String,

@@ -1,5 +1,4 @@
 import { ThunkDispatch, createAsyncThunk } from '@reduxjs/toolkit'
-import { getAllPost } from '../slice/GetAllPosts.ts'
 import axios from 'axios'
 interface GetThreadType {
   dispatch: ThunkDispatch<any, any, any>
@@ -22,8 +21,8 @@ export const GetAllPostsThunk = createAsyncThunk(
         .get(apiUrl)
         .then((res) => res.data)
         .catch((err) => console.log(err))
-      console.log(data)
-      val.dispatch(getAllPost(data))
+
+      return data
     } catch (error) {
       console.log(error)
     }

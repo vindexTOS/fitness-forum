@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 const commentSchema = new mongoose.Schema({
   comment: {
     type: String,
-    require: [true, 'Comment fealed is emptiy'],
+    required: [true, 'Comment fealed is emptiy'],
   },
   date: {
     type: Date,
@@ -11,11 +11,11 @@ const commentSchema = new mongoose.Schema({
   },
   postID: {
     type: String,
-    require: true,
+    required: true,
   },
   userID: {
     type: String,
-    require: true,
+    required: true,
   },
   reply: [
     {

@@ -15,24 +15,24 @@ const ThreadSlice = createSlice({
       state.data = action.payload
     },
   },
-  // extraReducers: (builder) => {
-  //   builder
-  //     .addCase(GetThreadThunk.pending, (state) => {
-  //       state.loading = true
-  //       state.error = null
-  //       state.data = {}
-  //     })
-  //     .addCase(GetThreadThunk.fulfilled, (state, action: any) => {
-  //       state.loading = false
-  //       state.error = null
-  //       state.data = action.payload
-  //     })
-  //     .addCase(GetThreadThunk.rejected, (state, action: any) => {
-  //       state.loading = false
-  //       state.error = action.error
-  //       state.data = {}
-  //     })
-  // },
+  extraReducers: (builder) => {
+    builder
+      .addCase(GetThreadThunk.pending, (state) => {
+        state.loading = true
+        state.error = null
+        state.data = {}
+      })
+      .addCase(GetThreadThunk.fulfilled, (state, action: any) => {
+        state.loading = false
+        state.error = null
+        state.data = action.payload
+      })
+      .addCase(GetThreadThunk.rejected, (state, action: any) => {
+        state.loading = false
+        state.error = action.error
+        state.data = {}
+      })
+  },
 })
 
 export const { getPostData } = ThreadSlice.actions

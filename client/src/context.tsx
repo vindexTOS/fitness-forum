@@ -85,7 +85,6 @@ export const ContextProvider = ({
           console.log('success')
         })
         .catch((err) => console.log(err))
-      console.log(forumID)
     } catch (error) {
       console.log(error)
     }

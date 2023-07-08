@@ -1,5 +1,4 @@
 import { ThunkDispatch, createAsyncThunk } from '@reduxjs/toolkit'
-import { getAllComments } from '../slice/CommentSlice'
 import axios from 'axios'
 type GetAllComments = {
   dispatch: ThunkDispatch<any, any, any>
@@ -41,13 +40,12 @@ export const GetCommentThunk = createAsyncThunk(
       val.postID
     }/?page=${String(val.pages)}&limit=10`
 
-    await axios
+    const data = await axios
       .get(apiUrl)
-      .then((res) => {
-        val.dispatch(getAllComments(res.data))
-        console.log(res)
-      })
+      .then((res) => res.data)
       .catch((err) => console.log(err))
+
+    return data
   },
 )
 

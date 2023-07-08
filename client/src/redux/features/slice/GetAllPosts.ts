@@ -19,24 +19,24 @@ const GetAllPostSlice = createSlice({
       state.search = action.payload
     },
   },
-  //   extraReducers: (builder) => {
-  //     builder
-  //       .addCase(GetAllPostsThunk.pending, (state) => {
-  //         state.loading = true
-  //         state.error = null
-  //         state.data = []
-  //       })
-  //       .addCase(GetAllPostsThunk.fulfilled, (state, action: any) => {
-  //         state.loading = false
-  //         state.error = null
-  //         state.data = action.payload
-  //       })
-  //       .addCase(GetAllPostsThunk.rejected, (state, action: any) => {
-  //         state.loading = false
-  //         state.error = action.error
-  //         state.data = []
-  //       })
-  //   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(GetAllPostsThunk.pending, (state) => {
+        state.loading = true
+        state.error = null
+        state.data = []
+      })
+      .addCase(GetAllPostsThunk.fulfilled, (state, action: any) => {
+        state.loading = false
+        state.error = null
+        state.data = action.payload
+      })
+      .addCase(GetAllPostsThunk.rejected, (state, action: any) => {
+        state.loading = false
+        state.error = action.error
+        state.data = []
+      })
+  },
 })
 
 export const { getAllPost, getSearch } = GetAllPostSlice.actions

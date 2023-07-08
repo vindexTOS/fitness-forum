@@ -21,7 +21,6 @@ export const CreateThreadThunk = createAsyncThunk(
     console.log('triggered')
     try {
       if (name && description && forumID && adminID) {
-        console.log('about to start')
         await axios
           .post(apiUrl, {
             name,
@@ -32,7 +31,7 @@ export const CreateThreadThunk = createAsyncThunk(
             color1,
             color2,
           })
-          .then((res) => console.log(res))
+          .then((res) => res)
           .catch((err) => console.log(err))
       }
       console.log('succsessful')
